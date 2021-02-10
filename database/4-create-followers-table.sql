@@ -1,0 +1,13 @@
+CREATE TABLE Messenger.[dbo].[Followers] 
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	UserID INT FOREIGN KEY REFERENCES Messenger.dbo.Users(ID) NOT NULL,
+	FollowerID INT FOREIGN KEY REFERENCES Messenger.dbo.Users(ID) NOT NULL,
+	Pending INT,
+	CONSTRAINT UNIQUE_RELATION UNIQUE (UserID, FollowerID),
+	CONSTRAINT DIFFERENT_USERS CHECK (UserID != FollowerID),
+);
+
+SELECT * FROM Messenger.dbo.Followers;
+
+
