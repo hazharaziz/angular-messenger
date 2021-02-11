@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebServer.DataContext;
 
 namespace WebServer
 {
@@ -25,6 +26,7 @@ namespace WebServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<MessengerContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
