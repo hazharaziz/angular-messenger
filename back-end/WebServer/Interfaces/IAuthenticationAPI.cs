@@ -8,8 +8,9 @@ namespace WebServer.Interfaces
 {
     public interface IAuthenticationAPI
     {
-        void AuthenticateUser(User user);
+        User AuthenticateUser(User user);
         void SignUpUser(User user);
         void LogoutUser();
+        string GenerateJSONWebToken(User userInfo);
     }
 }

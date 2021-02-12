@@ -21,16 +21,18 @@ namespace WebServer.Models
         [Key]
         [Column("ID")]
         public int Id { get; set; }
+        
         [Required]
         [StringLength(30)]
         public string Username { get; set; }
+        
         [Required]
         [StringLength(30)]
         public string Password { get; set; }
-        [Required]
+        
         [StringLength(30)]
         public string FirstName { get; set; }
-        [Required]
+
         [StringLength(30)]
         public string LastName { get; set; }
         public int IsPublic { get; set; }
