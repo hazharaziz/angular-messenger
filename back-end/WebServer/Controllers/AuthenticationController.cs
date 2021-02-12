@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebServer.DataContext;
 
 namespace WebServer.Controllers
 {
@@ -12,9 +13,9 @@ namespace WebServer.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private DbContext _messageContext;
+        private MessengerContext _messageContext;
 
-        public AuthenticationController(DbContext messageContext)
+        public AuthenticationController(MessengerContext messageContext)
         {
             _messageContext = messageContext;
         }
