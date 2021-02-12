@@ -16,6 +16,7 @@ namespace WebServer.Repositories
         {
             Context = messengerContext;
         }
+
         public IEnumerable<Follower> GetFollowers(int userId)
             => Find(f => (f.UserId == userId) && f.Pending == 0);
         public IEnumerable<Follower> GetAll()
