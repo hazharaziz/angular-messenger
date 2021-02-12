@@ -6,7 +6,7 @@ using WebServer.Models;
 
 namespace WebServer.Interfaces
 {
-    interface IAuthenticationAPI
+    public interface IAuthenticationAPI
     {
         void AuthenticateUser(User user);
         void SignUpUser(User user);
