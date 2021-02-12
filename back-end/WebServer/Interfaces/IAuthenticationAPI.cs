@@ -8,7 +8,7 @@ namespace WebServer.Interfaces
 {
     interface IAuthenticationAPI
     {
-        void LoginUser(User user);
+        void AuthenticateUser(User user);
         void SignUpUser(User user);
         void LogoutUser();
     }

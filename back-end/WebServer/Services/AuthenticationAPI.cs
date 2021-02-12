@@ -17,7 +17,12 @@ namespace WebServer.Services
             _context = context;
         }
 
-        public void LoginUser(User user)
+        public void AuthenticateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SignUpUser(User user)
         {
             throw new NotImplementedException();
         }
@@ -27,9 +32,5 @@ namespace WebServer.Services
             throw new NotImplementedException();
         }
 
-        public void SignUpUser(User user)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
