@@ -7,7 +7,7 @@ using WebServer.Models;
 
 namespace WebServer.Interfaces
 {
-    interface IFollowerRepository
+    public interface IFollowerRepository
     {
         IEnumerable<Follower> GetFollowers(int userId);
         IEnumerable<Follower> GetAll();

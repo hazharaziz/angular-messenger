@@ -7,7 +7,7 @@ using WebServer.Models;
 
 namespace WebServer.Interfaces
 {
-    interface IMessageRespository
+    public interface IMessageRespository
     {
         Message Get(int id);
         IEnumerable<Message> GetAll();

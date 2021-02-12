@@ -7,7 +7,7 @@ using WebServer.Models;
 
 namespace WebServer.Interfaces
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         User Get(int id);
         IEnumerable<User> GetAll();
