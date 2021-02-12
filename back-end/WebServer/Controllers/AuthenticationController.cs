@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,10 @@ namespace WebServer.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private MessengerContext _messageContext;
-
-        public AuthenticationController(MessengerContext messageContext)
+        private IConfiguration _config;
+        public AuthenticationController(IConfiguration config)
         {
-            _messageContext = messageContext;
+            _config = config;
         }
     }
 }
