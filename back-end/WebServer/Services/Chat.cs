@@ -42,7 +42,7 @@ namespace WebServer.Services
                     });
                 }
             }
-            return filteredMessages;
+            return filteredMessages.OrderByDescending(m => m.DateTime).ToList();
         }
 
         public List<ResponseMessage> FetchFriendsMessages(string username)
