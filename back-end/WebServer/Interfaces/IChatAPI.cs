@@ -14,6 +14,7 @@ namespace WebServer.Interfaces
         List<ResponseMessage> FetchFriendsMessages(string username);
         void AddMessage(Message message);
         void EditMessage(int id, Message message);
+        void DeleteMessage(int id);
         User GetCurrentUser(string username);
     }
 }

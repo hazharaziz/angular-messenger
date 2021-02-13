@@ -94,5 +94,33 @@ namespace WebServer.Controllers
 
             return response;
         }
+
+        [Authorize]
+        [HttpDelete("{id}")]    
+        public IActionResult DeleteMessage(int id)
+        {
+            IActionResult response = Unauthorized();
+            var currentUser = HttpContext.User;
+            string username = "";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (username != "")
+            {
+                try
+                {
+                    _chat.DeleteMessage(id);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return response;
+        }
+
     }
 }

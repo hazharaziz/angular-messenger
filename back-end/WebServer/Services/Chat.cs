@@ -77,6 +77,17 @@ namespace WebServer.Services
             _unitOfWork.Save();
         }
 
+        public void DeleteMessage(int id)
+        {
+            Message message = _unitOfWork.Messages.Find(m => m.MessageId == id).FirstOrDefault();
+            if (message == null)
+            {
+                throw new Exception();
+            }
+            _unitOfWork.Messages.Remove(message);
+            _unitOfWork.Save();
+        }
+
         public User GetCurrentUser(string username)
             => _unitOfWork.Users.GetByUsername(username);
 
