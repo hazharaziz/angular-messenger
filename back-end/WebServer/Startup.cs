@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using WebServer.Context;
 using WebServer.DataContext;
 using WebServer.Interfaces;
+using WebServer.Services;
 
 namespace WebServer
 {
@@ -33,6 +34,7 @@ namespace WebServer
             services.AddControllers();
             services.AddDbContext<MessengerContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IAuthenticationAPI, Authentication>();
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
