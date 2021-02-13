@@ -4,36 +4,55 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Interfaces;
 using WebServer.Models.DBModels;
+using WebServer.Models.ResponseModels;
 
 namespace WebServer.Services
 {
     public class Chat : IChatAPI
     {
         private IUnitOfWork _unitOfWork;
-        private IFollowerAPI _followerAPI;
+        private IRelationAPI _relationAPI;
 
-        public Chat(IUnitOfWork unitOfWork, IFollowerAPI followerAPI)
+        public Chat(IUnitOfWork unitOfWork, IRelationAPI followerAPI)
         {
             _unitOfWork = unitOfWork;
-            _followerAPI = followerAPI;
+            _relationAPI = followerAPI;
         }
 
         public List<Message> FetchMessages()
             => _unitOfWork.Messages.GetAll().ToList();
 
-        public List<Message> FetchFriendsMessages(int userId)
+        public List<ResponseMessage> FetchFriendsMessages(int userId)
         {
-            List<int> followingsIds = _followerAPI.GetFollowings(userId).Select(f => f.Id).ToList();
+            List<int> followingsIds = _relationAPI.GetFollowings(userId).Select(f => f.Id).ToList();
             List<Message> allMessages = FetchMessages();
-            List<Message> filteredMessages = new List<Message>();
+            List<ResponseMessage> filteredMessages = new List<ResponseMessage>();
             foreach (var message in allMessages)
             {
                 if (followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
                 {
-                    filteredMessages.Add(message);
+                    filteredMessages.Add(new ResponseMessage() 
+                    {
+                        MessageId = message.MessageId,
+                        ComposerId = message.ComposerId,
+                        ReplyToId = message.ReplyToId,
+                        Text = message.Text,
+                        ComposerName = message.ComposerName,
+                        DateTime = message.DateTime,
+                    });
                 }
             }
             return filteredMessages;
+        }
+
+        public List<ResponseMessage> FetchFriendsMessages(string username)
+        {
+            User user = _unitOfWork.Users.Find(u => u.Username == username).FirstOrDefault();
+            if (user == null)
+            {
+                throw new Exception();
+            }
+            return FetchFriendsMessages(user.Id);
         }
 
         public void AddMessage(Message message)

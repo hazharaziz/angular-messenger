@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Models.DBModels;
 using WebServer.Interfaces;
+using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
 {
@@ -16,15 +17,17 @@ namespace WebServer.Controllers
     public class ChatController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;
+        private IChatAPI _chat;
 
-        public ChatController(IUnitOfWork unitOfWork)
+        public ChatController(IUnitOfWork unitOfWork, IChatAPI chat)
         {
             _unitOfWork = unitOfWork;
+            _chat = chat;
         }
 
         [Authorize]
         [HttpGet("messages")]
-        public ActionResult<IEnumerable<Message>> Get()
+        public ActionResult<IEnumerable<ResponseMessage>> Get()
         {
             var currentUser = HttpContext.User;
             string username = "";
@@ -34,7 +37,7 @@ namespace WebServer.Controllers
             }
             if (username != "")
             {
-                return _unitOfWork.Messages.GetAll().ToArray();
+                return _chat.FetchFriendsMessages(username);
             }
             return Unauthorized();
         }
