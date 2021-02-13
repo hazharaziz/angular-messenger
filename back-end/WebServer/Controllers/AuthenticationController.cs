@@ -30,22 +30,45 @@ namespace WebServer.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        public IActionResult Login([FromBody] LoginUser login)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginRequest login)
         {
             IActionResult response = Unauthorized();
             User user = AuthenticateUser(login);
 
             if (user != null)
             {
-                var tokenString = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenString, name = user.FirstName + " " + user.LastName });
+                var tokenString = GenerateJSONWebToken();
+                response = Ok(new
+                {
+                    Token = tokenString,
+                    Name = $"{user.FirstName} {user.LastName}"
+                });
             }
 
             return response;
         }
 
-        public User AuthenticateUser(LoginUser user)
+        [AllowAnonymous]
+        [HttpPost("signup")]
+        public IActionResult SignUp([FromBody] User newUser)
+        {
+            if (_unitOfWork.Users.Find(user => user.Username == newUser.Username) == null)
+            {
+                _unitOfWork.Users.Add(newUser);
+                _unitOfWork.Save();
+                var tokenString = GenerateJSONWebToken();
+                return Ok(new
+                {
+                    token = tokenString,
+                    name = $"{newUser.FirstName} {newUser.LastName}",
+                    newUser.Username,
+                });
+            }
+            return Conflict();            
+        }
+
+        public User AuthenticateUser(LoginRequest user)
         {
             User dbUser = _unitOfWork.Users.Find(u => u.Username == user.Username).FirstOrDefault();
             User result = null;
@@ -56,17 +79,7 @@ namespace WebServer.Controllers
             return result;
         }
 
-        public void SignUpUser(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LogoutUser()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GenerateJSONWebToken(User userInfo)
+        public string GenerateJSONWebToken()
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

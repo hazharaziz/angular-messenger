@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebServer.Models.RequestModels
 {
-    public class LoginUser
+    public class LoginRequest
     {
         [Required]
         [StringLength(30)]
