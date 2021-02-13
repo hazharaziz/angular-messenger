@@ -26,8 +26,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet("messages")]
-        public ActionResult<IEnumerable<ResponseMessage>> Get()
+        public ActionResult<IEnumerable<ResponseMessage>> GetMessages()
         {
             var currentUser = HttpContext.User;
             string username = "";
@@ -40,6 +39,33 @@ namespace WebServer.Controllers
                 return _chat.FetchFriendsMessages(username);
             }
             return Unauthorized();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult SendMessage([FromBody] Message message)
+        {
+            IActionResult response = NoContent();
+            var currentUser = HttpContext.User;
+            string username = "";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (username != "")
+            {
+                try
+                {
+                    _chat.AddMessage(message);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return response;
         }
     }
 }
