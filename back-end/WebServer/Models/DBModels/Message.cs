@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace WebServer.Models
+namespace WebServer.DBModels.Models
 {
     public partial class Message
     {

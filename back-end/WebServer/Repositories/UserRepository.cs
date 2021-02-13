@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using WebServer.DataContext;
 using WebServer.Interfaces;
-using WebServer.Models;
+using WebServer.DBModels.Models;
 
 namespace WebServer.Repositories
 {

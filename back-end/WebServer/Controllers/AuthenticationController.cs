@@ -12,7 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using WebServer.DataContext;
 using WebServer.Interfaces;
-using WebServer.Models;
+using WebServer.DBModels.Models;
+using WebServer.Models.RequestModels;
 
 namespace WebServer.Controllers
 {
@@ -30,10 +31,10 @@ namespace WebServer.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] User login)
+        public IActionResult Login([FromBody] LoginUser login)
         {
             IActionResult response = Unauthorized();
-            var user = AuthenticateUser(login);
+            User user = AuthenticateUser(login);
 
             if (user != null)
             {
@@ -44,7 +45,7 @@ namespace WebServer.Controllers
             return response;
         }
 
-        public User AuthenticateUser(User user)
+        public User AuthenticateUser(LoginUser user)
         {
             User dbUser = _unitOfWork.Users.Find(u => u.Username == user.Username).FirstOrDefault();
             User result = null;

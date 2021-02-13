@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace WebServer.Models
+namespace WebServer.DBModels.Models
 {
     [Index(nameof(Username), Name = "UNIQUI_USERNAME", IsUnique = true)]
     public partial class User
@@ -29,10 +29,12 @@ namespace WebServer.Models
         [Required]
         [StringLength(30)]
         public string Password { get; set; }
-        
+
+        [Required]
         [StringLength(30)]
         public string FirstName { get; set; }
 
+        [Required]
         [StringLength(30)]
         public string LastName { get; set; }
         public int IsPublic { get; set; }

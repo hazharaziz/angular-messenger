@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using WebServer.Models;
+using WebServer.DBModels.Models;
 
 namespace WebServer.Interfaces
 {

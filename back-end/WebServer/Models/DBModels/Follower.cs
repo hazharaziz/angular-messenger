@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace WebServer.Models
+namespace WebServer.DBModels.Models
 {
     [Index(nameof(UserId), nameof(FollowerId), Name = "UNIQUE_RELATION", IsUnique = true)]
     public partial class Follower

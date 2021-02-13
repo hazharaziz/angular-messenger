@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebServer.Models;
+using WebServer.DBModels.Models;
 
 #nullable disable
 
