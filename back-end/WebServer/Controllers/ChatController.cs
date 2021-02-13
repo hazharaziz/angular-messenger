@@ -8,7 +8,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Models.DBModels;
 using WebServer.Interfaces;
-using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
 {
@@ -26,7 +25,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        public ActionResult<IEnumerable<ResponseMessage>> GetMessages()
+        public ActionResult<IEnumerable<Message>> GetMessages()
         {
             var currentUser = HttpContext.User;
             string username = "";

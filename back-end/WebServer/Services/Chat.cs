@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Interfaces;
 using WebServer.Models.DBModels;
-using WebServer.Models.ResponseModels;
 
 namespace WebServer.Services
 {
@@ -22,30 +21,22 @@ namespace WebServer.Services
         public List<Message> FetchMessages()
             => _unitOfWork.Messages.GetAll().ToList();
 
-        public List<ResponseMessage> FetchFriendsMessages(int userId)
+        public List<Message> FetchFriendsMessages(int userId)
         {
             List<int> followingsIds = _relationAPI.GetFollowings(userId).Select(f => f.Id).ToList();
             List<Message> allMessages = FetchMessages();
-            List<ResponseMessage> filteredMessages = new List<ResponseMessage>();
+            List<Message> filteredMessages = new List<Message>();
             foreach (var message in allMessages)
             {
                 if (followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
                 {
-                    filteredMessages.Add(new ResponseMessage() 
-                    {
-                        MessageId = message.MessageId,
-                        ComposerId = message.ComposerId,
-                        ReplyToId = message.ReplyToId,
-                        Text = message.Text,
-                        ComposerName = message.ComposerName,
-                        DateTime = message.DateTime,
-                    });
+                    filteredMessages.Add(message);
                 }
             }
             return filteredMessages.OrderByDescending(m => m.DateTime).ToList();
         }
 
-        public List<ResponseMessage> FetchFriendsMessages(string username)
+        public List<Message> FetchFriendsMessages(string username)
         {
             User user = _unitOfWork.Users.Find(u => u.Username == username).FirstOrDefault();
             if (user == null)

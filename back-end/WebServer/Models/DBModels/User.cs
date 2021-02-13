@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable
@@ -32,9 +33,12 @@ namespace WebServer.Models.DBModels
         [StringLength(60)]
         public string Name { get; set; }
         public int IsPublic { get; set; } = 0;
-
+        
+        [JsonIgnore]
         [InverseProperty(nameof(Follower.FollowerNavigation))]
         public virtual ICollection<Follower> Followers { get; set; }
+
+        [JsonIgnore]
         [InverseProperty(nameof(Message.Composer))]
         public virtual ICollection<Message> Messages { get; set; }
     }

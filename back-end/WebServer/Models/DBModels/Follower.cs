@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable
@@ -20,6 +21,7 @@ namespace WebServer.Models.DBModels
         public int FollowerId { get; set; }
         public int? Pending { get; set; }
 
+        [JsonIgnore]
         [ForeignKey(nameof(FollowerId))]
         [InverseProperty(nameof(User.Followers))]
         public virtual User FollowerNavigation { get; set; }
