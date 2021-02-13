@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using WebServer.DBModels.Models;
+using WebServer.Models.DBModels;
 using WebServer.Interfaces;
 using WebServer.Models.RequestModels;
 

@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace WebServer.DBModels.Models
+namespace WebServer.Models.DBModels
 {
     [Index(nameof(UserId), nameof(FollowerId), Name = "UNIQUE_RELATION", IsUnique = true)]
     public partial class Follower
     {
         [Key]
-        [Column("ID")]
-        public int Id { get; set; }
+        [Column("RelationID")]
+        public int RelationId { get; set; }
         [Column("UserID")]
         public int UserId { get; set; }
         [Column("FollowerID")]
@@ -21,10 +21,7 @@ namespace WebServer.DBModels.Models
         public int? Pending { get; set; }
 
         [ForeignKey(nameof(FollowerId))]
-        [InverseProperty("FollowerFollowerNavigations")]
+        [InverseProperty(nameof(User.Followers))]
         public virtual User FollowerNavigation { get; set; }
-        [ForeignKey(nameof(UserId))]
-        [InverseProperty("FollowerUsers")]
-        public virtual User User { get; set; }
     }
 }

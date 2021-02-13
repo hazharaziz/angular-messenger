@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace WebServer.DBModels.Models
+namespace WebServer.Models.DBModels
 {
     public partial class Message
     {
@@ -16,15 +16,20 @@ namespace WebServer.DBModels.Models
         }
 
         [Key]
-        [Column("ID")]
-        public int Id { get; set; }
+        [Column("MessageID")]
+        public int MessageId { get; set; }
+
+        [Required]
         [Column("ComposerID")]
-        public int? ComposerId { get; set; }
+        public int ComposerId { get; set; }
+
         [Column("ReplyToID")]
         public int? ReplyToId { get; set; }
+
         [Required]
         [StringLength(400)]
         public string Text { get; set; }
+
         [Required]
         [StringLength(70)]
         public string ComposerName { get; set; }

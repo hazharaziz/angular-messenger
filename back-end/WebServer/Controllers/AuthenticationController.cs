@@ -12,9 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WebServer.DataContext;
 using WebServer.Interfaces;
-using WebServer.DBModels.Models;
 using WebServer.Models.RequestModels;
 using System.Security.Claims;
+using WebServer.Models.DBModels;
 
 namespace WebServer.Controllers
 {
@@ -44,7 +44,7 @@ namespace WebServer.Controllers
                 response = Ok(new
                 {
                     Token = tokenString,
-                    Name = $"{user.FirstName} {user.LastName}"
+                    Name = user.Name
                 });
             }
 
@@ -63,7 +63,7 @@ namespace WebServer.Controllers
                 return Ok(new
                 {
                     token = tokenString,
-                    name = $"{newUser.FirstName} {newUser.LastName}",
+                    name = newUser.Name,
                     newUser.Username,
                 });
             }

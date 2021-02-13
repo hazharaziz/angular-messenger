@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebServer.DBModels.Models;
+using WebServer.Models.DBModels;
 
 #nullable disable
 
@@ -36,32 +36,28 @@ namespace WebServer.DataContext
 
             modelBuilder.Entity<Follower>(entity =>
             {
-                entity.HasOne(d => d.FollowerNavigation)
-                    .WithMany(p => p.FollowerFollowerNavigations)
-                    .HasForeignKey(d => d.FollowerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Followers__Follo__32E0915F");
+                entity.Property(e => e.Pending).HasDefaultValueSql("((0))");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.FollowerUsers)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Followers__UserI__31EC6D26");
+                entity.HasOne(d => d.FollowerNavigation)
+                    .WithMany(p => p.Followers)
+                    .HasForeignKey(d => d.FollowerId)
+                    .HasConstraintName("FK_Followers_Followers");
             });
 
             modelBuilder.Entity<Message>(entity =>
             {
-                entity.Property(e => e.Text).HasDefaultValueSql("('')");
+                entity.Property(e => e.ReplyToId).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Composer)
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.ComposerId)
-                    .HasConstraintName("FK__Messages__Compos__276EDEB3");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Messages_Users");
 
                 entity.HasOne(d => d.ReplyTo)
                     .WithMany(p => p.InverseReplyTo)
                     .HasForeignKey(d => d.ReplyToId)
-                    .HasConstraintName("FK__Messages__ReplyT__286302EC");
+                    .HasConstraintName("FK_Messages_Messages1");
             });
 
             modelBuilder.Entity<User>(entity =>
