@@ -29,15 +29,25 @@ namespace WebServer.Controllers
             IActionResult response = Unauthorized();
             var currentUser = HttpContext.User;
             string username = "";
+            string userId = "0";
             if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
             {
                 username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
             }
-            if (username != "")
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
             {
-                return _relations.GetFollowers(id);
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
             }
-            return Unauthorized();
+
+            if (userId != id.ToString() || username == "")
+            {
+                return Forbid();
+            }
+            if (username == "")
+            {
+                return Unauthorized();
+            }
+            return _relations.GetFollowers(id);
         }
     }
 }

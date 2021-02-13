@@ -10,6 +10,7 @@ namespace WebServer.Interfaces
     public interface IAuthenticationAPI
     {
         User AuthenticateUser(LoginRequest user);
+        User SignUpUser(User newUser);
         string GenerateJSONWebToken(User user);
     }
 }

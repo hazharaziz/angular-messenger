@@ -35,6 +35,13 @@ namespace WebServer.Services
             return result;
         }
 
+        public User SignUpUser(User newUser)
+        {
+            _unitOfWork.Users.Add(newUser);
+            _unitOfWork.Save();
+            return _unitOfWork.Users.Find(u => u.Username == newUser.Username).FirstOrDefault();
+        }
+
         public string GenerateJSONWebToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -42,6 +49,7 @@ namespace WebServer.Services
 
             var claims = new[] {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
@@ -52,6 +60,5 @@ namespace WebServer.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 }

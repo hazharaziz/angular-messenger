@@ -57,8 +57,7 @@ namespace WebServer.Controllers
         {
             if (_unitOfWork.Users.Find(user => user.Username == newUser.Username) == null)
             {
-                _unitOfWork.Users.Add(newUser);
-                _unitOfWork.Save();
+                newUser = _auth.SignUpUser(newUser);
                 var tokenString = _auth.GenerateJSONWebToken(newUser);
                 return Ok(new
                 {
