@@ -162,7 +162,46 @@ namespace WebServer.Controllers
                 _relations.AcceptFollowRequest(int.Parse(userId), id);
                 return StatusCode(200, new
                 {
-                    message = "Follow request accepted"
+                    message = "Follow request accepted successfully"
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error has occured in the server"
+                });
+            }
+        }
+
+
+        [Authorize]
+        [HttpDelete("reject-request/{id}")]
+        public IActionResult DeleteFollowRequest(int id)
+        {
+            var currentUser = HttpContext.User;
+            string username = "";
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId == null || username == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                _relations.RejectFollowRequest(int.Parse(userId), id);
+                return StatusCode(200, new
+                {
+                    message = "Follow request rejected successfully"
                 });
             }
             catch (Exception e)
