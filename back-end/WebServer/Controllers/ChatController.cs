@@ -8,6 +8,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Models.DBModels;
 using WebServer.Interfaces;
+using WebServer.Exceptions;
+using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
 {
@@ -15,29 +17,29 @@ namespace WebServer.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private IUnitOfWork _unitOfWork;
-        private IChatAPI _chat;
+        private IChatService _chatService;
+        private IAuthenticationService _authService;
 
-        public ChatController(IUnitOfWork unitOfWork, IChatAPI chat)
+        public ChatController(IAuthenticationService authService, IChatService chatService)
         {
-            _unitOfWork = unitOfWork;
-            _chat = chat;
+            _authService = authService;
+            _chatService = chatService;
         }
 
         [Authorize]
-        public ActionResult<IEnumerable<Message>> GetMessages()
+        public IActionResult GetMessages()
         {
-            var currentUser = HttpContext.User;
-            string username = "";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<Message>> response = _chatService.FetchFriendsMessages(int.Parse(userId));
+                return StatusCode(response.Status, response.Data);
             }
-            if (username != "")
+            catch (HttpException exception)
             {
-                return _chat.FetchFriendsMessages(username);
+                return StatusCode(exception.Status, new { message = exception.Message });
             }
-            return Unauthorized();
         }
 
         [Authorize]
@@ -55,7 +57,7 @@ namespace WebServer.Controllers
             {
                 try
                 {
-                    _chat.AddMessage(message);
+                    _chatService.AddMessage(message);
                     return Created("message created", message);
                 }
                 catch (Exception)
@@ -82,7 +84,7 @@ namespace WebServer.Controllers
             {
                 try
                 {
-                    _chat.EditMessage(id, message);
+                    _chatService.EditMessage(id, message);
                     return Ok();
                 }
                 catch (Exception)
@@ -109,7 +111,7 @@ namespace WebServer.Controllers
             {
                 try
                 {
-                    _chat.DeleteMessage(id);
+                    _chatService.DeleteMessage(id);
                     return Ok();
                 }
                 catch (Exception)

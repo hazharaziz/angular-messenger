@@ -6,7 +6,7 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Interfaces
 {
-    public interface IRelationAPI
+    public interface IRelationService
     {
         List<User> GetFollowers(int id);
         List<User> GetFollowers(string username);

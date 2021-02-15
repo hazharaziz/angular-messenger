@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace WebServer.Services
 {
-    public class AuthenticationService : IAuthenticationAPI
+    public class AuthenticationService : IAuthenticationService
     {
         private IConfiguration _config;
         private IUnitOfWork _unitOfWork;
@@ -93,6 +93,17 @@ namespace WebServer.Services
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string GetPrincipalClaim(ClaimsPrincipal principal, string type)
+        {
+            string claimValue = (principal.HasClaim(claim => claim.Type == type)) ?
+                principal.Claims.FirstOrDefault(claim => claim.Type == type).Value : "";
+
+            if (claimValue == "")
+                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.UnAuthorized);
+
+            return claimValue;
         }
     }
 }

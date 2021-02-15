@@ -34,9 +34,9 @@ namespace WebServer
             services.AddControllers();
             services.AddDbContext<MessengerContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IAuthenticationAPI, AuthenticationService>();
-            services.AddTransient<IChatAPI, Chat>();
-            services.AddTransient<IRelationAPI, Relations>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IChatService, ChatService>();
+            services.AddTransient<IRelationService, RelationService>();
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

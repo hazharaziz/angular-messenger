@@ -24,13 +24,11 @@ namespace WebServer.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private IUnitOfWork _unitOfWork;
-        private IAuthenticationAPI _auth;
+        private IAuthenticationService _authService;
 
-        public AuthenticationController(IAuthenticationAPI auth, IUnitOfWork unitOfWork)
+        public AuthenticationController(IAuthenticationService authService)
         {
-            _unitOfWork = unitOfWork;
-            _auth = auth;
+            _authService = authService;
         }
 
         [AllowAnonymous]
@@ -39,8 +37,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<Authentication> response = _auth.AuthenticateUser(login);
-                response.Token = _auth.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
+                Response<Authentication> response = _authService.AuthenticateUser(login);
+                response.Token = _authService.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
                 return StatusCode(response.Status, response);
             }
             catch (HttpException exception)
@@ -55,8 +53,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<Authentication> response = _auth.SignUpUser(newUser);
-                response.Token = _auth.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
+                Response<Authentication> response = _authService.SignUpUser(newUser);
+                response.Token = _authService.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
                 return StatusCode(response.Status, response);
             }
             catch (HttpException exception)

@@ -16,9 +16,9 @@ namespace WebServer.Controllers
     [ApiController]
     public class RelationController : ControllerBase
     {
-        private IRelationAPI _relations;
+        private IRelationService _relations;
 
-        public RelationController(IRelationAPI relations)
+        public RelationController(IRelationService relations)
         {
             _relations = relations;
         }

@@ -1,42 +1,52 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Interfaces;
 using WebServer.Models.DBModels;
+using WebServer.Models.ResponseModels;
 
 namespace WebServer.Services
 {
-    public class Chat : IChatAPI
+    public class ChatService : IChatService
     {
         private IUnitOfWork _unitOfWork;
-        private IRelationAPI _relationAPI;
+        private IRelationService _relationService;
 
-        public Chat(IUnitOfWork unitOfWork, IRelationAPI followerAPI)
+        public ChatService(IUnitOfWork unitOfWork, IRelationService relationService)
         {
             _unitOfWork = unitOfWork;
-            _relationAPI = followerAPI;
+            _relationService = relationService;
         }
 
         public List<Message> FetchMessages()
             => _unitOfWork.Messages.GetAll().ToList();
 
-        public List<Message> FetchFriendsMessages(int userId)
+        public Response<List<Message>> FetchFriendsMessages(int userId)
         {
-            List<int> followingsIds = _relationAPI.GetFollowings(userId).Select(f => f.Id).ToList();
+            List<int> followingsIds = _relationService.GetFollowings(userId).Select(f => f.Id).ToList();
             List<Message> allMessages = FetchMessages();
-            List<Message> filteredMessages = new List<Message>();
-            foreach (var message in allMessages)
-            {
-                if (followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
-                {
-                    filteredMessages.Add(message);
-                }
-            }
-            return filteredMessages.OrderByDescending(m => m.DateTime).ToList();
+
+            return new Response<List<Message>>() 
+            { 
+                Status = StatusCodes.Status200OK,
+                Data = allMessages.Where(message =>
+                        followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
+                        .OrderByDescending(m => m.DateTime).ToList()
+            };             
+            //List<Message> filteredMessages = new List<Message>();
+            //foreach (var message in allMessages)
+            //{
+            //    if (followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
+            //    {
+            //        filteredMessages.Add(message);
+            //    }
+            //}
+            //return filteredMessages.OrderByDescending(m => m.DateTime).ToList();
         }
 
-        public List<Message> FetchFriendsMessages(string username)
+        public Response<List<Message>> FetchFriendsMessages(string username)
         {
             User user = _unitOfWork.Users.Find(u => u.Username == username).FirstOrDefault();
             if (user == null)
