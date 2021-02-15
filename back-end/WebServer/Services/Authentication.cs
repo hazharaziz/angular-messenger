@@ -48,8 +48,8 @@ namespace WebServer.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.Name, (user.Username != "") ? user.Username : null),
+                new Claim(ClaimTypes.NameIdentifier, (user.Id != 0) ? user.Id.ToString() : null)
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],

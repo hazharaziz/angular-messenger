@@ -24,8 +24,8 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}/followers")]
-        public ActionResult<IEnumerable<User>> GetFollowers(int id)
+        [HttpGet("followers")]
+        public ActionResult<IEnumerable<User>> GetFollowers()
         {
             IActionResult response = Unauthorized();
             var currentUser = HttpContext.User;
@@ -40,23 +40,16 @@ namespace WebServer.Controllers
                 userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
             }
 
-            if (userId != id.ToString() || username == "")
-            {
-                return StatusCode(403, new 
-                { 
-                    message = "You are not allowed to access this resource"
-                });
-            }
-            if (username == "")
+            if (userId == null || username == null)
             {
                 return Unauthorized();
             }
-            return _relations.GetFollowers(id);
+            return _relations.GetFollowers(int.Parse(userId));
         }
 
         [Authorize]
-        [HttpGet("{id}/followings")]
-        public ActionResult<IEnumerable<User>> GetFollowings(int id)
+        [HttpGet("followings")]
+        public ActionResult<IEnumerable<User>> GetFollowings()
         {
             IActionResult response = Unauthorized();
             var currentUser = HttpContext.User;
@@ -71,24 +64,17 @@ namespace WebServer.Controllers
                 userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
             }
 
-            if (userId != id.ToString() || username == "")
-            {
-                return StatusCode(403, new
-                {
-                    message = "You are not allowed to access this resource"
-                });
-            }
-            if (username == "")
+            if (userId == null || username == null)
             {
                 return Unauthorized();
             }
-            return _relations.GetFollowings(id);
+            return _relations.GetFollowings(int.Parse(userId));
         }
 
 
         [Authorize]
-        [HttpGet("{id}/requests")]
-        public ActionResult<IEnumerable<User>> GetFollowRequests(int id)
+        [HttpGet("requests")]
+        public ActionResult<IEnumerable<User>> GetFollowRequests()
         {
             IActionResult response = Unauthorized();
             var currentUser = HttpContext.User;
@@ -103,19 +89,53 @@ namespace WebServer.Controllers
                 userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
             }
 
-            if (userId != id.ToString() || username == "")
-            {
-                return StatusCode(403, new
-                {
-                    message = "You are not allowed to access this resource"
-                });
-            }
-            if (username == "")
+            if (userId == null || username == null)
             {
                 return Unauthorized();
             }
-            return _relations.GetFollowRequests(id);
+            return _relations.GetFollowRequests(int.Parse(userId));
         }
+
+
+        [Authorize]
+        [HttpPost("send-request/{id}")]
+        public IActionResult SendFollowRequest(int id)
+        {
+            var currentUser = HttpContext.User;
+            string username = "";
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId == null || username == null)
+            {
+                return Unauthorized();
+            }
+            
+            try
+            {
+                
+                _relations.SendFollowRequest(id, int.Parse(userId));
+                return StatusCode(201, new
+                {
+                    message = "Follow request successfully sent"
+                });
+            } 
+            catch (Exception e)
+            {
+                return StatusCode(500, new 
+                {
+                    message = "An error has occured in the server"
+                });
+            }
+        }
+
 
     }
 }
