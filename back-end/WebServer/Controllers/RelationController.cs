@@ -71,7 +71,6 @@ namespace WebServer.Controllers
             return _relations.GetFollowings(int.Parse(userId));
         }
 
-
         [Authorize]
         [HttpGet("requests")]
         public ActionResult<IEnumerable<User>> GetFollowRequests()

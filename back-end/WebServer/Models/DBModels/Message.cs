@@ -25,7 +25,7 @@ namespace WebServer.Models.DBModels
         public int ComposerId { get; set; }
 
         [Column("ReplyToID")]
-        public int? ReplyToId { get; set; } = 0;
+        public int ReplyToId { get; set; } = 0;
 
         [Required]
         [StringLength(400)]

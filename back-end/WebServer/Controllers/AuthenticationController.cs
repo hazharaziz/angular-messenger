@@ -43,8 +43,9 @@ namespace WebServer.Controllers
                 var tokenString = _auth.GenerateJSONWebToken(user);
                 response = Ok(new
                 {
-                    Token = tokenString,
-                    Name = user.Name
+                    token = tokenString,
+                    name = user.Name,
+                    user.Username,
                 });
             }
 
@@ -55,18 +56,14 @@ namespace WebServer.Controllers
         [HttpPost("signup")]
         public IActionResult SignUp([FromBody] User newUser)
         {
-            if (_unitOfWork.Users.Find(user => user.Username == newUser.Username) == null)
+            newUser = _auth.SignUpUser(newUser);
+            var tokenString = _auth.GenerateJSONWebToken(newUser);
+            return Ok(new
             {
-                newUser = _auth.SignUpUser(newUser);
-                var tokenString = _auth.GenerateJSONWebToken(newUser);
-                return Ok(new
-                {
-                    token = tokenString,
-                    name = newUser.Name,
-                    newUser.Username,
-                });
-            }
-            return Conflict();
+                token = tokenString,
+                name = newUser.Name,
+                newUser.Username,
+            });
         }
 
     }

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using WebServer.Messages;
 
 #nullable disable
 
@@ -22,17 +24,22 @@ namespace WebServer.Models.DBModels
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [JsonPropertyName("username")]
+        [StringLength(20, MinimumLength = 3)]
         public string Username { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [JsonPropertyName("password")]
+        [StringLength(16, MinimumLength = 4)]
         public string Password { get; set; }
 
         [Required]
-        [StringLength(60)]
+        [JsonPropertyName("name")]
+        [StringLength(40, MinimumLength = 3)]
         public string Name { get; set; }
-        public int IsPublic { get; set; } = 0;
+
+        [JsonPropertyName("isPublic")]
+        public int IsPublic { get; set; } = 1;
         
         [JsonIgnore]
         [InverseProperty(nameof(Follower.FollowerNavigation))]

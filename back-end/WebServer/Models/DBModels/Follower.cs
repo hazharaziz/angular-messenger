@@ -19,7 +19,7 @@ namespace WebServer.Models.DBModels
         public int UserId { get; set; }
         [Column("FollowerID")]
         public int FollowerId { get; set; }
-        public int? Pending { get; set; }
+        public int Pending { get; set; }
 
         [JsonIgnore]
         [ForeignKey(nameof(FollowerId))]
