@@ -19,7 +19,6 @@ namespace WebServer.Interfaces
         void RejectFollowRequest(int userId, int followerId);
         void CancelRequest(int userId, int followerId);
         void Unfollow(int userId, int followerId);
-        bool HasFollower(int userId, int followerId);
-        bool HasRequestFrom(int userId, int followerid);
+
     }
 }

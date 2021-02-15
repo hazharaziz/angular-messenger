@@ -122,12 +122,5 @@ namespace WebServer.Services
                 _unitOfWork.Save();
             }
         }
-
-        public bool HasFollower(int userId, int followerId)
-            => _unitOfWork.Followers.HasFollower(userId, followerId);
-
-        public bool HasRequestFrom(int userId, int followerid)
-            => _unitOfWork.Followers.HasRequestFrom(userId, followerid);
-
     }
 }

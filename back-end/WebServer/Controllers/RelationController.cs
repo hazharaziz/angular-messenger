@@ -127,7 +127,7 @@ namespace WebServer.Controllers
                     message = "Follow request successfully sent"
                 });
             } 
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, new 
                 {
@@ -165,7 +165,7 @@ namespace WebServer.Controllers
                     message = "Follow request accepted successfully"
                 });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, new
                 {
@@ -204,7 +204,7 @@ namespace WebServer.Controllers
                     message = "Follow request rejected successfully"
                 });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, new
                 {
@@ -213,5 +213,70 @@ namespace WebServer.Controllers
             }
         }
 
+        [Authorize]
+        [HttpDelete("cancel-request/{id}")]
+        public IActionResult CancelFollowRequest(int id)
+        {
+            var currentUser = HttpContext.User;
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                _relations.CancelRequest(id, int.Parse(userId));
+                return StatusCode(200, new
+                {
+                    message = "Follow request canceled successfully"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error has occured in the server"
+                });
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("unfollow/{id}")]
+        public IActionResult Unfollow(int id)
+        {
+            var currentUser = HttpContext.User;
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                _relations.Unfollow(id, int.Parse(userId));
+                return StatusCode(200, new
+                {
+                    message = "you unfollowed the user successfully"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error has occured in the server"
+                });
+            }
+        }
     }
 }
