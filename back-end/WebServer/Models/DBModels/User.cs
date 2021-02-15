@@ -29,6 +29,7 @@ namespace WebServer.Models.DBModels
         public string Username { get; set; }
 
         [Required]
+        [JsonIgnore]
         [JsonPropertyName("password")]
         [StringLength(16, MinimumLength = 4)]
         public string Password { get; set; }

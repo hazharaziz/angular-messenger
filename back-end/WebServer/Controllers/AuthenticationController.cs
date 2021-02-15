@@ -15,6 +15,8 @@ using WebServer.Interfaces;
 using WebServer.Models.RequestModels;
 using System.Security.Claims;
 using WebServer.Models.DBModels;
+using WebServer.Models.ResponseModels;
+using WebServer.Exceptions;
 
 namespace WebServer.Controllers
 {
@@ -35,21 +37,16 @@ namespace WebServer.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest login)
         {
-            IActionResult response = Unauthorized();
-            User user = _auth.AuthenticateUser(login);
-
-            if (user != null)
+            try
             {
-                var tokenString = _auth.GenerateJSONWebToken(user);
-                response = Ok(new
-                {
-                    token = tokenString,
-                    name = user.Name,
-                    user.Username,
-                });
+                Response<User> response = _auth.AuthenticateUser(login);
+                response.Token = _auth.GenerateJSONWebToken(response.Data);
+                return StatusCode(response.Status, response);
             }
-
-            return response;
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, new { message = exception.Message });
+            }
         }
 
         [AllowAnonymous]

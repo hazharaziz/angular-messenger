@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebServer.Models.RequestModels
 {
-    public class Login
+    public class LoginRequest
     {
         [Required]
         [JsonPropertyName("username")]
