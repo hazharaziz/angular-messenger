@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Interfaces;
@@ -41,13 +42,47 @@ namespace WebServer.Controllers
 
             if (userId != id.ToString() || username == "")
             {
-                return Forbid();
+                return StatusCode(403, new 
+                { 
+                    message = "You are not allowed to access this resource"
+                });
             }
             if (username == "")
             {
                 return Unauthorized();
             }
             return _relations.GetFollowers(id);
+        }
+
+        [Authorize]
+        [HttpGet("{id}/followings")]
+        public ActionResult<IEnumerable<User>> GetFollowings(int id)
+        {
+            IActionResult response = Unauthorized();
+            var currentUser = HttpContext.User;
+            string username = "";
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId != id.ToString() || username == "")
+            {
+                return StatusCode(403, new
+                {
+                    message = "You are not allowed to access this resource"
+                });
+            }
+            if (username == "")
+            {
+                return Unauthorized();
+            }
+            return _relations.GetFollowings(id);
         }
     }
 }
