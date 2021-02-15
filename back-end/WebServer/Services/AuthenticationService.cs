@@ -17,18 +17,18 @@ using Microsoft.AspNetCore.Http;
 
 namespace WebServer.Services
 {
-    public class Authentication : IAuthenticationAPI
+    public class AuthenticationService : IAuthenticationAPI
     {
         private IConfiguration _config;
         private IUnitOfWork _unitOfWork;
 
-        public Authentication(IConfiguration config, IUnitOfWork unitOfWork)
+        public AuthenticationService(IConfiguration config, IUnitOfWork unitOfWork)
         {
             _config = config;
             _unitOfWork = unitOfWork;
         }
 
-        public Response<User> AuthenticateUser(LoginRequest user)
+        public Response<Authentication> AuthenticateUser(LoginRequest user)
         {
             User dbUser = _unitOfWork.Users.Find(u => u.Username == user.Username).FirstOrDefault();
 
@@ -38,28 +38,52 @@ namespace WebServer.Services
             if (dbUser.Password != user.Password) 
                 throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.UnAuthorized);
 
-            return new Response<User>()
+            return new Response<Authentication>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = dbUser,
+                Data = new Authentication() 
+                {
+                    Id = dbUser.Id,
+                    Username = dbUser.Username, 
+                    Name = dbUser.Name,
+                    IsPublic = dbUser.IsPublic
+                },
             };
         }
 
-        public User SignUpUser(User newUser)
+        public Response<Authentication> SignUpUser(User newUser)
         {
+            if (_unitOfWork.Users.Find(user => user.Username == newUser.Username).FirstOrDefault() != null)
+                throw new HttpException(StatusCodes.Status409Conflict, Alerts.Conflict);
+
             _unitOfWork.Users.Add(newUser);
             _unitOfWork.Save();
-            return _unitOfWork.Users.Find(u => u.Username == newUser.Username).FirstOrDefault();
+
+            newUser = _unitOfWork.Users.Find(u => u.Username == newUser.Username).FirstOrDefault();
+
+            var authResponse = new Authentication()
+            {
+                Id = newUser.Id,
+                Username = newUser.Username,
+                Name = newUser.Name,
+                IsPublic = newUser.IsPublic
+            };
+
+            return new Response<Authentication>()
+            {
+                Status = StatusCodes.Status201Created,
+                Data = authResponse
+            };
         }
 
-        public string GenerateJSONWebToken(User user)
+        public string GenerateJSONWebToken(string id, string username)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
-                new Claim(ClaimTypes.Name, (user != null) ? user.Username : ""),
-                new Claim(ClaimTypes.NameIdentifier, (user != null) ? user.Id.ToString() : "")
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.NameIdentifier, id)
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],

@@ -39,8 +39,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<User> response = _auth.AuthenticateUser(login);
-                response.Token = _auth.GenerateJSONWebToken(response.Data);
+                Response<Authentication> response = _auth.AuthenticateUser(login);
+                response.Token = _auth.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
                 return StatusCode(response.Status, response);
             }
             catch (HttpException exception)
@@ -53,14 +53,17 @@ namespace WebServer.Controllers
         [HttpPost("signup")]
         public IActionResult SignUp([FromBody] User newUser)
         {
-            newUser = _auth.SignUpUser(newUser);
-            var tokenString = _auth.GenerateJSONWebToken(newUser);
-            return Ok(new
+            try
             {
-                token = tokenString,
-                name = newUser.Name,
-                newUser.Username,
-            });
+                Response<Authentication> response = _auth.SignUpUser(newUser);
+                response.Token = _auth.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
+                return StatusCode(response.Status, response);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, new { message = exception.Message });
+            }
+
         }
 
     }

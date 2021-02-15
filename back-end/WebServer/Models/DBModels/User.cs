@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using WebServer.Messages;
@@ -29,7 +30,6 @@ namespace WebServer.Models.DBModels
         public string Username { get; set; }
 
         [Required]
-        [JsonIgnore]
         [JsonPropertyName("password")]
         [StringLength(16, MinimumLength = 4)]
         public string Password { get; set; }
