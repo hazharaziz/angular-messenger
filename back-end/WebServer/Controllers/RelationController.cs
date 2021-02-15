@@ -84,5 +84,38 @@ namespace WebServer.Controllers
             }
             return _relations.GetFollowings(id);
         }
+
+
+        [Authorize]
+        [HttpGet("{id}/requests")]
+        public ActionResult<IEnumerable<User>> GetFollowRequests(int id)
+        {
+            IActionResult response = Unauthorized();
+            var currentUser = HttpContext.User;
+            string username = "";
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId != id.ToString() || username == "")
+            {
+                return StatusCode(403, new
+                {
+                    message = "You are not allowed to access this resource"
+                });
+            }
+            if (username == "")
+            {
+                return Unauthorized();
+            }
+            return _relations.GetFollowRequests(id);
+        }
+
     }
 }

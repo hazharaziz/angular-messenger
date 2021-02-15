@@ -7,11 +7,11 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Services
 {
-    public class Relation : IRelationAPI
+    public class Relations : IRelationAPI
     {
         private IUnitOfWork _unitOfWork;
 
-        public Relation(IUnitOfWork unitOfWork)
+        public Relations(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
