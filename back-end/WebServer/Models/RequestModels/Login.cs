@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebServer.Models.RequestModels
 {
-    public class LoginRequest
+    public class Login
     {
         [Required]
-        [StringLength(30)]
+        [JsonPropertyName("username")]
+        [StringLength(20, MinimumLength = 3)]
         public string Username { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [JsonPropertyName("password")]
+        [StringLength(16, MinimumLength = 4)]
         public string Password { get; set; }
     }
 }
