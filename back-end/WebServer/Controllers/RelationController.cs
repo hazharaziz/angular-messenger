@@ -136,6 +136,43 @@ namespace WebServer.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPut("accept-request/{id}")]
+        public IActionResult AcceptFollowRequest(int id)
+        {
+            var currentUser = HttpContext.User;
+            string username = "";
+            string userId = "0";
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            }
+            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            {
+                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId == null || username == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                _relations.AcceptFollowRequest(int.Parse(userId), id);
+                return StatusCode(200, new
+                {
+                    message = "Follow request accepted"
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error has occured in the server"
+                });
+            }
+        }
 
     }
 }
