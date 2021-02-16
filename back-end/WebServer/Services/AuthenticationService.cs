@@ -28,7 +28,7 @@ namespace WebServer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Response<Authentication> AuthenticateUser(LoginRequest user)
+        public Response<UserModel> AuthenticateUser(LoginRequest user)
         {
             User dbUser = _unitOfWork.Users.Find(u => u.Username == user.Username).FirstOrDefault();
 
@@ -38,10 +38,10 @@ namespace WebServer.Services
             if (dbUser.Password != user.Password) 
                 throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.UnAuthorized);
 
-            return new Response<Authentication>()
+            return new Response<UserModel>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = new Authentication() 
+                Data = new UserModel() 
                 {
                     Id = dbUser.Id,
                     Username = dbUser.Username, 
@@ -51,7 +51,7 @@ namespace WebServer.Services
             };
         }
 
-        public Response<Authentication> SignUpUser(User newUser)
+        public Response<UserModel> SignUpUser(User newUser)
         {
             if (_unitOfWork.Users.GetByUsername(newUser.Username) != null)
                 throw new HttpException(StatusCodes.Status409Conflict, Alerts.Conflict);
@@ -61,7 +61,7 @@ namespace WebServer.Services
 
             newUser = _unitOfWork.Users.GetByUsername(newUser.Username);
 
-            var authResponse = new Authentication()
+            var authResponse = new UserModel()
             {
                 Id = newUser.Id,
                 Username = newUser.Username,
@@ -69,7 +69,7 @@ namespace WebServer.Services
                 IsPublic = newUser.IsPublic
             };
 
-            return new Response<Authentication>()
+            return new Response<UserModel>()
             {
                 Status = StatusCodes.Status201Created,
                 Data = authResponse

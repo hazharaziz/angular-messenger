@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebServer.Models.ResponseModels
 {
-    public class Authentication
+    public class UserModel
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }

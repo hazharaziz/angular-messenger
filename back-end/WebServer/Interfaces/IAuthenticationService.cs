@@ -11,8 +11,8 @@ namespace WebServer.Interfaces
 {
     public interface IAuthenticationService
     {
-        Response<Authentication> AuthenticateUser(LoginRequest user);
-        Response<Authentication> SignUpUser(User newUser);
+        Response<UserModel> AuthenticateUser(LoginRequest user);
+        Response<UserModel> SignUpUser(User newUser);
         string GenerateJSONWebToken(string id, string username);
         string GetPrincipalClaim(ClaimsPrincipal principal, string type);
     }

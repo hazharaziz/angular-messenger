@@ -28,6 +28,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult GetMessages()
         {
             try

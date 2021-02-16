@@ -27,7 +27,7 @@ namespace WebServer.Services
 
         public Response<List<Message>> FetchFriendsMessages(int userId)
         {
-            List<int> followingsIds = _relationService.GetFollowings(userId).Select(f => f.Id).ToList();
+            List<int> followingsIds = _relationService.GetFollowings(userId).Data.Select(f => f.Id).ToList();
             List<Message> allMessages = FetchMessages();
 
             return new Response<List<Message>>() 
@@ -37,15 +37,7 @@ namespace WebServer.Services
                         followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
                         .OrderByDescending(m => m.DateTime).ToList()
             };             
-            //List<Message> filteredMessages = new List<Message>();
-            //foreach (var message in allMessages)
-            //{
-            //    if (followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
-            //    {
-            //        filteredMessages.Add(message);
-            //    }
-            //}
-            //return filteredMessages.OrderByDescending(m => m.DateTime).ToList();
+
         }
 
         public Response<List<Message>> FetchFriendsMessages(string username)

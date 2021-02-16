@@ -7,8 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebServer.Exceptions;
 using WebServer.Interfaces;
 using WebServer.Models.DBModels;
+using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
 {
@@ -16,85 +18,65 @@ namespace WebServer.Controllers
     [ApiController]
     public class RelationController : ControllerBase
     {
-        private IRelationService _relations;
+        private IAuthenticationService _authService;
+        private IRelationService _relationService;
 
-        public RelationController(IRelationService relations)
+        public RelationController(IAuthenticationService authService, IRelationService relationService)
         {
-            _relations = relations;
+            _authService = authService;
+            _relationService = relationService;
         }
 
         [Authorize]
         [HttpGet("followers")]
-        public ActionResult<IEnumerable<User>> GetFollowers()
+        public IActionResult GetFollowers()
         {
-            IActionResult response = Unauthorized();
-            var currentUser = HttpContext.User;
-            string username = "";
-            string userId = "0";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<UserModel>> response = _relationService.GetFollowers(int.Parse(userId));
+                return StatusCode(response.Status, response.Data);
             }
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            catch (HttpException exception) 
             {
-                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+                return StatusCode(exception.Status, new { message = exception.Message });
             }
-
-            if (userId == null || username == null)
-            {
-                return Unauthorized();
-            }
-            return _relations.GetFollowers(int.Parse(userId));
         }
 
         [Authorize]
         [HttpGet("followings")]
-        public ActionResult<IEnumerable<User>> GetFollowings()
+        public IActionResult GetFollowings()
         {
-            IActionResult response = Unauthorized();
-            var currentUser = HttpContext.User;
-            string username = "";
-            string userId = "0";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<UserModel>> response = _relationService.GetFollowings(int.Parse(userId));
+                return StatusCode(StatusCodes.Status200OK, response.Data);
             }
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            catch (HttpException exception)
             {
-                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+                return StatusCode(exception.Status, new { message = exception.Message });
             }
-
-            if (userId == null || username == null)
-            {
-                return Unauthorized();
-            }
-            return _relations.GetFollowings(int.Parse(userId));
         }
 
         [Authorize]
         [HttpGet("requests")]
-        public ActionResult<IEnumerable<User>> GetFollowRequests()
+        public IActionResult GetFollowRequests()
         {
-            IActionResult response = Unauthorized();
-            var currentUser = HttpContext.User;
-            string username = "";
-            string userId = "0";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<UserModel>> response = _relationService.GetFollowRequests(int.Parse(userId));
+                return StatusCode(StatusCodes.Status200OK, response.Data);
             }
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.NameIdentifier))
+            catch (HttpException exception)
             {
-                userId = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+                return StatusCode(exception.Status, new { message = exception.Message });
             }
-
-            if (userId == null || username == null)
-            {
-                return Unauthorized();
-            }
-            return _relations.GetFollowRequests(int.Parse(userId));
         }
-
 
         [Authorize]
         [HttpPost("send-request/{id}")]
@@ -120,7 +102,7 @@ namespace WebServer.Controllers
             try
             {
                 
-                _relations.SendFollowRequest(id, int.Parse(userId));
+                _relationService.SendFollowRequest(id, int.Parse(userId));
                 return StatusCode(201, new
                 {
                     message = "Follow request successfully sent"
@@ -158,7 +140,7 @@ namespace WebServer.Controllers
 
             try
             {
-                _relations.AcceptFollowRequest(int.Parse(userId), id);
+                _relationService.AcceptFollowRequest(int.Parse(userId), id);
                 return StatusCode(200, new
                 {
                     message = "Follow request accepted successfully"
@@ -197,7 +179,7 @@ namespace WebServer.Controllers
 
             try
             {
-                _relations.RejectFollowRequest(int.Parse(userId), id);
+                _relationService.RejectFollowRequest(int.Parse(userId), id);
                 return StatusCode(200, new
                 {
                     message = "Follow request rejected successfully"
@@ -230,7 +212,7 @@ namespace WebServer.Controllers
 
             try
             {
-                _relations.CancelRequest(id, int.Parse(userId));
+                _relationService.CancelRequest(id, int.Parse(userId));
                 return StatusCode(200, new
                 {
                     message = "Follow request canceled successfully"
@@ -263,7 +245,7 @@ namespace WebServer.Controllers
 
             try
             {
-                _relations.Unfollow(id, int.Parse(userId));
+                _relationService.Unfollow(id, int.Parse(userId));
                 return StatusCode(200, new
                 {
                     message = "you unfollowed the user successfully"

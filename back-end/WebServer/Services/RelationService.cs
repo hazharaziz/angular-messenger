@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Messages;
 using WebServer.Models.DBModels;
+using WebServer.Models.ResponseModels;
 
 namespace WebServer.Services
 {
@@ -16,57 +20,110 @@ namespace WebServer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public List<User> GetFollowers(int userId)
+        public Response<List<UserModel>> GetFollowers(int userId)
         {
+            if (_unitOfWork.Users.Get(userId) == null) 
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             List<int> followerIds = _unitOfWork.Followers.GetFollowers(userId).Select(f => f.FollowerId).ToList();
-            List<User> followers = new List<User>();
+            List<UserModel> followers = new List<UserModel>();
             foreach (int id in followerIds)
             {
                 var user = _unitOfWork.Users.Get(id);
-                followers.Add(user);
+                followers.Add(new UserModel() 
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Name = user.Name,
+                    IsPublic = user.IsPublic
+                });
             }
-            return followers;
+
+            return new Response<List<UserModel>>() 
+            {
+                Status = StatusCodes.Status200OK,
+                Data = followers
+            };
         }
 
-        public List<User> GetFollowers(string username)
+        public Response<List<UserModel>> GetFollowers(string username)
         {
             User user = _unitOfWork.Users.GetByUsername(username);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             return GetFollowers(user.Id);
         }
 
-        public List<User> GetFollowings(int userId)
+        public Response<List<UserModel>> GetFollowings(int userId)
         {
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             List<int> followingIds = _unitOfWork.Followers.Find(f => (f.FollowerId == userId) && f.Pending == 0)
                 .Select(f => f.UserId).ToList();
-            List<User> followings = new List<User>();
+            List<UserModel> followings = new List<UserModel>();
             foreach (int id in followingIds)
             {
-                followings.Add(_unitOfWork.Users.Get(id));
+                User user = _unitOfWork.Users.Get(id);
+                followings.Add(new UserModel() 
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Name = user.Name,
+                    IsPublic = user.IsPublic
+                });
             }
-            return followings;
+            
+            return new Response<List<UserModel>>() 
+            {
+                Status = StatusCodes.Status200OK,
+                Data = followings
+            };
         }
 
-        public List<User> GetFollowings(string username)
+        public Response<List<UserModel>> GetFollowings(string username)
         {
             User user = _unitOfWork.Users.GetByUsername(username);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             return GetFollowings(user.Id);
         }
 
-        public List<User> GetFollowRequests(int userId)
+        public Response<List<UserModel>> GetFollowRequests(int userId)
         {
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             List<int> followRequestsIds = _unitOfWork.Followers.Find(f => (f.UserId == userId) && f.Pending == 1)
                 .Select(f => f.FollowerId).ToList();
-            List<User> followRequests = new List<User>();
+            List<UserModel> followRequests = new List<UserModel>();
             foreach (int id in followRequestsIds)
             {
-                followRequests.Add(_unitOfWork.Users.Get(id));
+                User user = _unitOfWork.Users.Get(id);
+                followRequests.Add(new UserModel() 
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Name = user.Name,
+                    IsPublic = user.IsPublic
+                });
             }
-            return followRequests;
+
+            return new Response<List<UserModel>>() 
+            {
+                Status = StatusCodes.Status200OK,
+                Data = followRequests
+            };
         }
 
-        public List<User> GetFollowRequests(string username)
+        public Response<List<UserModel>> GetFollowRequests(string username)
         {
             User user = _unitOfWork.Users.GetByUsername(username);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             return GetFollowRequests(user.Id);
         }
 

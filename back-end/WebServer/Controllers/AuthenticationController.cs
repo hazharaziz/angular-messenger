@@ -37,7 +37,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<Authentication> response = _authService.AuthenticateUser(login);
+                Response<UserModel> response = _authService.AuthenticateUser(login);
                 response.Token = _authService.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
                 return StatusCode(response.Status, response);
             }
@@ -53,7 +53,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<Authentication> response = _authService.SignUpUser(newUser);
+                Response<UserModel> response = _authService.SignUpUser(newUser);
                 response.Token = _authService.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
                 return StatusCode(response.Status, response);
             }
