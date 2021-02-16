@@ -41,5 +41,23 @@ namespace WebServer.Controllers
                 return StatusCode(exception.Status, new { message = exception.Message });
             }
         }
+
+        [Authorize]
+        [HttpPut]
+        public IActionResult EditProfile([FromBody] UserModel editedUser)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<UserModel> response = _profileService.EditProfile(int.Parse(userId), editedUser);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, new { message = exception.Message });
+            }
+        }
+
     }
 }
