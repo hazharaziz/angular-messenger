@@ -127,57 +127,108 @@ namespace WebServer.Services
             return GetFollowRequests(user.Id);
         }
 
-        public void SendFollowRequest(int userId, int followerId)
+        public Response<string> SendFollowRequest(int userId, int followerId)
         {
-            bool isPublicUser = _unitOfWork.Users.Get(userId).IsPublic == 1;
-            if (!_unitOfWork.Followers.HasFollower(userId, followerId))
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null || _unitOfWork.Users.Get(followerId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            if (_unitOfWork.Followers.HasFollower(userId, followerId))
+                throw new HttpException(StatusCodes.Status409Conflict, Alerts.AlreadyFollowed);
+
+            bool isPublicUser = user.IsPublic == 1;
+            Follower follower = new Follower()
             {
-                Follower follower = new Follower()
-                {
-                    UserId = userId,
-                    FollowerId = followerId,
-                    Pending = (isPublicUser) ? 0 : 1
-                };
-                _unitOfWork.Followers.Add(follower);
-                _unitOfWork.Save();
-            }
+                UserId = userId,
+                FollowerId = followerId,
+                Pending = (isPublicUser) ? 0 : 1
+            };
+            _unitOfWork.Followers.Add(follower);
+            _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status201Created,
+                Data = Alerts.FollowRequestSent
+            };
         }
 
-        public void AcceptFollowRequest(int userId, int followerId)
+        public Response<string> AcceptFollowRequest(int userId, int followerId)
         {
-            if (_unitOfWork.Followers.HasRequestFrom(userId, followerId))
+            if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            if (!_unitOfWork.Followers.HasRequestFrom(userId, followerId))
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NoRequestFromThisUser);
+
+            Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
+            follower.Pending = 0;
+            _unitOfWork.Save();
+
+            return new Response<string>()
             {
-                Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
-                follower.Pending = 0;
-                _unitOfWork.Save();
-            }
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.RequestAccepted
+            };
         }
 
-        public void RejectFollowRequest(int userId, int followerId)
+        public Response<string> RejectFollowRequest(int userId, int followerId)
         {
-            if (_unitOfWork.Followers.HasRequestFrom(userId, followerId))
-            {
-                Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
-                _unitOfWork.Followers.Remove(follower);
-                _unitOfWork.Save();
-            }
-        }
+            if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-        public void CancelRequest(int userId, int followerId)
-        {
+            if (!_unitOfWork.Followers.HasRequestFrom(userId, followerId))
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NoRequestFromThisUser);
+
             Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
             _unitOfWork.Followers.Remove(follower);
             _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.RequestRejected
+            };
         }
 
-        public void Unfollow(int userId, int followerId)
+        public Response<string> CancelRequest(int userId, int followerId)
         {
-            if (_unitOfWork.Followers.HasFollower(userId, followerId))
+            if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Follower request = _unitOfWork.Followers
+                                .Find(f => f.UserId == userId && f.FollowerId == followerId && f.Pending == 1)
+                                .FirstOrDefault();
+            if (request == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.RequestNotFound);
+
+            _unitOfWork.Followers.Remove(request);
+            _unitOfWork.Save();
+
+            return new Response<string>()
             {
-                Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
-                _unitOfWork.Followers.Remove(follower);
-                _unitOfWork.Save();
-            }
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.RequestCanceled
+            };
+        }
+
+        public Response<string> Unfollow(int userId, int followerId)
+        {
+            if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            if (!_unitOfWork.Followers.HasFollower(userId, followerId))
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.RelationNotFound);
+
+            Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
+            _unitOfWork.Followers.Remove(follower);
+            _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.UserUnfollowed
+            };
         }
     }
 }

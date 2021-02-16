@@ -15,11 +15,11 @@ namespace WebServer.Interfaces
         Response<List<UserModel>> GetFollowings(string username);
         Response<List<UserModel>> GetFollowRequests(int id);
         Response<List<UserModel>> GetFollowRequests(string username);
-        void SendFollowRequest(int userId, int followerId);
-        void AcceptFollowRequest(int userId, int followerId);
-        void RejectFollowRequest(int userId, int followerId);
-        void CancelRequest(int userId, int followerId);
-        void Unfollow(int userId, int followerId);
+        Response<string> SendFollowRequest(int userId, int followerId);
+        Response<string> AcceptFollowRequest(int userId, int followerId);
+        Response<string> RejectFollowRequest(int userId, int followerId);
+        Response<string> CancelRequest(int userId, int followerId);
+        Response<string> Unfollow(int userId, int followerId);
 
     }
 }

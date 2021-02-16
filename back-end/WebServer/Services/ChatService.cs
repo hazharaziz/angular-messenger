@@ -33,8 +33,8 @@ namespace WebServer.Services
             return new Response<List<Message>>() 
             { 
                 Status = StatusCodes.Status200OK,
-                Data = allMessages.Where(message =>
-                        followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
+                Data =  allMessages
+                        .Where(message => followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
                         .OrderByDescending(m => m.DateTime).ToList()
             };             
 
@@ -44,9 +44,8 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Find(u => u.Username == username).FirstOrDefault();
             if (user == null)
-            {
-                throw new Exception();
-            }
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             return FetchFriendsMessages(user.Id);
         }
 
@@ -57,14 +56,15 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status201Created,
-                Data = Alerts.MessageCreatedSuccess
+                Data = Alerts.MessageCreated
             };
         }
 
         public Response<string> EditMessage(int id, Message message)
         {
             Message targetMessage = _unitOfWork.Messages.Get(id);
-            if (targetMessage == null) throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+            if (targetMessage == null) 
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
 
             targetMessage.Text = message.Text;
             targetMessage.ReplyToId = message.ReplyToId;
@@ -74,14 +74,15 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = Alerts.MessageEditedSuccess
+                Data = Alerts.MessageEdited
             };
         }
 
         public Response<string> DeleteMessage(int id)
         {
             Message message = _unitOfWork.Messages.Get(id);
-            if (message == null) throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+            if (message == null) 
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
 
             _unitOfWork.Messages.Remove(message);
             _unitOfWork.Save();
@@ -89,7 +90,7 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = Alerts.MessageEditedSuccess
+                Data = Alerts.MessageEdited
             };
         }
     }
