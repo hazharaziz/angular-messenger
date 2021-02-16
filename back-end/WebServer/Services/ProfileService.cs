@@ -66,6 +66,9 @@ namespace WebServer.Services
             if (user.Password != oldPassword)
                 throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
 
+            user.Password = newPassword;
+            _unitOfWork.Save();
+
             return new Response<string>
             {
                 Status = StatusCodes.Status200OK,

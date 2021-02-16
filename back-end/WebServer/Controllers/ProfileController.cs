@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Models.RequestModels;
 using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
@@ -52,6 +53,24 @@ namespace WebServer.Controllers
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<UserModel> response = _profileService.EditProfile(int.Parse(userId), editedUser);
                 return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, new { message = exception.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPut("change-pass")]
+        public IActionResult ChangePassword([FromBody] ChangePasswordRequest body)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<string> response = 
+                    _profileService.ChangePassword(int.Parse(userId), body.OldPassword, body.NewPassword);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
