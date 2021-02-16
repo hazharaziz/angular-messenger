@@ -24,5 +24,7 @@ namespace WebServer.Messages
         public const string RelationNotFound = "Relation not found";
         public const string UserUnfollowed = "User unfollowed successfully";
         public const string AlreadyFollowed = "User has already been followed";
+        public const string WrongPassword = "Wrong password";
+        public const string PasswordChanged = "Password changed successfully";
     }
 }
