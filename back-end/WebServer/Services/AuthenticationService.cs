@@ -53,13 +53,13 @@ namespace WebServer.Services
 
         public Response<Authentication> SignUpUser(User newUser)
         {
-            if (_unitOfWork.Users.Find(user => user.Username == newUser.Username).FirstOrDefault() != null)
+            if (_unitOfWork.Users.GetByUsername(newUser.Username) != null)
                 throw new HttpException(StatusCodes.Status409Conflict, Alerts.Conflict);
 
             _unitOfWork.Users.Add(newUser);
             _unitOfWork.Save();
 
-            newUser = _unitOfWork.Users.Find(u => u.Username == newUser.Username).FirstOrDefault();
+            newUser = _unitOfWork.Users.GetByUsername(newUser.Username);
 
             var authResponse = new Authentication()
             {
@@ -89,7 +89,7 @@ namespace WebServer.Services
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(120),
+              expires: DateTime.Now.AddMinutes(60),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

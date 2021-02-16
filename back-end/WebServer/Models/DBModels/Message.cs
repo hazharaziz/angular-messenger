@@ -17,23 +17,31 @@ namespace WebServer.Models.DBModels
         }
 
         [Key]
+        [JsonPropertyName("id")]
         [Column("MessageID")]
         public int MessageId { get; set; }
 
         [Required]
+        [JsonPropertyName("composerId")]
         [Column("ComposerID")]
         public int ComposerId { get; set; }
 
+        [JsonPropertyName("replyToId")]
         [Column("ReplyToID")]
         public int ReplyToId { get; set; } = 0;
 
         [Required]
+        [JsonPropertyName("text")]
         [StringLength(400)]
         public string Text { get; set; }
 
         [Required]
-        [StringLength(70)]
+        [JsonPropertyName("composerName")]
+        [StringLength(40, MinimumLength = 3)]
         public string ComposerName { get; set; }
+
+        [Required]
+        [JsonPropertyName("dateTime")]
         [Column(TypeName = "datetime")]
         public DateTime DateTime { get; set; }
 

@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Messages;
 using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 
@@ -56,41 +58,47 @@ namespace WebServer.Services
             return FetchFriendsMessages(user.Id);
         }
 
-        public void AddMessage(Message message)
+        public Response<string> AddMessage(Message message)
         {
-            if (message == null)
-            {
-                throw new Exception();
-            }
             _unitOfWork.Messages.Add(message);
             _unitOfWork.Save();
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status201Created,
+                Data = Alerts.MessageCreatedSuccess
+            };
         }
 
-        public void EditMessage(int id, Message message)
+        public Response<string> EditMessage(int id, Message message)
         {
-            if (message == null)
-            {
-                throw new Exception();
-            }
             Message targetMessage = _unitOfWork.Messages.Get(id);
+            if (targetMessage == null) throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             targetMessage.Text = message.Text;
             targetMessage.ReplyToId = message.ReplyToId;
+
             _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.MessageEditedSuccess
+            };
         }
 
-        public void DeleteMessage(int id)
+        public Response<string> DeleteMessage(int id)
         {
-            Message message = _unitOfWork.Messages.Find(m => m.MessageId == id).FirstOrDefault();
-            if (message == null)
-            {
-                throw new Exception();
-            }
+            Message message = _unitOfWork.Messages.Get(id);
+            if (message == null) throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
             _unitOfWork.Messages.Remove(message);
             _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.MessageEditedSuccess
+            };
         }
-
-        public User GetCurrentUser(string username)
-            => _unitOfWork.Users.GetByUsername(username);
-
     }
 }

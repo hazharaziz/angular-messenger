@@ -11,5 +11,8 @@ namespace WebServer.Messages
         public const string Forbidden = "Authorization failed";
         public const string UnAuthorized = "Wrong authentication credentials";
         public const string Conflict = "Resource already exists";
+        public const string MessageCreatedSuccess = "Message created successfully";
+        public const string MessageEditedSuccess = "Message edited successfully";
+        public const string InternalServerError = "Internal server error";
     }
 }

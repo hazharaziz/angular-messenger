@@ -10,6 +10,7 @@ using WebServer.Models.DBModels;
 using WebServer.Interfaces;
 using WebServer.Exceptions;
 using WebServer.Models.ResponseModels;
+using WebServer.Messages;
 
 namespace WebServer.Controllers
 {
@@ -46,81 +47,62 @@ namespace WebServer.Controllers
         [HttpPost]
         public IActionResult SendMessage([FromBody] Message message)
         {
-            IActionResult response = Unauthorized();
-            var currentUser = HttpContext.User;
-            string username = "";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                Response<string> response = _chatService.AddMessage(message);
+                return StatusCode(response.Status, new { message = response.Data});
             }
-            if (username != "")
+            catch (Exception)
             {
-                try
+                return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
-                    _chatService.AddMessage(message);
-                    return Created("message created", message);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                    message = Alerts.InternalServerError
+                });
             }
-
-            return response;
         }
 
         [Authorize]
         [HttpPut("{id}")]
         public IActionResult EditMessage(int id, [FromBody] Message message)
         {
-            IActionResult response = Unauthorized();
-            var currentUser = HttpContext.User;
-            string username = "";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                Response<string> response = _chatService.EditMessage(id, message);
+                return StatusCode(response.Status, new { message = response.Data });
             }
-            if (username != "")
+            catch (HttpException exception)
             {
-                try
-                {
-                    _chatService.EditMessage(id, message);
-                    return Ok();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                return StatusCode(exception.Status, new { message = exception.Message });
             }
-
-            return response;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = Alerts.InternalServerError
+                });
+            }
         }
 
         [Authorize]
         [HttpDelete("{id}")]    
         public IActionResult DeleteMessage(int id)
         {
-            IActionResult response = Unauthorized();
-            var currentUser = HttpContext.User;
-            string username = "";
-            if (currentUser.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            try
             {
-                username = currentUser.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+                Response<string> response = _chatService.DeleteMessage(id);
+                return StatusCode(response.Status, new { message = response.Data });
             }
-            if (username != "")
+            catch (HttpException exception)
             {
-                try
-                {
-                    _chatService.DeleteMessage(id);
-                    return Ok();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                return StatusCode(exception.Status, new { message = exception.Message });
             }
-
-            return response;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = Alerts.InternalServerError
+                });
+            }
         }
 
     }
