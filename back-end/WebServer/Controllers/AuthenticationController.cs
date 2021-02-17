@@ -10,7 +10,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebServer.DataContext;
 using WebServer.Interfaces;
 using WebServer.Models.RequestModels;
 using System.Security.Claims;

@@ -30,7 +30,6 @@ namespace WebServer.Repositories
 
         public void AddRange(List<Follower> entities)
             => Context.Set<Follower>().AddRange(entities);
-
         public void Remove(Follower entity)
             => Context.Set<Follower>().Remove(entity);
 

@@ -15,7 +15,7 @@ namespace WebServer.Models.DBModels
         [JsonPropertyName("id")]
         [Column("DirectMessageID")]
         public int DirectMessageId { get; set; }
-        
+
         [Required]
         [JsonPropertyName("directId")]
         [Column("DirectID")]
