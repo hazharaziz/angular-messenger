@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebServer.Models.DBModels
 {
-    public partial class DirectMessage
+    public partial class Group
     {
         [Key]
         [JsonPropertyName("id")]
@@ -48,6 +48,6 @@ namespace WebServer.Models.DBModels
         [JsonIgnore]
         [ForeignKey(nameof(DirectId))]
         [InverseProperty("DirectMessages")]
-        public virtual DirectMessage Direct { get; set; }
+        public virtual Group Direct { get; set; }
     }
 }

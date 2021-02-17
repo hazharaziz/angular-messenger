@@ -18,9 +18,9 @@ namespace WebServer.DataContext
         {
         }
 
-        public virtual DbSet<DirectMessage> Directs { get; set; }
-        public virtual DbSet<DirectMessage> DirectMessages { get; set; }
-        public virtual DbSet<DirectMessage> Followers { get; set; }
+        public virtual DbSet<Group> Directs { get; set; }
+        public virtual DbSet<Group> DirectMessages { get; set; }
+        public virtual DbSet<Group> Followers { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
         public virtual DbSet<GroupMessage> GroupMessages { get; set; }
@@ -39,7 +39,7 @@ namespace WebServer.DataContext
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<DirectMessage>(entity =>
+            modelBuilder.Entity<Group>(entity =>
             {
                 entity.HasOne(d => d.Direct)
                     .WithMany(p => p.DirectMessages)
@@ -47,7 +47,7 @@ namespace WebServer.DataContext
                     .HasConstraintName("FK_DirectMessages_Directs");
             });
 
-            modelBuilder.Entity<DirectMessage>(entity =>
+            modelBuilder.Entity<Group>(entity =>
             {
                 entity.Property(e => e.Pending).HasDefaultValueSql("((0))");
             });

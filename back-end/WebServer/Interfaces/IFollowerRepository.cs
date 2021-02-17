@@ -9,13 +9,13 @@ namespace WebServer.Interfaces
 {
     public interface IFollowerRepository
     {
-        IEnumerable<DirectMessage> GetFollowers(int userId);
-        IEnumerable<DirectMessage> GetAll();
-        IEnumerable<DirectMessage> Find(Expression<Func<DirectMessage, bool>> predicate);
-        void Add(DirectMessage entity);
-        void AddRange(IEnumerable<DirectMessage> entities);
-        void Remove(DirectMessage entity);
-        void RemoveRange(IEnumerable<DirectMessage> entities);
+        IEnumerable<Group> GetFollowers(int userId);
+        IEnumerable<Group> GetAll();
+        IEnumerable<Group> Find(Expression<Func<Group, bool>> predicate);
+        void Add(Group entity);
+        void AddRange(IEnumerable<Group> entities);
+        void Remove(Group entity);
+        void RemoveRange(IEnumerable<Group> entities);
         bool HasFollower(int userId, int followerId);
         bool HasRequestFrom(int userId, int followerId);
     }

@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebServer.Models.DBModels
 {
-    public partial class DirectMessage
+    public partial class Group
     {
-        public DirectMessage()
+        public Group()
         {
-            DirectMessages = new HashSet<DirectMessage>();
+            DirectMessages = new HashSet<Group>();
         }
 
         [Key]
@@ -27,7 +27,7 @@ namespace WebServer.Models.DBModels
         public int SecondUserId { get; set; }
 
         [JsonIgnore]
-        [InverseProperty(nameof(DirectMessage.Direct))]
-        public virtual ICollection<DirectMessage> DirectMessages { get; set; }
+        [InverseProperty(nameof(Group.Direct))]
+        public virtual ICollection<Group> DirectMessages { get; set; }
     }
 }

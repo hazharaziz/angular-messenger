@@ -7,10 +7,11 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Interfaces
 {
-    public interface IDirectMessageRepository
+    public interface IGroupRepository
     {
         IEnumerable<Group> GetAll();
-        Group Get(int directMessageId);
+        IEnumerable<Group> GetGroups(int userId);
+        Group Get(int groupId);
         IEnumerable<Group> Find(Expression<Func<Group, bool>> predicate);
         void Add(Group entity);
         void AddRange(IEnumerable<Group> entities);
