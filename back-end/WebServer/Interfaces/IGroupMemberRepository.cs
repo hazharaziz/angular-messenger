@@ -7,7 +7,7 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Interfaces
 {
-    public interface IGroupMemeberRepository
+    public interface IGroupMemberRepository
     {
         IEnumerable<GroupMember> GetAll();
         IEnumerable<GroupMember> GetGroups(int userId);

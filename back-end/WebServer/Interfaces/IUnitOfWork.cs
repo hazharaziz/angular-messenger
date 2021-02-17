@@ -13,7 +13,7 @@ namespace WebServer.Interfaces
         IDirectRepository Directs { get; }
         IDirectMessageRepository DirectMessages { get; }
         IGroupRepository Groups { get; }
-        IGroupMemeberRepository GroupMembers { get; }
+        IGroupMemberRepository GroupMembers { get; }
         IGroupMessageRepository GroupMessages { get; }
         int Save();
     }
