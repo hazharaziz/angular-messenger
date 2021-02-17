@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebServer.Models.DBModels
 {
-    public partial class Direct
+    public partial class DirectMessage
     {
-        public Direct()
+        public DirectMessage()
         {
             DirectMessages = new HashSet<DirectMessage>();
         }

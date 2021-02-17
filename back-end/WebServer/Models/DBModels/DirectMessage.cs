@@ -48,6 +48,6 @@ namespace WebServer.Models.DBModels
         [JsonIgnore]
         [ForeignKey(nameof(DirectId))]
         [InverseProperty("DirectMessages")]
-        public virtual Direct Direct { get; set; }
+        public virtual DirectMessage Direct { get; set; }
     }
 }

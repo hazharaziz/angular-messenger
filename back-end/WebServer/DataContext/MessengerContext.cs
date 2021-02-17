@@ -18,9 +18,9 @@ namespace WebServer.DataContext
         {
         }
 
-        public virtual DbSet<Direct> Directs { get; set; }
+        public virtual DbSet<DirectMessage> Directs { get; set; }
         public virtual DbSet<DirectMessage> DirectMessages { get; set; }
-        public virtual DbSet<Direct> Followers { get; set; }
+        public virtual DbSet<DirectMessage> Followers { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
         public virtual DbSet<GroupMessage> GroupMessages { get; set; }
@@ -47,7 +47,7 @@ namespace WebServer.DataContext
                     .HasConstraintName("FK_DirectMessages_Directs");
             });
 
-            modelBuilder.Entity<Direct>(entity =>
+            modelBuilder.Entity<DirectMessage>(entity =>
             {
                 entity.Property(e => e.Pending).HasDefaultValueSql("((0))");
             });

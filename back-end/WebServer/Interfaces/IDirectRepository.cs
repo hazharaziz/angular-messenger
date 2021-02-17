@@ -9,13 +9,13 @@ namespace WebServer.Interfaces
 {
     public interface IDirectRepository
     {
-        IEnumerable<Direct> GetAll();
-        IEnumerable<Direct> GetDirects(int userId);
-        Direct Get(int directId);
-        IEnumerable<Direct> Find(Expression<Func<Direct, bool>> predicate);
-        void Add(Direct entity);
-        void AddRange(IEnumerable<Direct> entities);
-        void Remove(Direct entity);
-        void RemoveRange(IEnumerable<Direct> entities);
+        IEnumerable<DirectMessage> GetAll();
+        IEnumerable<DirectMessage> GetDirects(int userId);
+        DirectMessage Get(int directId);
+        IEnumerable<DirectMessage> Find(Expression<Func<DirectMessage, bool>> predicate);
+        void Add(DirectMessage entity);
+        void AddRange(IEnumerable<DirectMessage> entities);
+        void Remove(DirectMessage entity);
+        void RemoveRange(IEnumerable<DirectMessage> entities);
     }
 }

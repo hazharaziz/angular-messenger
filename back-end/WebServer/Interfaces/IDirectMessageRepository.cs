@@ -7,16 +7,14 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Interfaces
 {
-    public interface IFollowerRepository
+    public interface IDirectMessageRepository
     {
-        IEnumerable<DirectMessage> GetFollowers(int userId);
         IEnumerable<DirectMessage> GetAll();
+        DirectMessage Get(int directMessageId);
         IEnumerable<DirectMessage> Find(Expression<Func<DirectMessage, bool>> predicate);
         void Add(DirectMessage entity);
         void AddRange(IEnumerable<DirectMessage> entities);
         void Remove(DirectMessage entity);
         void RemoveRange(IEnumerable<DirectMessage> entities);
-        bool HasFollower(int userId, int followerId);
-        bool HasRequestFrom(int userId, int followerId);
     }
 }
