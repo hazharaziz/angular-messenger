@@ -39,7 +39,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -56,7 +56,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -70,13 +70,29 @@ namespace WebServer.Controllers
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<string> response = 
                     _profileService.ChangePassword(int.Parse(userId), body.OldPassword, body.NewPassword);
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
+        [Authorize]
+        [HttpDelete]
+        public IActionResult DeleteAccount()
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<string> response = _profileService.DeleteAccount(int.Parse(userId));
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+        }
     }
 }

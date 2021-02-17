@@ -43,7 +43,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -59,7 +59,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
 
         }

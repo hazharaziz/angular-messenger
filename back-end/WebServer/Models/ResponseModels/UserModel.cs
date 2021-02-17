@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace WebServer.Models.ResponseModels
 {
-    #nullable enable
     public class UserModel
     {
         [JsonPropertyName("id")]
@@ -16,14 +15,14 @@ namespace WebServer.Models.ResponseModels
 
         [JsonPropertyName("username")]
         [StringLength(20, MinimumLength = 3)]
-        public string? Username { get; set; }
+        public string Username { get; set; }
 
         [JsonPropertyName("name")]
         [StringLength(40, MinimumLength = 3)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [JsonPropertyName("isPublic")]
         [Range(typeof(int), "0", "1")]
-        public int? IsPublic { get; set; }
+        public int IsPublic { get; set; }
     }
 }

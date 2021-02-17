@@ -44,13 +44,14 @@ namespace WebServer.Services
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+            
+            if (editedUser.Username != user.Username)
+                if (_unitOfWork.Users.GetByUsername(editedUser.Username) != null)
+                    throw new HttpException(StatusCodes.Status409Conflict, Alerts.UsernameConflict);
 
-            if (_unitOfWork.Users.GetByUsername(editedUser.Username) != null)
-                throw new HttpException(StatusCodes.Status409Conflict, Alerts.UsernameConflict);
-
-            user.Username = editedUser.Username ?? user.Username;
-            user.Name = editedUser.Name ?? user.Name;
-            user.IsPublic = editedUser.IsPublic ?? user.IsPublic;
+            user.Username = editedUser.Username;
+            user.Name = editedUser.Name;
+            user.IsPublic = editedUser.IsPublic;
             _unitOfWork.Save();
 
             return new Response<UserModel>()
@@ -82,6 +83,28 @@ namespace WebServer.Services
             {
                 Status = StatusCodes.Status200OK,
                 Data = Alerts.PasswordChanged
+            };
+        }
+
+        public Response<string> DeleteAccount(int userId)
+        {
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            _unitOfWork.Followers.GetAll().ToList().ForEach(relation =>
+            {
+                if (relation.UserId == userId || relation.FollowerId == userId)
+                    _unitOfWork.Followers.Remove(relation);
+            });
+
+            _unitOfWork.Users.Remove(user);
+            _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.AccountDeleted
             };
         }
     }

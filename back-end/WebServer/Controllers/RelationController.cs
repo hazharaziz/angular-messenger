@@ -40,7 +40,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception) 
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -57,7 +57,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -74,7 +74,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -87,11 +87,11 @@ namespace WebServer.Controllers
                 var principal = HttpContext.User;
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);                
                 Response<string> response = _relationService.SendFollowRequest(id, int.Parse(userId));
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             } 
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -104,11 +104,11 @@ namespace WebServer.Controllers
                 var principal = HttpContext.User;
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<string> response = _relationService.AcceptFollowRequest(int.Parse(userId), id);
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -121,11 +121,11 @@ namespace WebServer.Controllers
                 var principal = HttpContext.User;
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<string> response = _relationService.RejectFollowRequest(int.Parse(userId), id);
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -138,11 +138,11 @@ namespace WebServer.Controllers
                 var principal = HttpContext.User;
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<string> response = _relationService.CancelRequest(id, int.Parse(userId));
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -155,11 +155,11 @@ namespace WebServer.Controllers
                 var principal = HttpContext.User;
                 string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<string> response = _relationService.Unfollow(id, int.Parse(userId));
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
     }

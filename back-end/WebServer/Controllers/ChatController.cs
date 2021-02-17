@@ -40,7 +40,7 @@ namespace WebServer.Controllers
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
         }
 
@@ -51,14 +51,11 @@ namespace WebServer.Controllers
             try
             {
                 Response<string> response = _chatService.AddMessage(message);
-                return StatusCode(response.Status, new { message = response.Data});
+                return StatusCode(response.Status, response.Data);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    message = Alerts.InternalServerError
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError, Alerts.InternalServerError);
             }
         }
 
@@ -69,18 +66,15 @@ namespace WebServer.Controllers
             try
             {
                 Response<string> response = _chatService.EditMessage(id, message);
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    message = Alerts.InternalServerError
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError, Alerts.InternalServerError);
             }
         }
 
@@ -91,18 +85,15 @@ namespace WebServer.Controllers
             try
             {
                 Response<string> response = _chatService.DeleteMessage(id);
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
-                return StatusCode(exception.Status, new { message = exception.Message });
+                return StatusCode(exception.Status, exception.Message);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    message = Alerts.InternalServerError
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError, Alerts.InternalServerError);
             }
         }
 

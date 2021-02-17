@@ -12,5 +12,6 @@ namespace WebServer.Interfaces
         public Response<UserModel> GetProfile(int userId);
         public Response<UserModel> EditProfile(int userId, UserModel editedUser);
         public Response<string> ChangePassword(int userId, string oldPassword, string newPassword);
+        public Response<string> DeleteAccount(int userId);
     }
 }
