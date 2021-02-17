@@ -18,7 +18,12 @@ namespace WebServer.DataContext
         {
         }
 
+        public virtual DbSet<Direct> Directs { get; set; }
+        public virtual DbSet<DirectMessage> DirectMessages { get; set; }
         public virtual DbSet<Follower> Followers { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<GroupMember> GroupMembers { get; set; }
+        public virtual DbSet<GroupMessage> GroupMessages { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -34,14 +39,33 @@ namespace WebServer.DataContext
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
+            modelBuilder.Entity<DirectMessage>(entity =>
+            {
+                entity.HasOne(d => d.Direct)
+                    .WithMany(p => p.DirectMessages)
+                    .HasForeignKey(d => d.DirectId)
+                    .HasConstraintName("FK_DirectMessages_Directs");
+            });
+
             modelBuilder.Entity<Follower>(entity =>
             {
                 entity.Property(e => e.Pending).HasDefaultValueSql("((0))");
+            });
 
-                entity.HasOne(d => d.FollowerNavigation)
-                    .WithMany(p => p.Followers)
-                    .HasForeignKey(d => d.FollowerId)
-                    .HasConstraintName("FK_Followers_Followers");
+            modelBuilder.Entity<GroupMember>(entity =>
+            {
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GroupMembers)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_GroupMembers_GroupMembers");
+            });
+
+            modelBuilder.Entity<GroupMessage>(entity =>
+            {
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GroupMessages)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_GroupMessages_GroupMessages");
             });
 
             modelBuilder.Entity<Message>(entity =>
@@ -51,13 +75,7 @@ namespace WebServer.DataContext
                 entity.HasOne(d => d.Composer)
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.ComposerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Messages_Users");
-
-                entity.HasOne(d => d.ReplyTo)
-                    .WithMany(p => p.InverseReplyTo)
-                    .HasForeignKey(d => d.ReplyToId)
-                    .HasConstraintName("FK_Messages_Messages1");
             });
 
             modelBuilder.Entity<User>(entity =>

@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Configuration;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using WebServer.Messages;
 
 #nullable disable
 
 namespace WebServer.Models.DBModels
 {
+    [Index(nameof(Username), Name = "UNIQUE_USERNAME", IsUnique = true)]
     public partial class User
     {
         public User()
         {
-            Followers = new HashSet<Follower>();
             Messages = new HashSet<Message>();
         }
 
@@ -42,10 +39,6 @@ namespace WebServer.Models.DBModels
         [JsonPropertyName("isPublic")]
         [Range(typeof(int), "0", "1")]
         public int IsPublic { get; set; } = 1;
-        
-        [JsonIgnore]
-        [InverseProperty(nameof(Follower.FollowerNavigation))]
-        public virtual ICollection<Follower> Followers { get; set; }
 
         [JsonIgnore]
         [InverseProperty(nameof(Message.Composer))]

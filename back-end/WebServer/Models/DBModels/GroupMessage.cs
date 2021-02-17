@@ -9,21 +9,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebServer.Models.DBModels
 {
-    public partial class Message
+    public partial class GroupMessage
     {
         [Key]
-        [JsonPropertyName("id")]
-        [Column("MessageID")]
-        public int MessageId { get; set; }
+        [Column("GroupMessageID")]
+        public int GroupMessageId { get; set; }
+
+        [Required]
+        [JsonPropertyName("groupId")]
+        [Column("GroupID")]
+        public int GroupId { get; set; }
+
+        [JsonPropertyName("replyToId")]
+        [Column("ReplyToID")]
+        public int ReplyToId { get; set; }
 
         [Required]
         [JsonPropertyName("composerId")]
         [Column("ComposerID")]
         public int ComposerId { get; set; }
-
-        [JsonPropertyName("replyToId")]
-        [Column("ReplyToID")]
-        public int ReplyToId { get; set; } = 0;
 
         [Required]
         [JsonPropertyName("text")]
@@ -41,8 +45,8 @@ namespace WebServer.Models.DBModels
         public DateTime DateTime { get; set; }
 
         [JsonIgnore]
-        [ForeignKey(nameof(ComposerId))]
-        [InverseProperty(nameof(User.Messages))]
-        public virtual User Composer { get; set; }
+        [ForeignKey(nameof(GroupId))]
+        [InverseProperty("GroupMessages")]
+        public virtual Group Group { get; set; }
     }
 }

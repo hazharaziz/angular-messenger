@@ -9,12 +9,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebServer.Models.DBModels
 {
-    public partial class Message
+    public partial class DirectMessage
     {
         [Key]
         [JsonPropertyName("id")]
-        [Column("MessageID")]
-        public int MessageId { get; set; }
+        [Column("DirectMessageID")]
+        public int DirectMessageId { get; set; }
+        
+        [Required]
+        [JsonPropertyName("directId")]
+        [Column("DirectID")]
+        public int DirectId { get; set; }
 
         [Required]
         [JsonPropertyName("composerId")]
@@ -23,7 +28,7 @@ namespace WebServer.Models.DBModels
 
         [JsonPropertyName("replyToId")]
         [Column("ReplyToID")]
-        public int ReplyToId { get; set; } = 0;
+        public int ReplyToId { get; set; }
 
         [Required]
         [JsonPropertyName("text")]
@@ -41,8 +46,8 @@ namespace WebServer.Models.DBModels
         public DateTime DateTime { get; set; }
 
         [JsonIgnore]
-        [ForeignKey(nameof(ComposerId))]
-        [InverseProperty(nameof(User.Messages))]
-        public virtual User Composer { get; set; }
+        [ForeignKey(nameof(DirectId))]
+        [InverseProperty("DirectMessages")]
+        public virtual Direct Direct { get; set; }
     }
 }
