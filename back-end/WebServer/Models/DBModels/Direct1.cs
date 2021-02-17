@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace WebServer.Models.DBModels
 {
     [Index(nameof(UserId), nameof(FollowerId), Name = "UNIQUE_RELATION", IsUnique = true)]
-    public partial class Follower
+    public partial class Direct
     {
         [Key]
         [Column("RelationID")]

@@ -137,7 +137,7 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status409Conflict, Alerts.AlreadyFollowed);
 
             bool isPublicUser = user.IsPublic == 1;
-            Follower follower = new Follower()
+            Direct follower = new Direct()
             {
                 UserId = userId,
                 FollowerId = followerId,
@@ -161,7 +161,7 @@ namespace WebServer.Services
             if (!_unitOfWork.Followers.HasRequestFrom(userId, followerId))
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NoRequestFromThisUser);
 
-            Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
+            Direct follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
             follower.Pending = 0;
             _unitOfWork.Save();
 
@@ -180,7 +180,7 @@ namespace WebServer.Services
             if (!_unitOfWork.Followers.HasRequestFrom(userId, followerId))
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NoRequestFromThisUser);
 
-            Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
+            Direct follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
             _unitOfWork.Followers.Remove(follower);
             _unitOfWork.Save();
 
@@ -196,7 +196,7 @@ namespace WebServer.Services
             if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Follower request = _unitOfWork.Followers
+            Direct request = _unitOfWork.Followers
                                 .Find(f => f.UserId == userId && f.FollowerId == followerId && f.Pending == 1)
                                 .FirstOrDefault();
             if (request == null)
@@ -220,7 +220,7 @@ namespace WebServer.Services
             if (!_unitOfWork.Followers.HasFollower(userId, followerId))
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.RelationNotFound);
 
-            Follower follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
+            Direct follower = _unitOfWork.Followers.Find(f => f.UserId == userId && f.FollowerId == followerId).First();
             _unitOfWork.Followers.Remove(follower);
             _unitOfWork.Save();
 
