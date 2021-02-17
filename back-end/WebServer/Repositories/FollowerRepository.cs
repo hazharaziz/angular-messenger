@@ -17,24 +17,24 @@ namespace WebServer.Repositories
             Context = messengerContext;
         }
 
-        public IEnumerable<Follower> GetFollowers(int userId)
+        public List<Follower> GetFollowers(int userId)
             => Find(f => (f.UserId == userId) && f.Pending == 0);
-        public IEnumerable<Follower> GetAll()
+        public List<Follower> GetAll()
             => Context.Set<Follower>().ToList();
 
-        public IEnumerable<Follower> Find(Expression<Func<Follower, bool>> predicate)
-            => Context.Set<Follower>().Where(predicate);
+        public List<Follower> Find(Expression<Func<Follower, bool>> predicate)
+            => Context.Set<Follower>().Where(predicate).ToList();
 
         public void Add(Follower entity)
             => Context.Set<Follower>().Add(entity);
 
-        public void AddRange(IEnumerable<Follower> entities)
+        public void AddRange(List<Follower> entities)
             => Context.Set<Follower>().AddRange(entities);
 
         public void Remove(Follower entity)
             => Context.Set<Follower>().Remove(entity);
 
-        public void RemoveRange(IEnumerable<Follower> entities)
+        public void RemoveRange(List<Follower> entities)
             => Context.Set<Follower>().RemoveRange(entities);
 
         public bool HasFollower(int userId, int followerId)
