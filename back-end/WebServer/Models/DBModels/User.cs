@@ -40,6 +40,7 @@ namespace WebServer.Models.DBModels
         public string Name { get; set; }
 
         [JsonPropertyName("isPublic")]
+        [Range(typeof(int), "0", "1")]
         public int IsPublic { get; set; } = 1;
         
         [JsonIgnore]

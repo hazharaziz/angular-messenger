@@ -54,7 +54,7 @@ namespace WebServer.Services
         public Response<UserModel> SignUpUser(User newUser)
         {
             if (_unitOfWork.Users.GetByUsername(newUser.Username) != null)
-                throw new HttpException(StatusCodes.Status409Conflict, Alerts.Conflict);
+                throw new HttpException(StatusCodes.Status409Conflict, Alerts.UsernameConflict);
 
             _unitOfWork.Users.Add(newUser);
             _unitOfWork.Save();

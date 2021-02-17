@@ -45,15 +45,24 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
 
-            user.Username = editedUser.Username;
-            user.Name = editedUser.Name;
-            user.IsPublic = editedUser.IsPublic;
+            if (_unitOfWork.Users.GetByUsername(editedUser.Username) != null)
+                throw new HttpException(StatusCodes.Status409Conflict, Alerts.UsernameConflict);
+
+            user.Username = editedUser.Username ?? user.Username;
+            user.Name = editedUser.Name ?? user.Name;
+            user.IsPublic = editedUser.IsPublic ?? user.IsPublic;
             _unitOfWork.Save();
 
             return new Response<UserModel>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = editedUser
+                Data = new UserModel()
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Name = user.Name,
+                    IsPublic = user.IsPublic
+                }
             };
         }
 
