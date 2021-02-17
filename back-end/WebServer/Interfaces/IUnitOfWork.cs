@@ -10,6 +10,11 @@ namespace WebServer.Interfaces
         IUserRepository Users { get; }
         IMessageRepository Messages { get; }
         IFollowerRepository Followers { get; }
+        IDirectRepository Directs { get; }
+        IDirectMessageRepository DirectMessages { get; }
+        IGroupRepository Groups { get; }
+        IGroupMemeberRepository GroupMembers { get; }
+        IGroupMessageRepository GroupMessages { get; }
         int Save();
     }
 }

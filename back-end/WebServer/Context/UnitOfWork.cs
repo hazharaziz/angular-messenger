@@ -14,6 +14,11 @@ namespace WebServer.Context
         public IUserRepository Users { get; private set; }
         public IMessageRepository Messages { get; private set; }
         public IFollowerRepository Followers { get; private set; }
+        public IDirectRepository Directs { get; private set; }
+        public IDirectMessageRepository DirectMessages { get; private set; }
+        public IGroupRepository Groups { get; private set; }
+        public IGroupMemberRepository GroupMembers { get; private set; }
+        public IGroupMessageRepository GroupMessages { get; private set; }
 
         public UnitOfWork(MessengerContext messengerContext)
         {
@@ -21,6 +26,11 @@ namespace WebServer.Context
             Users = new UserRepository(_context);
             Messages = new MessageRepository(_context);
             Followers = new FollowerRepository(_context);
+            Directs = new DirectRepository(_context);
+            DirectMessages = new DirectMessageRepository(_context);
+            Groups = new GroupRepository(_context);
+            GroupMembers = new GroupMemberRepository(_context);
+            GroupMessages = new GroupMessageRepository(_context);
         }
 
         public void Dispose()
