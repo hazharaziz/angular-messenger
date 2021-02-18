@@ -22,13 +22,10 @@ namespace WebServer.Services
             _relationService = relationService;
         }
 
-        public List<Message> FetchMessages()
-            => _unitOfWork.Messages.GetAll().ToList();
-
         public Response<List<Message>> FetchFriendsMessages(int userId)
         {
             List<int> followingsIds = _relationService.GetFollowings(userId).Data.Select(f => f.Id).ToList();
-            List<Message> allMessages = FetchMessages();
+            List<Message> allMessages = _unitOfWork.Messages.GetAll();
 
             return new Response<List<Message>>() 
             { 

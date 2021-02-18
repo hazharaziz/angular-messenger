@@ -9,13 +9,14 @@ namespace WebServer.Interfaces
 {
     public interface IGroupMemberRepository
     {
-        IEnumerable<GroupMember> GetAll();
-        IEnumerable<GroupMember> GetGroups(int userId);
-        GroupMember Get(int groupId);
-        IEnumerable<GroupMember> Find(Expression<Func<GroupMember, bool>> predicate);
+        List<GroupMember> GetAll();
+        List<GroupMember> Find(Expression<Func<GroupMember, bool>> predicate);
         void Add(GroupMember entity);
         void AddRange(IEnumerable<GroupMember> entities);
         void Remove(GroupMember entity);
         void RemoveRange(IEnumerable<GroupMember> entities);
+        List<int> GetUserGroups(int userId);
+        List<int> GetGroupMembers(int groupId);
+        bool IsMemberOfGroup(int userId, int groupId);
     }
 }

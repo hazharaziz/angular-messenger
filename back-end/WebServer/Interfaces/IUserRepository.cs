@@ -9,13 +9,13 @@ namespace WebServer.Interfaces
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetAll();
-        User Get(int id);
-        User GetByUsername(string username);
-        IEnumerable<User> Find(Expression<Func<User, bool>> predicate);
+        List<User> GetAll();
+        List<User> Find(Expression<Func<User, bool>> predicate);
         void Add(User entity);
         void AddRange(IEnumerable<User> entities);
         void Remove(User entity);
         void RemoveRange(IEnumerable<User> entities);
+        User Get(int id);
+        User GetByUsername(string username);
     }
 }

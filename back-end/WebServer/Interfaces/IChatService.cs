@@ -9,7 +9,6 @@ namespace WebServer.Interfaces
 {
     public interface IChatService
     {
-        List<Message> FetchMessages();
         Response<List<Message>> FetchFriendsMessages(int userId);
         Response<List<Message>> FetchFriendsMessages(string username);
         Response<string> AddMessage(Message message);

@@ -30,7 +30,7 @@ namespace WebServer.Services
 
         public Response<UserModel> AuthenticateUser(LoginRequest user)
         {
-            User dbUser = _unitOfWork.Users.Find(u => u.Username == user.Username).FirstOrDefault();
+            User dbUser = _unitOfWork.Users.GetByUsername(user.Username);
 
             if (dbUser == null) 
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);

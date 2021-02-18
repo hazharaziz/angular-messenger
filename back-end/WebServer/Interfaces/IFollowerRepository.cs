@@ -13,9 +13,9 @@ namespace WebServer.Interfaces
         List<Follower> GetAll();
         List<Follower> Find(Expression<Func<Follower, bool>> predicate);
         void Add(Follower entity);
-        void AddRange(List<Follower> entities);
+        void AddRange(IEnumerable<Follower> entities);
         void Remove(Follower entity);
-        void RemoveRange(List<Follower> entities);
+        void RemoveRange(IEnumerable<Follower> entities);
         bool HasFollower(int userId, int followerId);
         bool HasRequestFrom(int userId, int followerId);
     }

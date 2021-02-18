@@ -9,34 +9,14 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Repositories
 {
-    public class MessageRepository : IMessageRepository
+    public class MessageRepository : Repository<Message>, IMessageRepository
     {
-        public MessengerContext Context;
+        public MessageRepository(MessengerContext messengerContext): base(messengerContext) { }
 
-        public MessageRepository(MessengerContext messengerContext)
-        {
-            Context = messengerContext;
-        }
+        public List<Message> GetUserMessages(int userId)
+            => Find(m => m.ComposerId == userId);
 
-        public Message Get(int id)
-            => Context.Set<Message>().Find(id);
-
-        public IEnumerable<Message> GetAll()
-            => Context.Set<Message>().ToList();
-
-        public IEnumerable<Message> Find(Expression<Func<Message, bool>> predicate)
-            => Context.Set<Message>().Where(predicate);
-
-        public void Add(Message entity)
-            => Context.Set<Message>().Add(entity);
-
-        public void AddRange(IEnumerable<Message> entities)
-            => Context.Set<Message>().AddRange(entities);
-
-        public void Remove(Message entity)
-            => Context.Set<Message>().Remove(entity);
-
-        public void RemoveRange(IEnumerable<Message> entities)
-            => Context.Set<Message>().RemoveRange(entities);
+        public Message Get(int messageId)
+            => Find(m => m.MessageId == messageId).FirstOrDefault();
     }
 }

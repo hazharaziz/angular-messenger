@@ -10,12 +10,12 @@ namespace WebServer.Interfaces
     public interface IDirectMessageRepository
     {
         List<DirectMessage> GetAll();
-        List<DirectMessage> GetDirectMessages(int userId);
-        DirectMessage Get(int directMessageId);
         List<DirectMessage> Find(Expression<Func<DirectMessage, bool>> predicate);
         void Add(DirectMessage directMessage);
-        void AddRange(List<DirectMessage> directMessages);
+        void AddRange(IEnumerable<DirectMessage> directMessages);
         void Remove(DirectMessage directMessage);
-        void RemoveRange(List<DirectMessage> directMessages);
+        void RemoveRange(IEnumerable<DirectMessage> directMessages);
+        List<DirectMessage> GetDirectMessages(int userId);
+        DirectMessage Get(int directMessageId);
     }
 }

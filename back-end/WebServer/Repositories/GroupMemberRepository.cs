@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,52 +10,17 @@ using WebServer.Models.DBModels;
 
 namespace WebServer.Repositories
 {
-    public class GroupMemberRepository : IGroupMemberRepository
+    public class GroupMemberRepository : Repository<GroupMember>, IGroupMemberRepository
     {
-        public MessengerContext Context;
-        public GroupMemberRepository(MessengerContext messengerContext)
-        {
-            Context = messengerContext;
-        }
+        public GroupMemberRepository(MessengerContext context) : base(context) { }
 
-        public void Add(GroupMember entity)
-        {
-            throw new NotImplementedException();
-        }
+        public List<int> GetUserGroups(int userId)
+            => Find(g => g.UserId == userId).Select(g => g.GroupId).ToList();
 
-        public void AddRange(IEnumerable<GroupMember> entities)
-        {
-            throw new NotImplementedException();
-        }
+        public List<int> GetGroupMembers(int groupId)
+            => Find(g => g.GroupId == groupId).Select(g => g.UserId).ToList();
 
-        public IEnumerable<GroupMember> Find(Expression<Func<GroupMember, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GroupMember Get(int groupId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<GroupMember> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<GroupMember> GetGroups(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(GroupMember entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<GroupMember> entities)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsMemberOfGroup(int userId, int groupId)
+            => Find(g => g.UserId == userId && g.GroupId == groupId).FirstOrDefault() != null;
     }
 }
