@@ -10,9 +10,11 @@ namespace WebServer.Models.RequestModels
 {
     public class DirectMessageRequest
     {
+        [Required]
         [JsonPropertyName("directId")]
         public int DirectId { get; set; }
 
+        [Required]
         [JsonPropertyName("targetId")]
         public int TargetId { get; set; }
 
