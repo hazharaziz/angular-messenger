@@ -2,30 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace WebServer.Models.DBModels
+namespace WebServer.Models.RequestModels
 {
-    public partial class DirectMessage
+    public class DirectMessageRequest
     {
-        [Key]
-        [JsonPropertyName("id")]
-        [Column("DirectMessageID")]
-        public int DirectMessageId { get; set; }
-
         [JsonPropertyName("directId")]
-        [Column("DirectID")]
         public int DirectId { get; set; }
 
-        [JsonPropertyName("composerId")]
-        [Column("ComposerID")]
-        public int ComposerId { get; set; }
+        [JsonPropertyName("targetId")]
+        public int TargetId { get; set; }
 
         [JsonPropertyName("replyToId")]
-        [Column("ReplyToID")]
         public int ReplyToId { get; set; }
 
         [Required]
@@ -40,12 +31,6 @@ namespace WebServer.Models.DBModels
 
         [Required]
         [JsonPropertyName("dateTime")]
-        [Column(TypeName = "datetime")]
         public DateTime DateTime { get; set; }
-
-        [JsonIgnore]
-        [ForeignKey(nameof(DirectId))]
-        [InverseProperty("DirectMessages")]
-        public virtual Direct Direct { get; set; }
     }
 }
