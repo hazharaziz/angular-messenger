@@ -14,7 +14,7 @@ namespace WebServer.Repositories
         public DirectRepository(MessengerContext messengerContext) : base(messengerContext) { }
 
         public List<Direct> GetDirects(int userId)
-            => Find(d => d.DirectId == userId);
+            => Find(d => d.FirstUserId == userId || d.SecondUserId == userId);
 
         public Direct Get(int directId)
             => Find(d => d.DirectId == directId).FirstOrDefault();
