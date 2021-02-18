@@ -13,7 +13,7 @@ namespace WebServer.Interfaces
         Response<List<DirectMessage>> GetDirectMessages(int directId);
         Response<string> SendDirectMessage(int userId, int targetId, DirectMessage directMessage);
         Response<string> EditDirectMessage(int directMessageId, DirectMessage editedMessage);
-        Response<string> DeleteDirectMessage(int directMessageId);
+        Response<string> DeleteDirectMessage(int userId, int directMessageId);
         Response<string> DeleteDirectHistory(int directId);
         Response<string> DeleteDirect(int directId);
     }

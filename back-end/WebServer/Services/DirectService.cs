@@ -102,20 +102,58 @@ namespace WebServer.Services
                 Data = Alerts.DirectMessageEdited
             };
         }
-        
+
+        public Response<string> DeleteDirectMessage(int userId, int directMessageId)
+        {
+            DirectMessage directMessage = _unitOfWork.DirectMessages.Get(directMessageId);
+            if (directMessage == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
+
+            if (directMessage.ComposerId != userId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            _unitOfWork.DirectMessages.Remove(directMessage);
+            _unitOfWork.Save();
+
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.DirectMessageDeleted
+            };
+        }
+
         public Response<string> DeleteDirect(int directId)
         {
-            throw new NotImplementedException();
+            Direct direct = _unitOfWork.Directs.Get(directId);
+            if (direct == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.DirectNotFound);
+            _unitOfWork.Directs.Remove(direct);
+            _unitOfWork.Save();
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.DirectDeleted
+            };
         }
 
         public Response<string> DeleteDirectHistory(int directId)
         {
-            throw new NotImplementedException();
+            Direct direct = _unitOfWork.Directs.Get(directId);
+            if (direct == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.DirectNotFound);
+
+            _unitOfWork.DirectMessages.GetAll().ForEach(dm =>
+            {
+                if (dm.DirectId == directId)
+                    _unitOfWork.DirectMessages.Remove(dm);
+            });
+            _unitOfWork.Save();
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.DirectHistoryDeleted
+            };
         }
 
-        public Response<string> DeleteDirectMessage(int directMessageId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

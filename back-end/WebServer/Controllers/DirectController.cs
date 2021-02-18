@@ -118,5 +118,66 @@ namespace WebServer.Controllers
             }
         }
 
+        [Authorize]
+        [HttpDelete("dm/{messageId}")]
+        public IActionResult DeleteDirectMessage(int messageId)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<string> response = _directService.DeleteDirectMessage(int.Parse(userId), messageId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("history/{directId}")]
+        public IActionResult DeleteDirectHistory(int directId)
+        {
+            try
+            {
+                Response<string> response = _directService.DeleteDirectHistory(directId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+
+        [Authorize]
+        [HttpDelete("{directId}")]
+        public IActionResult DeleteDirect(int directId)
+        {
+            try
+            {
+                Response<string> response = _directService.DeleteDirect(directId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+
     }
 }
