@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
 using WebServer.Models.DBModels;
+using WebServer.Models.RequestModels;
 using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
@@ -41,7 +42,11 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-        }   
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
 
         [Authorize]
         [HttpGet("{directId}")]
@@ -55,6 +60,40 @@ namespace WebServer.Controllers
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult SendDirectMessage([FromBody] DirectMessageRequest directMessage)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                int targetId = directMessage.TargetId;
+                DirectMessage message = new DirectMessage()
+                {
+                    DirectId = directMessage.DirectId,
+                    Text = directMessage.Text,
+                    ComposerName = directMessage.ComposerName,
+                    DateTime = directMessage.DateTime,
+                    ReplyToId = directMessage.ReplyToId
+                };
+                Response<string> response = _directService.SendDirectMessage(int.Parse(userId), targetId, message);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
     }

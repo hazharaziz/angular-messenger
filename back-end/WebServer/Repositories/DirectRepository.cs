@@ -19,9 +19,9 @@ namespace WebServer.Repositories
         public Direct Get(int directId)
             => Find(d => d.DirectId == directId).FirstOrDefault();
 
-        public bool HasDirect(int firstUserId, int secondUserId)
+        public Direct Get(int firstUserId, int secondUserId)
             => Find(d => (d.FirstUserId == firstUserId && d.SecondUserId == secondUserId) ||
                          (d.FirstUserId == secondUserId && d.SecondUserId == firstUserId))
-                         .FirstOrDefault() != null;
+                         .FirstOrDefault();
     }
 }

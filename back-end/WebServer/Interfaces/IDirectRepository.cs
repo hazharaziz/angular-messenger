@@ -17,6 +17,6 @@ namespace WebServer.Interfaces
         void RemoveRange(IEnumerable<Direct> directs);
         List<Direct> GetDirects(int userId);
         Direct Get(int directId);
-        bool HasDirect(int firstUserId, int secondUserId);
+        Direct Get(int firstUserId, int secondUserId);
     }
 }

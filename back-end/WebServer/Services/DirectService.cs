@@ -7,6 +7,7 @@ using WebServer.Exceptions;
 using WebServer.Interfaces;
 using WebServer.Messages;
 using WebServer.Models.DBModels;
+using WebServer.Models.RequestModels;
 using WebServer.Models.ResponseModels;
 
 namespace WebServer.Services
@@ -50,7 +51,8 @@ namespace WebServer.Services
             if (_unitOfWork.Directs.Get(directId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.DirectNotFound);
 
-            List<DirectMessage> messages = _unitOfWork.DirectMessages.GetDirectMessages(directId);
+            List<DirectMessage> messages = _unitOfWork.DirectMessages.GetDirectMessages(directId)
+                                            .OrderByDescending(d => d.DateTime).ToList();
             return new Response<List<DirectMessage>>()
             {
                 Status = StatusCodes.Status200OK,
@@ -60,7 +62,30 @@ namespace WebServer.Services
 
         public Response<string> SendDirectMessage(int userId, int targetId, DirectMessage directMessage)
         {
-            throw new NotImplementedException();
+            if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(targetId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Direct direct = _unitOfWork.Directs.Get(directMessage.DirectId);
+            if (direct == null)
+            {
+                _unitOfWork.Directs.Add(new Direct()
+                {
+                    FirstUserId = userId,
+                    SecondUserId = targetId
+                });
+            }
+
+            direct = _unitOfWork.Directs.Get(userId, targetId);
+            directMessage.DirectId = direct.DirectId;
+            directMessage.ComposerId = userId;
+            _unitOfWork.DirectMessages.Add(directMessage);
+            _unitOfWork.Save();
+
+            return new Response<string>()   
+            {
+                Status = StatusCodes.Status201Created,
+                Data = Alerts.DirectMessageCreated
+            };
         }
 
         public Response<string> EditDirectMessage(int directMessageId, DirectMessage editedMessage)

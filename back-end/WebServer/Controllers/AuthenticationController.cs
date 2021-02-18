@@ -44,6 +44,10 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
         }
 
         [AllowAnonymous]
@@ -60,7 +64,10 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
         }
 
     }

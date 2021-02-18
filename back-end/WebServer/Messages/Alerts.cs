@@ -29,5 +29,9 @@ namespace WebServer.Messages
         public const string UsernameConflict = "Username Conflict";
         public const string AccountDeleted = "Account deleted successfully";
         public const string DirectNotFound = "Direct Not Found";
+        public const string DirectMessageCreated = "Direct message created successfully";
+        public const string DirectMessageEdited = "Direct message edited successfully";
+        public const string DirectMessageDeleted = "Direct message deleted successfully";
+        
     }
 }

@@ -42,6 +42,10 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
         }
 
         [Authorize]
@@ -53,9 +57,9 @@ namespace WebServer.Controllers
                 Response<string> response = _chatService.AddMessage(message);
                 return StatusCode(response.Status, response.Data);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, Alerts.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
 
@@ -72,9 +76,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, Alerts.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
 
@@ -91,9 +95,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, Alerts.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
 

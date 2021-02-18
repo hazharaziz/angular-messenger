@@ -41,6 +41,10 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
         }
 
         [Authorize]
@@ -57,6 +61,10 @@ namespace WebServer.Controllers
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
 
@@ -76,6 +84,10 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
         }
 
         [Authorize]
@@ -92,6 +104,10 @@ namespace WebServer.Controllers
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
     }
