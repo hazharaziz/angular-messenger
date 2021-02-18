@@ -6,11 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace WebServer.Models.DBModels
+namespace WebServer
 {
     [Index(nameof(FirstUserId), nameof(SecondUserId), Name = "UNIQUE_VALUES", IsUnique = true)]
     public partial class Direct
     {
+        public Direct()
+        {
+            DirectMessages = new HashSet<DirectMessage>();
+        }
+
         [Key]
         [Column("DirectID")]
         public int DirectId { get; set; }
@@ -18,5 +23,8 @@ namespace WebServer.Models.DBModels
         public int FirstUserId { get; set; }
         [Column("SecondUserID")]
         public int SecondUserId { get; set; }
+
+        [InverseProperty(nameof(DirectMessage.Direct))]
+        public virtual ICollection<DirectMessage> DirectMessages { get; set; }
     }
 }
