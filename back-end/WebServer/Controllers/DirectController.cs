@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
@@ -41,5 +42,20 @@ namespace WebServer.Controllers
                 return StatusCode(exception.Status, exception.Message);
             }
         }   
+
+        [Authorize]
+        [HttpGet("{directId}")]
+        public IActionResult GetDirectMessages(int directId)
+        {
+            try
+            {
+                Response<List<DirectMessage>> response = _directService.GetDirectMessages(directId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+        }
     }
 }

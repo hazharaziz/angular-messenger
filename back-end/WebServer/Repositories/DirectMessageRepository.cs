@@ -13,10 +13,14 @@ namespace WebServer.Repositories
     {
         public DirectMessageRepository(MessengerContext messengerContext) : base(messengerContext) { }
 
-        public List<DirectMessage> GetDirectMessages(int userId)
+        public List<DirectMessage> GetDirectMessages(int directId)
+            => Find(dm => dm.DirectId == directId);
+
+        public List<DirectMessage> GetUserDirectMessages(int userId)
             => Find(dm => dm.ComposerId == userId);
 
         public DirectMessage Get(int directMessageId)
             => Find(dm => dm.DirectMessageId == directMessageId).FirstOrDefault();
+
     }
 }

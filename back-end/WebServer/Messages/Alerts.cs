@@ -28,5 +28,6 @@ namespace WebServer.Messages
         public const string PasswordChanged = "Password changed successfully";
         public const string UsernameConflict = "Username Conflict";
         public const string AccountDeleted = "Account deleted successfully";
+        public const string DirectNotFound = "Direct Not Found";
     }
 }

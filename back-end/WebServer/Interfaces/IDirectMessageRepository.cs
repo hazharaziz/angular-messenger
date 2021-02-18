@@ -15,7 +15,8 @@ namespace WebServer.Interfaces
         void AddRange(IEnumerable<DirectMessage> directMessages);
         void Remove(DirectMessage directMessage);
         void RemoveRange(IEnumerable<DirectMessage> directMessages);
-        List<DirectMessage> GetDirectMessages(int userId);
+        List<DirectMessage> GetDirectMessages(int directId);
+        List<DirectMessage> GetUserDirectMessages(int userId);
         DirectMessage Get(int directMessageId);
     }
 }

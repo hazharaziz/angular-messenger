@@ -47,7 +47,15 @@ namespace WebServer.Services
 
         public Response<List<DirectMessage>> GetDirectMessages(int directId)
         {
-            throw new NotImplementedException();
+            if (_unitOfWork.Directs.Get(directId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.DirectNotFound);
+
+            List<DirectMessage> messages = _unitOfWork.DirectMessages.GetDirectMessages(directId);
+            return new Response<List<DirectMessage>>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = messages
+            };
         }
 
         public Response<string> SendDirectMessage(int userId, int targetId, DirectMessage directMessage)
