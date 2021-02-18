@@ -32,6 +32,8 @@ namespace WebServer.Messages
         public const string DirectMessageCreated = "Direct message created successfully";
         public const string DirectMessageEdited = "Direct message edited successfully";
         public const string DirectMessageDeleted = "Direct message deleted successfully";
-        
+        public const string MessageNotFound = "Message Not Found";
+
+
     }
 }

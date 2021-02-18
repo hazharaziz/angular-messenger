@@ -90,8 +90,19 @@ namespace WebServer.Services
 
         public Response<string> EditDirectMessage(int directMessageId, DirectMessage editedMessage)
         {
-            throw new NotImplementedException();
+            DirectMessage message = _unitOfWork.DirectMessages.Get(directMessageId);
+            if (message == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
+
+            message.Text = editedMessage.Text;
+            _unitOfWork.Save();
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.DirectMessageEdited
+            };
         }
+        
         public Response<string> DeleteDirect(int directId)
         {
             throw new NotImplementedException();

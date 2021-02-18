@@ -96,5 +96,27 @@ namespace WebServer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
+
+        [Authorize]
+        [HttpPut]
+        public IActionResult EditDirectMessage([FromBody] DirectMessage message)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                Response<string> response = _directService.EditDirectMessage(message.DirectMessageId, message);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
     }
 }
