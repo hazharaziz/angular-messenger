@@ -13,6 +13,7 @@ namespace WebServer.Messages
         public const string Conflict = "Resource conflict";
         public const string MessageCreated = "Message created successfully";
         public const string MessageEdited = "Message edited successfully";
+        public const string MessageDeleted = "Message deleted successfully";
         public const string InternalServerError = "Internal server error";
         public const string UsersNotFound = "User(s) not found";
         public const string FollowRequestSent = "Follow request sent successfully";
@@ -29,12 +30,15 @@ namespace WebServer.Messages
         public const string UsernameConflict = "Username Conflict";
         public const string AccountDeleted = "Account deleted successfully";
         public const string DirectNotFound = "Direct Not Found";
-        public const string DirectMessageCreated = "Direct message created successfully";
-        public const string DirectMessageEdited = "Direct message edited successfully";
-        public const string DirectMessageDeleted = "Direct message deleted successfully";
         public const string MessageNotFound = "Message Not Found";
         public const string DirectDeleted = "Direct deleted successfully";
-        public const string DirectHistoryDeleted = "Direct history cleared successfully";
+        public const string HistoryDeleted = "history cleared successfully";
         public const string NotAllowed = "Operation not allowed";
+        public const string GroupCreated = "Group created successfully";
+        public const string GroupEdited = "Group edited successfully";
+        public const string GroupDeleted = "Group deleted successfully";
+        public const string MemberAdded = "Member added to group successfully";
+        public const string MemberRemoved = "Member removed from group successfully";
+        public const string LeftGroup = "You left the group successfully";
     }
 }

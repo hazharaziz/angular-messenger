@@ -42,7 +42,7 @@ namespace WebServer.Models.DBModels
 
         [JsonPropertyName("addMemberAccess")]
         [Range(typeof(int), "0", "1")]
-        public int AddMemberAccess { get; set; }
+        public int AddMemberAccess { get; set; } = 0;
 
         [JsonIgnore]
         [InverseProperty(nameof(GroupMember.Group))]

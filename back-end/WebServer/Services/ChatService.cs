@@ -87,7 +87,7 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = Alerts.MessageEdited
+                Data = Alerts.MessageDeleted
             };
         }
     }

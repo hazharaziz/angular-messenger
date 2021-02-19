@@ -11,7 +11,7 @@ namespace WebServer.Interfaces
     {
         Response<List<GroupModel>> GetUserGroups(int userId);
         Response<Group> GetGroupInfo(int userId, int groupId);
-        Response<string> CreateGroup(Group group);
+        Response<string> CreateGroup(int userId, Group group);
         Response<string> EditGroup(int userId, Group editedGroup);
         Response<string> DeleteGroup(int userId, int groupId);
         Response<string> AddMembersToGroup(int groupId, List<int> memberIds);

@@ -84,7 +84,7 @@ namespace WebServer.Services
             return new Response<string>()   
             {
                 Status = StatusCodes.Status201Created,
-                Data = Alerts.DirectMessageCreated
+                Data = Alerts.MessageCreated
             };
         }
 
@@ -99,7 +99,7 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = Alerts.DirectMessageEdited
+                Data = Alerts.MessageEdited
             };
         }
 
@@ -118,7 +118,7 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = Alerts.DirectMessageDeleted
+                Data = Alerts.MessageDeleted
             };
         }
 
@@ -151,7 +151,7 @@ namespace WebServer.Services
             return new Response<string>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = Alerts.DirectHistoryDeleted
+                Data = Alerts.HistoryDeleted
             };
         }
 

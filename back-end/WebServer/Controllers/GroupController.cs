@@ -68,5 +68,27 @@ namespace WebServer.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        public IActionResult CreateGroup([FromBody] Group group)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                Response<string> response = _groupService.CreateGroup(userId, group);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+
     }
 }
