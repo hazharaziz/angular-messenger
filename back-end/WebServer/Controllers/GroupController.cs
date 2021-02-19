@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 
 namespace WebServer.Controllers
@@ -45,5 +46,27 @@ namespace WebServer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
+
+        [Authorize]
+        [HttpGet("{groupId}")]
+        public IActionResult GetGroupInfo(int groupId)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                Response<Group> response = _groupService.GetGroupInfo(userId, groupId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
     }
 }

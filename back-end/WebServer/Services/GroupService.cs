@@ -35,9 +35,17 @@ namespace WebServer.Services
             return new Response<List<GroupModel>>() { Status = StatusCodes.Status200OK, Data = groups };
         }
 
-        public Response<Group> GetGroupInfo(int groupId)
+        public Response<Group> GetGroupInfo(int userId, int groupId)
         {
-            throw new NotImplementedException();
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+
+            return new Response<Group>() { Status = StatusCodes.Status200OK, Data = group };
         }
 
         public Response<string> CreateGroup(Group group)

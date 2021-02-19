@@ -10,7 +10,7 @@ namespace WebServer.Interfaces
     public interface IGroupService
     {
         Response<List<GroupModel>> GetUserGroups(int userId);
-        Response<Group> GetGroupInfo(int groupId);
+        Response<Group> GetGroupInfo(int userId, int groupId);
         Response<string> CreateGroup(Group group);
         Response<string> EditGroup(int userId, Group editedGroup);
         Response<string> DeleteGroup(int userId, int groupId);
