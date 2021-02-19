@@ -37,6 +37,13 @@ namespace WebServer.Models.DBModels
         [StringLength(40, MinimumLength = 3)]
         public string CreatorName { get; set; }
 
+        [JsonPropertyName("membersCount")]
+        public int MembersCount { get; set; }
+
+        [JsonPropertyName("addMemberAccess")]
+        [Range(typeof(int), "0", "1")]
+        public int AddMemberAccess { get; set; }
+
         [JsonIgnore]
         [InverseProperty(nameof(GroupMember.Group))]
         public virtual ICollection<GroupMember> GroupMembers { get; set; }

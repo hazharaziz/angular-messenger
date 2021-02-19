@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebServer;
 using WebServer.Models.DBModels;
 
 #nullable disable
@@ -58,7 +57,7 @@ namespace WebServer.DataContext
                 entity.HasOne(d => d.Group)
                     .WithMany(p => p.GroupMembers)
                     .HasForeignKey(d => d.GroupId)
-                    .HasConstraintName("FK_GroupMembers_GroupMembers");
+                    .HasConstraintName("FK_GroupMembers_Groups");
             });
 
             modelBuilder.Entity<GroupMessage>(entity =>
@@ -66,7 +65,7 @@ namespace WebServer.DataContext
                 entity.HasOne(d => d.Group)
                     .WithMany(p => p.GroupMessages)
                     .HasForeignKey(d => d.GroupId)
-                    .HasConstraintName("FK_GroupMessages_GroupMessages");
+                    .HasConstraintName("FK_GroupMessages_Groups");
             });
 
             modelBuilder.Entity<Message>(entity =>
