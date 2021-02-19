@@ -92,10 +92,22 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
 
-            _unitOfWork.Followers.GetAll().ToList().ForEach(relation =>
+            _unitOfWork.Followers.GetAll().ForEach(relation =>
             {
                 if (relation.UserId == userId || relation.FollowerId == userId)
                     _unitOfWork.Followers.Remove(relation);
+            });
+
+            _unitOfWork.DirectMessages.GetAll().ForEach(dm =>
+            {
+                if (dm.ComposerId == userId)
+                    dm.ComposerName = "Deleted Account";
+            });
+
+            _unitOfWork.GroupMessages.GetAll().ForEach(gm => 
+            {
+                if (gm.ComposerId == userId)
+                    gm.ComposerName = "Deleted Account";
             });
 
             _unitOfWork.Users.Remove(user);
