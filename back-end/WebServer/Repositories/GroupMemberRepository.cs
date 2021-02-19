@@ -20,6 +20,9 @@ namespace WebServer.Repositories
         public List<int> GetGroupMembers(int groupId)
             => Find(g => g.GroupId == groupId).Select(g => g.UserId).ToList();
 
+        public GroupMember GetGroupMember(int groupId, int memberId)
+            => Find(g => g.GroupId == groupId && g.UserId == memberId).FirstOrDefault();
+
         public bool IsMemberOfGroup(int userId, int groupId)
             => Find(g => g.UserId == userId && g.GroupId == groupId).FirstOrDefault() != null;
     }

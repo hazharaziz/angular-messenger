@@ -17,6 +17,7 @@ namespace WebServer.Interfaces
         void RemoveRange(IEnumerable<GroupMember> entities);
         List<int> GetUserGroups(int userId);
         List<int> GetGroupMembers(int groupId);
+        GroupMember GetGroupMember(int groupId, int memberId);
         bool IsMemberOfGroup(int userId, int groupId);
     }
 }

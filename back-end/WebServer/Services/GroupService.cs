@@ -73,6 +73,8 @@ namespace WebServer.Services
                 GroupName = group.GroupName,
                 CreatorId = group.CreatorId,
                 CreatorName = group.CreatorName,
+                AddMemberAccess = group.AddMemberAccess,
+                MembersCount = group.MembersCount,
                 Members = members
             };
 
@@ -169,9 +171,27 @@ namespace WebServer.Services
             return new Response<string>() { Status = StatusCodes.Status201Created, Data = Alerts.MemberAdded };
         }
 
-        public Response<string> RemoveMemberFromGroup(int groupId, int memberId)
+        public Response<string> RemoveMemberFromGroup(int userId, int groupId, int memberId)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            if (userId != group.CreatorId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            GroupMember groupMember = _unitOfWork.GroupMembers.GetGroupMember(groupId, memberId);
+            if (groupMember == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            _unitOfWork.GroupMembers.Remove(groupMember);
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.MemberRemoved };
         }
 
         public Response<List<GroupMessage>> GetGroupMessages(int userId, int groupId)
