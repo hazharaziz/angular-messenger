@@ -279,7 +279,21 @@ namespace WebServer.Services
 
         public Response<string> ClearGroupHistory(int userId, int groupId)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            _unitOfWork.GroupMessages.GetGroupMessages(groupId).ForEach(message =>
+            {
+                _unitOfWork.GroupMessages.Remove(message);
+            });
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.HistoryDeleted };
         }
 
         public Response<string> LeaveGroup(int userId, int groupId)
