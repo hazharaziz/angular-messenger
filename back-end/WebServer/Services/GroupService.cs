@@ -207,13 +207,30 @@ namespace WebServer.Services
             if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
-            List<GroupMessage> groupMessages = _unitOfWork.GroupMessages.GetGroupMessages(groupId);
+            List<GroupMessage> groupMessages = _unitOfWork.GroupMessages
+                    .GetGroupMessages(groupId).OrderByDescending(m => m.DateTime).ToList();
             return new Response<List<GroupMessage>>() { Status = StatusCodes.Status200OK, Data = groupMessages };
         }
 
         public Response<string> SendGroupMessage(int userId, int groupId, GroupMessage message)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            message.ComposerId = userId;
+            message.GroupId = groupId;
+            _unitOfWork.GroupMessages.Add(message);
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status201Created, Data = Alerts.MessageCreated };
         }
 
         public Response<string> EditMessage(int userId, int groupId, GroupMessage editedMessage)

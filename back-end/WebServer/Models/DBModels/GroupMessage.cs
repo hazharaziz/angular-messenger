@@ -15,7 +15,6 @@ namespace WebServer.Models.DBModels
         [Column("GroupMessageID")]
         public int GroupMessageId { get; set; }
 
-        [Required]
         [JsonPropertyName("groupId")]
         [Column("GroupID")]
         public int GroupId { get; set; }
@@ -24,7 +23,6 @@ namespace WebServer.Models.DBModels
         [Column("ReplyToID")]
         public int ReplyToId { get; set; }
 
-        [Required]
         [JsonPropertyName("composerId")]
         [Column("ComposerID")]
         public int ComposerId { get; set; }

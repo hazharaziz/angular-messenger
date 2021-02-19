@@ -195,5 +195,26 @@ namespace WebServer.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost("{groupId}/messages")]
+        public IActionResult SendGroupMessage(int groupId, [FromBody] GroupMessage groupMessage)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                Response<string> response = _groupService.SendGroupMessage(userId, groupId, groupMessage);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
     }
 }
