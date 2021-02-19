@@ -298,7 +298,22 @@ namespace WebServer.Services
 
         public Response<string> LeaveGroup(int userId, int groupId)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            GroupMember record = _unitOfWork.GroupMembers.GetGroupMember(groupId, userId);
+            if (record == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            _unitOfWork.GroupMembers.Remove(record);
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.LeftGroup };
         }
     }
 }
