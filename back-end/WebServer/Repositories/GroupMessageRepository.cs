@@ -13,8 +13,8 @@ namespace WebServer.Repositories
     {
         public GroupMessageRepository(MessengerContext messengerContext): base(messengerContext) { }
 
-        public List<GroupMessage> GetUserGroupMessages(int userId)
-            => Find(gm => gm.ComposerId == userId);
+        public List<GroupMessage> GetGroupMessages(int groupId)
+            => Find(gm => gm.GroupId == groupId);
 
         public GroupMessage Get(int groupMessageId)
             => Find(gm => gm.GroupMessageId == groupMessageId).FirstOrDefault();

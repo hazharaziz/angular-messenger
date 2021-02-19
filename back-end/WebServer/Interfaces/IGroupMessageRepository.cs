@@ -15,7 +15,7 @@ namespace WebServer.Interfaces
         void AddRange(IEnumerable<GroupMessage> groupMessages);
         void Remove(GroupMessage groupMessage);
         void RemoveRange(IEnumerable<GroupMessage> groupMessages);
-        List<GroupMessage> GetUserGroupMessages(int userId);
+        List<GroupMessage> GetGroupMessages(int groupId);
         GroupMessage Get(int groupMessageId);
     }
 }

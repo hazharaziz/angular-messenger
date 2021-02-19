@@ -196,7 +196,19 @@ namespace WebServer.Services
 
         public Response<List<GroupMessage>> GetGroupMessages(int userId, int groupId)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            List<GroupMessage> groupMessages = _unitOfWork.GroupMessages.GetGroupMessages(groupId);
+            return new Response<List<GroupMessage>>() { Status = StatusCodes.Status200OK, Data = groupMessages };
         }
 
         public Response<string> SendGroupMessage(int userId, int groupId, GroupMessage message)
