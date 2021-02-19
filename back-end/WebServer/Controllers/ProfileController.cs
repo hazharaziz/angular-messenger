@@ -53,7 +53,7 @@ namespace WebServer.Controllers
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<UserModel> response = _profileService.EditProfile(userId, editedUser);
+                Response<string> response = _profileService.EditProfile(userId, editedUser);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

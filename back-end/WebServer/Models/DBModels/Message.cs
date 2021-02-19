@@ -35,7 +35,7 @@ namespace WebServer.Models.DBModels
 
         [JsonPropertyName("dateTime")]
         [Column(TypeName = "datetime")]
-        public DateTime DateTime { get; set; };
+        public DateTime DateTime { get; set; }
 
         [JsonIgnore]
         [ForeignKey(nameof(ComposerId))]

@@ -24,7 +24,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             return new Response<UserModel>()
             {
@@ -39,11 +39,11 @@ namespace WebServer.Services
             };
         }
 
-        public Response<UserModel> EditProfile(int userId, UserModel editedUser)
+        public Response<string> EditProfile(int userId, UserModel editedUser)
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
             
             if (editedUser.Username != user.Username)
                 if (_unitOfWork.Users.GetByUsername(editedUser.Username) != null)
@@ -54,24 +54,14 @@ namespace WebServer.Services
             user.IsPublic = editedUser.IsPublic;
             _unitOfWork.Save();
 
-            return new Response<UserModel>()
-            {
-                Status = StatusCodes.Status200OK,
-                Data = new UserModel()
-                {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Name = user.Name,
-                    IsPublic = user.IsPublic
-                }
-            };
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.ProfileEdited };
         }
 
         public Response<string> ChangePassword(int userId, string oldPassword, string newPassword)
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             if (user.Password != oldPassword)
                 throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
@@ -90,25 +80,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
-
-            _unitOfWork.Followers.GetAll().ForEach(relation =>
-            {
-                if (relation.UserId == userId || relation.FollowerId == userId)
-                    _unitOfWork.Followers.Remove(relation);
-            });
-
-            _unitOfWork.DirectMessages.GetAll().ForEach(dm =>
-            {
-                if (dm.ComposerId == userId)
-                    dm.ComposerName = "Deleted Account";
-            });
-
-            _unitOfWork.GroupMessages.GetAll().ForEach(gm => 
-            {
-                if (gm.ComposerId == userId)
-                    gm.ComposerName = "Deleted Account";
-            });
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             _unitOfWork.Users.Remove(user);
             _unitOfWork.Save();
