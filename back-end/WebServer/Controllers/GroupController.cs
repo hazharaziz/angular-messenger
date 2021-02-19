@@ -32,8 +32,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<GroupModel>> response = _groupService.GetUserGroups(userId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -53,8 +52,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<GroupInfoModel> response = _groupService.GetGroupInfo(userId, groupId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -74,8 +72,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.CreateGroup(userId, group);
                 return StatusCode(response.Status, response.Data);
             }
@@ -95,8 +92,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.EditGroup(userId, groupId, editedGroup);
                 return StatusCode(response.Status, response.Data);
             }
@@ -116,8 +112,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.DeleteGroup(userId, groupId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -137,8 +132,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.AddMembersToGroup(userId, groupId, memberIds);
                 return StatusCode(response.Status, response.Data);
             }
@@ -159,8 +153,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.RemoveMemberFromGroup(userId, groupId, memberId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -180,8 +173,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<GroupMessage>> response = _groupService.GetGroupMessages(userId, groupId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -201,8 +193,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.SendGroupMessage(userId, groupId, groupMessage);
                 return StatusCode(response.Status, response.Data);
             }
@@ -222,8 +213,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.EditGroupMessage(userId, groupId, groupMessage);
                 return StatusCode(response.Status, response.Data);
             }
@@ -243,8 +233,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.DeleteGroupMessage(userId, groupId, messageId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -264,8 +253,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.ClearGroupHistory(userId, groupId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -285,8 +273,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.LeaveGroup(userId, groupId);
                 return StatusCode(response.Status, response.Data);
             }

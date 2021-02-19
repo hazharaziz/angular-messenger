@@ -11,8 +11,8 @@ namespace WebServer.Interfaces
     {
         Response<List<Message>> FetchFriendsMessages(int userId);
         Response<List<Message>> FetchFriendsMessages(string username);
-        Response<string> AddMessage(Message message);
-        Response<string> EditMessage(int id, Message message);
-        Response<string> DeleteMessage(int id);
+        Response<string> AddMessage(int userId, Message message);
+        Response<string> EditMessage(int userId, int messageId, Message message);
+        Response<string> DeleteMessage(int userId, int messageId);
     }
 }

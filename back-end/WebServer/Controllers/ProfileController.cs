@@ -32,9 +32,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<UserModel> response = _profileService.GetProfile(int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<UserModel> response = _profileService.GetProfile(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -53,9 +52,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<UserModel> response = _profileService.EditProfile(int.Parse(userId), editedUser);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<UserModel> response = _profileService.EditProfile(userId, editedUser);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -74,10 +72,9 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = 
-                    _profileService.ChangePassword(int.Parse(userId), body.OldPassword, body.NewPassword);
+                    _profileService.ChangePassword(userId, body.OldPassword, body.NewPassword);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -96,9 +93,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<string> response = _profileService.DeleteAccount(int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _profileService.DeleteAccount(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

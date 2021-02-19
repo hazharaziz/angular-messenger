@@ -24,30 +24,39 @@ namespace WebServer.Services
 
         public Response<List<Message>> FetchFriendsMessages(int userId)
         {
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
             List<int> followingsIds = _relationService.GetFollowings(userId).Data.Select(f => f.Id).ToList();
-            List<Message> allMessages = _unitOfWork.Messages.GetAll();
+            List<Message> allMessages = _unitOfWork.Messages.GetAll()
+                        .Where(message => followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
+                        .OrderByDescending(m => m.DateTime).ToList();
 
             return new Response<List<Message>>() 
             { 
                 Status = StatusCodes.Status200OK,
                 Data =  allMessages
-                        .Where(message => followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
-                        .OrderByDescending(m => m.DateTime).ToList()
-            };             
-
+            };
         }
 
         public Response<List<Message>> FetchFriendsMessages(string username)
         {
-            User user = _unitOfWork.Users.Find(u => u.Username == username).FirstOrDefault();
+            User user = _unitOfWork.Users.GetByUsername(username);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             return FetchFriendsMessages(user.Id);
         }
 
-        public Response<string> AddMessage(Message message)
+        public Response<string> AddMessage(int userId, Message message)
         {
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            message.ComposerId = user.Id;
+            message.ComposerName = user.Name;
             _unitOfWork.Messages.Add(message);
             _unitOfWork.Save();
             return new Response<string>()
@@ -57,15 +66,16 @@ namespace WebServer.Services
             };
         }
 
-        public Response<string> EditMessage(int id, Message message)
+        public Response<string> EditMessage(int userId, int messageId, Message message)
         {
-            Message targetMessage = _unitOfWork.Messages.Get(id);
+            Message targetMessage = _unitOfWork.Messages.Get(messageId);
             if (targetMessage == null) 
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
+
+            if (targetMessage.ComposerId != userId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             targetMessage.Text = message.Text;
-            targetMessage.ReplyToId = message.ReplyToId;
-
             _unitOfWork.Save();
 
             return new Response<string>()
@@ -75,11 +85,14 @@ namespace WebServer.Services
             };
         }
 
-        public Response<string> DeleteMessage(int id)
+        public Response<string> DeleteMessage(int userId, int messageId)
         {
-            Message message = _unitOfWork.Messages.Get(id);
+            Message message = _unitOfWork.Messages.Get(messageId);
             if (message == null) 
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
+
+            if (message.ComposerId != userId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             _unitOfWork.Messages.Remove(message);
             _unitOfWork.Save();

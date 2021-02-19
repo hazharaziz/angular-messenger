@@ -14,6 +14,6 @@ namespace WebServer.Interfaces
         Response<UserModel> AuthenticateUser(LoginRequest user);
         Response<UserModel> SignUpUser(User newUser);
         string GenerateJSONWebToken(string id, string username);
-        string GetPrincipalClaim(ClaimsPrincipal principal, string type);
+        string GetClaim(ClaimsPrincipal principal, string type);
     }
 }

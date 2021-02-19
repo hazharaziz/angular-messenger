@@ -34,8 +34,8 @@ namespace WebServer.Controllers
             try
             {
                 var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<UserModel>> response = _relationService.GetFollowers(int.Parse(userId));
+                string userId = _authService.GetClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<UserModel>> response = _relationService.GetFollowers(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception) 
@@ -55,8 +55,8 @@ namespace WebServer.Controllers
             try
             {
                 var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<UserModel>> response = _relationService.GetFollowings(int.Parse(userId));
+                string userId = _authService.GetClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<UserModel>> response = _relationService.GetFollowings(userId);
                 return StatusCode(StatusCodes.Status200OK, response.Data);
             }
             catch (HttpException exception)
@@ -76,8 +76,8 @@ namespace WebServer.Controllers
             try
             {
                 var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<UserModel>> response = _relationService.GetFollowRequests(int.Parse(userId));
+                string userId = _authService.GetClaim(principal, ClaimTypes.NameIdentifier);
+                Response<List<UserModel>> response = _relationService.GetFollowRequests(userId);
                 return StatusCode(StatusCodes.Status200OK, response.Data);
             }
             catch (HttpException exception)
@@ -96,9 +96,8 @@ namespace WebServer.Controllers
         {            
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);                
-                Response<string> response = _relationService.SendFollowRequest(id, int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _relationService.SendFollowRequest(id, userId);
                 return StatusCode(response.Status, response.Data);
             } 
             catch (HttpException exception)
@@ -117,9 +116,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<string> response = _relationService.AcceptFollowRequest(int.Parse(userId), id);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _relationService.AcceptFollowRequest(userId, id);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -138,9 +136,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<string> response = _relationService.RejectFollowRequest(int.Parse(userId), id);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _relationService.RejectFollowRequest(userId, id);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -159,9 +156,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<string> response = _relationService.CancelRequest(id, int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _relationService.CancelRequest(id, userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -180,9 +176,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<string> response = _relationService.Unfollow(id, int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _relationService.Unfollow(id, userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

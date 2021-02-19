@@ -25,16 +25,14 @@ namespace WebServer.Controllers
             _userService = userService;
         }
 
-
         [Authorize]
         [HttpGet]
         public IActionResult GetUsers()
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<UserModel>> response = _userService.GetAllUsers(int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<UserModel>> response = _userService.GetAllUsers(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -53,9 +51,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<UserModel>> response = _userService.FilterUsers(int.Parse(userId), text);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<UserModel>> response = _userService.FilterUsers(userId, text);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -74,9 +71,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<UserModel>> response = _userService.GetUserFriends(int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<UserModel>> response = _userService.GetUserFriends(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

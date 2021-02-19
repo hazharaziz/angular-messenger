@@ -33,9 +33,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<Message>> response = _chatService.FetchFriendsMessages(int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<Message>> response = _chatService.FetchFriendsMessages(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -54,7 +53,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<string> response = _chatService.AddMessage(message);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _chatService.AddMessage(userId, message);
                 return StatusCode(response.Status, response.Data);
             }
             catch (Exception exception)
@@ -64,12 +64,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
-        public IActionResult EditMessage(int id, [FromBody] Message message)
+        [HttpPut("{messageId}")]
+        public IActionResult EditMessage(int messageId, [FromBody] Message message)
         {
             try
             {
-                Response<string> response = _chatService.EditMessage(id, message);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _chatService.EditMessage(userId, messageId, message);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -83,12 +84,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]    
-        public IActionResult DeleteMessage(int id)
+        [HttpDelete("{messageId}")]    
+        public IActionResult DeleteMessage(int messageId)
         {
             try
             {
-                Response<string> response = _chatService.DeleteMessage(id);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _chatService.DeleteMessage(userId, messageId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -100,6 +102,5 @@ namespace WebServer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-
     }
 }

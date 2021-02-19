@@ -95,7 +95,7 @@ namespace WebServer.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string GetPrincipalClaim(ClaimsPrincipal principal, string type)
+        public string GetClaim(ClaimsPrincipal principal, string type)
         {
             string claimValue = (principal.HasClaim(claim => claim.Type == type)) ?
                 principal.Claims.FirstOrDefault(claim => claim.Type == type).Value : "";

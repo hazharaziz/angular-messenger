@@ -33,9 +33,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<List<DirectModel>> response = _directService.GetUserDirects(int.Parse(userId));
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<DirectModel>> response = _directService.GetUserDirects(userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -73,8 +72,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 int targetId = directMessage.TargetId;
                 DirectMessage message = new DirectMessage()
                 {
@@ -84,7 +82,7 @@ namespace WebServer.Controllers
                     DateTime = directMessage.DateTime,
                     ReplyToId = directMessage.ReplyToId
                 };
-                Response<string> response = _directService.SendDirectMessage(int.Parse(userId), targetId, message);
+                Response<string> response = _directService.SendDirectMessage(userId, targetId, message);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -103,8 +101,6 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
                 Response<string> response = _directService.EditDirectMessage(message.DirectMessageId, message);
                 return StatusCode(response.Status, response.Data);
             }
@@ -124,9 +120,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier);
-                Response<string> response = _directService.DeleteDirectMessage(int.Parse(userId), messageId);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _directService.DeleteDirectMessage(userId, messageId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
