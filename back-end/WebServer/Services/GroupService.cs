@@ -233,12 +233,31 @@ namespace WebServer.Services
             return new Response<string>() { Status = StatusCodes.Status201Created, Data = Alerts.MessageCreated };
         }
 
-        public Response<string> EditMessage(int userId, int groupId, GroupMessage editedMessage)
+        public Response<string> EditGroupMessage(int userId, int groupId, GroupMessage editedMessage)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            GroupMessage message = _unitOfWork.GroupMessages.Get(editedMessage.GroupMessageId);
+
+            if (message == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
+
+            message.Text = editedMessage.Text;
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.MessageEdited };            
         }
 
-        public Response<string> DeleteMessage(int userId, int messageId)
+        public Response<string> DeleteGroupMessage(int userId, int messageId)
         {
             throw new NotImplementedException();
         }
