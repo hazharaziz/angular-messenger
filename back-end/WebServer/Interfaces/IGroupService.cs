@@ -12,7 +12,7 @@ namespace WebServer.Interfaces
         Response<List<GroupModel>> GetUserGroups(int userId);
         Response<Group> GetGroupInfo(int userId, int groupId);
         Response<string> CreateGroup(int userId, Group group);
-        Response<string> EditGroup(int userId, Group editedGroup);
+        Response<string> EditGroup(int userId, int groupId, Group editedGroup);
         Response<string> DeleteGroup(int userId, int groupId);
         Response<string> AddMembersToGroup(int groupId, List<int> memberIds);
         Response<string> RemoveMemberFromGroup(int groupId, int memberId);

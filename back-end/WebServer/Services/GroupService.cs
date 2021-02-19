@@ -64,14 +64,40 @@ namespace WebServer.Services
             return new Response<string>() { Status = StatusCodes.Status201Created, Data = Alerts.GroupCreated };
         }
 
-        public Response<string> EditGroup(int userId, Group editedGroup)
+        public Response<string> EditGroup(int userId, int groupId, Group editedGroup)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            group.GroupName = editedGroup.GroupName;
+            group.AddMemberAccess = editedGroup.AddMemberAccess;
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.GroupEdited };
         }
 
         public Response<string> DeleteGroup(int userId, int groupId)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            if (userId != group.CreatorId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            _unitOfWork.Groups.Remove(group);
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.GroupDeleted };
         }
 
         public Response<string> AddMembersToGroup(int groupId, List<int> memberIds)

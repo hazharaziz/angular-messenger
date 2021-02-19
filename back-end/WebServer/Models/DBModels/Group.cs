@@ -27,12 +27,10 @@ namespace WebServer.Models.DBModels
         [StringLength(40, MinimumLength = 3)]
         public string GroupName { get; set; }
 
-        [Required]
         [JsonPropertyName("creatorId")]
         [Column("CreatorID")]
         public int CreatorId { get; set; }
 
-        [Required]
         [JsonPropertyName("creatorName")]
         [StringLength(40, MinimumLength = 3)]
         public string CreatorName { get; set; }
