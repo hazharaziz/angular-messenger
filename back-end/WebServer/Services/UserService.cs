@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
 using WebServer.Messages;
+using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 
 namespace WebServer.Services
@@ -47,7 +48,7 @@ namespace WebServer.Services
             List<UserModel> filteredUsers = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(user =>
             {
-                if (user.Username.Contains(text) || user.Name.Contains(text))
+                if ((user.Username.Contains(text) || user.Name.Contains(text)) && user.Id != userId)
                 {
                     filteredUsers.Add(new UserModel()
                     {
