@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Messages;
 using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 
@@ -19,7 +22,17 @@ namespace WebServer.Services
 
         public Response<List<GroupModel>> GetUserGroups(int userId) 
         {
-            throw new NotImplementedException();
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            List<GroupModel> groups = new List<GroupModel>();
+            _unitOfWork.Groups.GetAll().ForEach(group =>
+            {
+                if (_unitOfWork.GroupMembers.IsMemberOfGroup(userId, group.GroupId))
+                    groups.Add(new GroupModel() { GroupId = group.GroupId, GroupName = group.GroupName });
+            });
+
+            return new Response<List<GroupModel>>() { Status = StatusCodes.Status200OK, Data = groups };
         }
 
         public Response<Group> GetGroupInfo(int groupId)
