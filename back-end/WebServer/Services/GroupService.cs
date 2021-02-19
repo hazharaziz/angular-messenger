@@ -257,9 +257,24 @@ namespace WebServer.Services
             return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.MessageEdited };            
         }
 
-        public Response<string> DeleteGroupMessage(int userId, int messageId)
+        public Response<string> DeleteGroupMessage(int userId, int groupId, int messageId)
         {
-            throw new NotImplementedException();
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            GroupMessage message = _unitOfWork.GroupMessages.Get(messageId);
+            _unitOfWork.GroupMessages.Remove(message);
+            _unitOfWork.Save();
+
+            return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.MessageDeleted };
         }
 
         public Response<string> ClearGroupHistory(int userId, int groupId)

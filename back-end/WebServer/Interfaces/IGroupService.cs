@@ -19,7 +19,7 @@ namespace WebServer.Interfaces
         Response<List<GroupMessage>> GetGroupMessages(int userId, int groupId);
         Response<string> SendGroupMessage(int userId, int groupId, GroupMessage message);
         Response<string> EditGroupMessage(int userId, int groupId, GroupMessage editedMessage);
-        Response<string> DeleteGroupMessage(int userId, int messageId);
+        Response<string> DeleteGroupMessage(int userId, int groupId, int messageId);
         Response<string> ClearGroupHistory(int userId, int groupId);
         Response<string> LeaveGroup(int userId, int groupId);
     }
