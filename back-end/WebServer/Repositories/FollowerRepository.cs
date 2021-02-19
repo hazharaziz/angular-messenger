@@ -16,6 +16,9 @@ namespace WebServer.Repositories
         public List<Follower> GetFollowers(int userId)
             => Find(f => (f.UserId == userId) && f.Pending == 0);
 
+        public bool IsFriend(int userId, int followerId)
+            => HasFollower(userId, followerId) && HasFollower(followerId, userId);
+
         public bool HasFollower(int userId, int followerId)
         {
             bool result = false;
