@@ -20,7 +20,7 @@ namespace WebServer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Response<List<GroupModel>> GetUserGroups(int userId) 
+        public Response<List<GroupModel>> GetUserGroups(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
@@ -35,7 +35,7 @@ namespace WebServer.Services
             return new Response<List<GroupModel>>() { Status = StatusCodes.Status200OK, Data = groups };
         }
 
-        public Response<Group> GetGroupInfo(int userId, int groupId)
+        public Response<GroupInfoModel> GetGroupInfo(int userId, int groupId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
@@ -45,7 +45,38 @@ namespace WebServer.Services
 
             Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
 
-            return new Response<Group>() { Status = StatusCodes.Status200OK, Data = group };
+            List<UserModel> members = new List<UserModel>();
+            _unitOfWork.GroupMembers.GetGroupMembers(groupId).ForEach(memberId =>
+            {
+                UserModel userModel = new UserModel();
+                User member = _unitOfWork.Users.Get(memberId);
+                if (member == null)
+                {
+                    userModel.Name = "Deleted Account";
+                }
+                else
+                {
+                    userModel = new UserModel()
+                    {
+                        Id = member.Id,
+                        Username = member.Username,
+                        Name = member.Name,
+                        IsPublic = member.IsPublic
+                    };
+                }
+                members.Add(userModel);
+            });
+
+            GroupInfoModel groupInfo = new GroupInfoModel()
+            {
+                GroupId = group.GroupId,
+                GroupName = group.GroupName,
+                CreatorId = group.CreatorId,
+                CreatorName = group.CreatorName,
+                Members = members
+            };
+
+            return new Response<GroupInfoModel>() { Status = StatusCodes.Status200OK, Data = groupInfo };
         }
 
         public Response<string> CreateGroup(int userId, Group group)
@@ -74,6 +105,9 @@ namespace WebServer.Services
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
 
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
             group.GroupName = editedGroup.GroupName;
             group.AddMemberAccess = editedGroup.AddMemberAccess;
             _unitOfWork.Save();
@@ -100,9 +134,39 @@ namespace WebServer.Services
             return new Response<string>() { Status = StatusCodes.Status200OK, Data = Alerts.GroupDeleted };
         }
 
-        public Response<string> AddMembersToGroup(int groupId, List<int> memberIds)
+        public Response<string> AddMembersToGroup(int userId, int groupId, List<int> memberIds)
         {
-            throw new NotImplementedException();
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+
+            foreach (int memberId in memberIds)
+            {
+                User user = _unitOfWork.Users.Get(memberId);
+                if (user == null)
+                    throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+                if (_unitOfWork.GroupMembers.IsMemberOfGroup(memberId, groupId))
+                    throw new HttpException(StatusCodes.Status409Conflict, Alerts.AlreadyMember);
+
+                if (!_unitOfWork.Followers.IsFriend(userId, memberId))
+                    throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotTwoWayRelation);
+
+                if (group.AddMemberAccess == 0)
+                {
+                    if (userId != group.CreatorId)
+                        throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+                } 
+
+                _unitOfWork.GroupMembers.Add(new GroupMember() { UserId = memberId, GroupId = groupId });
+                group.MembersCount++;
+            }
+
+            _unitOfWork.Save();
+            return new Response<string>() { Status = StatusCodes.Status201Created, Data = Alerts.MemberAdded };
         }
 
         public Response<string> RemoveMemberFromGroup(int groupId, int memberId)

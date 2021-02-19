@@ -55,7 +55,7 @@ namespace WebServer.Controllers
             {
                 var principal = HttpContext.User;
                 int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
-                Response<Group> response = _groupService.GetGroupInfo(userId, groupId);
+                Response<GroupInfoModel> response = _groupService.GetGroupInfo(userId, groupId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -130,6 +130,28 @@ namespace WebServer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
+
+        [Authorize]
+        [HttpPost("{groupId}/add-member")]
+        public IActionResult AddMemberToGroup(int groupId, [FromBody] List<int> memberIds)
+        {
+            try
+            {
+                var principal = HttpContext.User;
+                int userId = int.Parse(_authService.GetPrincipalClaim(principal, ClaimTypes.NameIdentifier));
+                Response<string> response = _groupService.AddMembersToGroup(userId, groupId, memberIds);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
 
     }
 }

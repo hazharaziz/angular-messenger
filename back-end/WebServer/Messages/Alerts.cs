@@ -40,5 +40,7 @@ namespace WebServer.Messages
         public const string MemberAdded = "Member added to group successfully";
         public const string MemberRemoved = "Member removed from group successfully";
         public const string LeftGroup = "You left the group successfully";
+        public const string AlreadyMember = "User is already member of the group";
+        public const string NotTwoWayRelation = "The relation between you and the user is not two way";
     }
 }
