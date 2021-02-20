@@ -26,26 +26,6 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public IActionResult GetUsers()
-        {
-            try
-            {
-                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<List<UserModel>> response = _userService.GetAllUsers(userId);
-                return StatusCode(response.Status, response.Data);
-            }
-            catch (HttpException exception)
-            {
-                return StatusCode(exception.Status, exception.Message);
-            }
-            catch (Exception exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
-            }
-        }
-
-        [Authorize]
         [HttpGet("{text}")]
         public IActionResult FilterUsers(string text)
         {
