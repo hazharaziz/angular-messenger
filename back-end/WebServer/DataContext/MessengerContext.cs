@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebServer.Models;
+using WebServer.Models.DBModels;
 
 #nullable disable
 
@@ -18,7 +18,12 @@ namespace WebServer.DataContext
         {
         }
 
+        public virtual DbSet<Direct> Directs { get; set; }
+        public virtual DbSet<DirectMessage> DirectMessages { get; set; }
         public virtual DbSet<Follower> Followers { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<GroupMember> GroupMembers { get; set; }
+        public virtual DbSet<GroupMessage> GroupMessages { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -34,34 +39,43 @@ namespace WebServer.DataContext
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
+            modelBuilder.Entity<DirectMessage>(entity =>
+            {
+                entity.HasOne(d => d.Direct)
+                    .WithMany(p => p.DirectMessages)
+                    .HasForeignKey(d => d.DirectId)
+                    .HasConstraintName("FK_DirectMessages_Directs");
+            });
+
             modelBuilder.Entity<Follower>(entity =>
             {
-                entity.HasOne(d => d.FollowerNavigation)
-                    .WithMany(p => p.FollowerFollowerNavigations)
-                    .HasForeignKey(d => d.FollowerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Followers__Follo__32E0915F");
+                entity.Property(e => e.Pending).HasDefaultValueSql("((0))");
+            });
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.FollowerUsers)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Followers__UserI__31EC6D26");
+            modelBuilder.Entity<GroupMember>(entity =>
+            {
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GroupMembers)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_GroupMembers_Groups");
+            });
+
+            modelBuilder.Entity<GroupMessage>(entity =>
+            {
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GroupMessages)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_GroupMessages_Groups");
             });
 
             modelBuilder.Entity<Message>(entity =>
             {
-                entity.Property(e => e.Text).HasDefaultValueSql("('')");
+                entity.Property(e => e.ReplyToId).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Composer)
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.ComposerId)
-                    .HasConstraintName("FK__Messages__Compos__276EDEB3");
-
-                entity.HasOne(d => d.ReplyTo)
-                    .WithMany(p => p.InverseReplyTo)
-                    .HasForeignKey(d => d.ReplyToId)
-                    .HasConstraintName("FK__Messages__ReplyT__286302EC");
+                    .HasConstraintName("FK_Messages_Users");
             });
 
             modelBuilder.Entity<User>(entity =>
