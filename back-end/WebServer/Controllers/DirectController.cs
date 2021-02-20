@@ -49,7 +49,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet("{directId}")]
+        [HttpGet("{directId}/messages")]
         public IActionResult GetDirectMessages(int directId)
         {
             try
@@ -138,7 +138,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("history/{directId}")]
+        [HttpDelete("{directId}/history")]
         public IActionResult DeleteDirectHistory(int directId)
         {
             try
@@ -176,6 +176,5 @@ namespace WebServer.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
-
     }
 }

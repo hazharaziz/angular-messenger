@@ -112,13 +112,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut("accept-request/{requestId}")]
-        public IActionResult AcceptFollowRequest(int requestId)
+        [HttpPut("accept-request/{followerId}")]
+        public IActionResult AcceptFollowRequest(int followerId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.AcceptFollowRequest(userId, requestId);
+                Response<string> response = _relationService.AcceptFollowRequest(userId, followerId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -132,13 +132,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("reject-request/{requestId}")]
-        public IActionResult RejectFollowRequest(int requestId)
+        [HttpDelete("reject-request/{followerId}")]
+        public IActionResult RejectFollowRequest(int followerId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.RejectFollowRequest(userId, requestId);
+                Response<string> response = _relationService.RejectFollowRequest(userId, followerId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -152,13 +152,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("cancel-request/{requestId}")]
-        public IActionResult CancelFollowRequest(int requestId)
+        [HttpDelete("cancel-request/{followerId}")]
+        public IActionResult CancelFollowRequest(int followerId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.CancelRequest(requestId, userId);
+                Response<string> response = _relationService.CancelRequest(followerId, userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

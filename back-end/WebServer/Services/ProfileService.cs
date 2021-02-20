@@ -47,7 +47,7 @@ namespace WebServer.Services
             
             if (editedUser.Username != user.Username)
                 if (_unitOfWork.Users.GetByUsername(editedUser.Username) != null)
-                    throw new HttpException(StatusCodes.Status409Conflict, Alerts.UsernameConflict);
+                    throw new HttpException(StatusCodes.Status409Conflict, Alerts.UsernameExists);
 
             user.Username = editedUser.Username;
             user.Name = editedUser.Name;
