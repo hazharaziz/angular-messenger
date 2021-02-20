@@ -54,7 +54,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<List<DirectMessage>> response = _directService.GetDirectMessages(directId);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<DirectMessage>> response = _directService.GetDirectMessages(userId, directId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -68,7 +69,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("message")]
         public IActionResult SendDirectMessage([FromBody] DirectMessageRequest directMessage)
         {
             try
@@ -97,12 +98,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut]
+        [HttpPut("message")]
         public IActionResult EditDirectMessage([FromBody] DirectMessage message)
         {
             try
             {
-                Response<string> response = _directService.EditDirectMessage(message.DirectMessageId, message);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _directService.EditDirectMessage(userId, message.DirectMessageId, message);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -116,7 +118,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("dm/{messageId}")]
+        [HttpDelete("message/{messageId}")]
         public IActionResult DeleteDirectMessage(int messageId)
         {
             try
@@ -141,7 +143,8 @@ namespace WebServer.Controllers
         {
             try
             {
-                Response<string> response = _directService.DeleteDirectHistory(directId);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _directService.DeleteDirectHistory(userId, directId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -154,14 +157,14 @@ namespace WebServer.Controllers
             }
         }
 
-
         [Authorize]
         [HttpDelete("{directId}")]
         public IActionResult DeleteDirect(int directId)
         {
             try
             {
-                Response<string> response = _directService.DeleteDirect(directId);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _directService.DeleteDirect(userId, directId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

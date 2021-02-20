@@ -34,7 +34,7 @@ namespace WebServer.Messages
         public const string DirectNotFound = "Direct Not Found";
         public const string MessageNotFound = "Message Not Found";
         public const string DirectDeleted = "Direct deleted successfully";
-        public const string HistoryDeleted = "history cleared successfully";
+        public const string HistoryDeleted = "History cleared successfully";
         public const string NotAllowed = "Operation not allowed";
         public const string GroupCreated = "Group created successfully";
         public const string GroupEdited = "Group edited successfully";
