@@ -14,14 +14,5 @@ namespace WebServer.Exceptions
         {
             this.Status = status;
         }
-
-        public HttpException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected HttpException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-
     }
 }
