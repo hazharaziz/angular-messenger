@@ -33,7 +33,7 @@ namespace WebServer.Services
             User dbUser = _unitOfWork.Users.GetByUsername(user.Username);
 
             if (dbUser == null) 
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.NotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
             
             if (dbUser.Password != user.Password) 
                 throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.UnAuthorized);

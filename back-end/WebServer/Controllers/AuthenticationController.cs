@@ -16,6 +16,7 @@ using System.Security.Claims;
 using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 using WebServer.Exceptions;
+using WebServer.Messages;
 
 namespace WebServer.Controllers
 {
@@ -44,9 +45,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
@@ -64,9 +65,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 

@@ -69,16 +69,16 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             List<UserModel> friends = new List<UserModel>();
-            _unitOfWork.Users.GetAll().ForEach(user =>
+            _unitOfWork.Users.GetAll().ForEach(record =>
             {
-                if (_unitOfWork.Followers.IsFriend(userId, user.Id))
+                if (_unitOfWork.Followers.IsFriend(userId, record.Id))
                 {
                     friends.Add(new UserModel()
                     {
-                        Id = user.Id,
-                        Username = user.Username,
-                        Name = user.Name,
-                        IsPublic = user.IsPublic
+                        Id = record.Id,
+                        Username = record.Username,
+                        Name = record.Name,
+                        IsPublic = record.IsPublic
                     });
                 }
             });

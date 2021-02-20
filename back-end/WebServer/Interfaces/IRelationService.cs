@@ -19,7 +19,6 @@ namespace WebServer.Interfaces
         Response<string> AcceptFollowRequest(int userId, int followerId);
         Response<string> RejectFollowRequest(int userId, int followerId);
         Response<string> CancelRequest(int userId, int followerId);
-        Response<string> Unfollow(int userId, int followerId);
-
+        Response<string> DeleteRelation(int userId, int followerId);
     }
 }

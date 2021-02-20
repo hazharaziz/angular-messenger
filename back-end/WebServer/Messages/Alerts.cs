@@ -23,8 +23,10 @@ namespace WebServer.Messages
         public const string RequestCanceled = "Request canceled successfully";
         public const string RequestNotFound = "Follow request not found";
         public const string RelationNotFound = "Relation not found";
-        public const string UserUnfollowed = "User unfollowed successfully";
+        public const string RelationDeleted = "relation deleted successfully";
         public const string AlreadyFollowed = "User has already been followed";
+        public const string AlreadySentRequest = "Request already sent";
+        public const string AlreadyIsFollower = "User is already a follower";
         public const string WrongPassword = "Wrong password";
         public const string PasswordChanged = "Password changed successfully";
         public const string UsernameConflict = "Username Conflict";
@@ -43,5 +45,6 @@ namespace WebServer.Messages
         public const string AlreadyMember = "User is already member of the group";
         public const string NotTwoWayRelation = "The relation between you and the user is not two way";
         public const string ProfileEdited = "Profile edited successfully";
+        public const string SomethingWentWrong = "Something went wrong";
     }
 }

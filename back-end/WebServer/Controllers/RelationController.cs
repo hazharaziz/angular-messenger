@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
+using WebServer.Messages;
 using WebServer.Models.DBModels;
 using WebServer.Models.ResponseModels;
 
@@ -38,13 +39,13 @@ namespace WebServer.Controllers
                 Response<List<UserModel>> response = _relationService.GetFollowers(userId);
                 return StatusCode(response.Status, response.Data);
             }
-            catch (HttpException exception) 
+            catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
@@ -63,9 +64,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
@@ -84,109 +85,129 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
         [Authorize]
-        [HttpPost("send-request/{id}")]
-        public IActionResult SendFollowRequest(int id)
+        [HttpPost("send-request/{targetId}")]
+        public IActionResult SendFollowRequest(int targetId)
         {            
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.SendFollowRequest(id, userId);
+                Response<string> response = _relationService.SendFollowRequest(targetId, userId);
                 return StatusCode(response.Status, response.Data);
-            } 
+            }
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
         [Authorize]
-        [HttpPut("accept-request/{id}")]
-        public IActionResult AcceptFollowRequest(int id)
+        [HttpPut("accept-request/{requestId}")]
+        public IActionResult AcceptFollowRequest(int requestId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.AcceptFollowRequest(userId, id);
+                Response<string> response = _relationService.AcceptFollowRequest(userId, requestId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
         [Authorize]
-        [HttpDelete("reject-request/{id}")]
-        public IActionResult RejectFollowRequest(int id)
+        [HttpDelete("reject-request/{requestId}")]
+        public IActionResult RejectFollowRequest(int requestId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.RejectFollowRequest(userId, id);
+                Response<string> response = _relationService.RejectFollowRequest(userId, requestId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
         [Authorize]
-        [HttpDelete("cancel-request/{id}")]
-        public IActionResult CancelFollowRequest(int id)
+        [HttpDelete("cancel-request/{requestId}")]
+        public IActionResult CancelFollowRequest(int requestId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.CancelRequest(id, userId);
+                Response<string> response = _relationService.CancelRequest(requestId, userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
         [Authorize]
         [HttpDelete("unfollow/{id}")]
-        public IActionResult Unfollow(int id)
+        public IActionResult Unfollow(int followingId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.Unfollow(id, userId);
+                Response<string> response = _relationService.DeleteRelation(followingId, userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("delete-follower/{followerId}")]
+        public IActionResult DeleteFollower(int followerId)
+        {
+            try
+            {
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = _relationService.DeleteRelation(userId, followerId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
     }

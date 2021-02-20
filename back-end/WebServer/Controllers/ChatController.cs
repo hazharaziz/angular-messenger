@@ -41,9 +41,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
@@ -57,9 +57,13 @@ namespace WebServer.Controllers
                 Response<string> response = _chatService.AddMessage(userId, message);
                 return StatusCode(response.Status, response.Data);
             }
-            catch (Exception exception)
+            catch (HttpException exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
@@ -77,9 +81,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
 
@@ -97,9 +101,9 @@ namespace WebServer.Controllers
             {
                 return StatusCode(exception.Status, exception.Message);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
             }
         }
     }
