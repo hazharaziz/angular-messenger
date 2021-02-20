@@ -13,7 +13,7 @@ namespace WebServer.Repositories
     {
         public GroupRepository(MessengerContext messengerContext): base(messengerContext) { }
 
-        public Group GetGroupInfo(int groupId)
+        public Group Get(int groupId)
             => Find(g => g.GroupId == groupId).FirstOrDefault();
     }
 }

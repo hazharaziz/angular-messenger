@@ -29,7 +29,7 @@ namespace WebServer.Messages
         public const string AlreadyIsFollower = "User is already a follower";
         public const string WrongPassword = "Wrong password";
         public const string PasswordChanged = "Password changed successfully";
-        public const string UsernameConflict = "Username Conflict";
+        public const string UsernameExists = "Username already exists";
         public const string AccountDeleted = "Account deleted successfully";
         public const string DirectNotFound = "Direct Not Found";
         public const string MessageNotFound = "Message Not Found";
@@ -43,8 +43,9 @@ namespace WebServer.Messages
         public const string MemberRemoved = "Member removed from group successfully";
         public const string LeftGroup = "You left the group successfully";
         public const string AlreadyMember = "User is already member of the group";
-        public const string NotTwoWayRelation = "The relation between you and the user is not two way";
+        public const string NotFriends = "User is not your friend";
         public const string ProfileEdited = "Profile edited successfully";
         public const string SomethingWentWrong = "Something went wrong";
+        public const string GroupNotFound = "Group not found";
     }
 }

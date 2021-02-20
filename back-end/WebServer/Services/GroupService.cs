@@ -39,11 +39,14 @@ namespace WebServer.Services
         {
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+            
+            Group group = _unitOfWork.Groups.Get(groupId);
+            if (group == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.GroupNotFound);
 
             if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
 
             List<UserModel> members = new List<UserModel>();
             _unitOfWork.GroupMembers.GetGroupMembers(groupId).ForEach(memberId =>
@@ -103,11 +106,11 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.GroupNotFound);
 
-            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId) || group.CreatorId != userId)
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             group.GroupName = editedGroup.GroupName;
@@ -123,7 +126,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -141,7 +144,7 @@ namespace WebServer.Services
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -152,10 +155,10 @@ namespace WebServer.Services
                     throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
                 if (_unitOfWork.GroupMembers.IsMemberOfGroup(memberId, groupId))
-                    throw new HttpException(StatusCodes.Status409Conflict, Alerts.AlreadyMember);
+                    throw new HttpException(StatusCodes.Status400BadRequest, Alerts.AlreadyMember);
 
                 if (!_unitOfWork.Followers.IsFriend(userId, memberId))
-                    throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotTwoWayRelation);
+                    throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotFriends);
 
                 if (group.AddMemberAccess == 0)
                 {
@@ -177,7 +180,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -188,6 +191,7 @@ namespace WebServer.Services
             if (groupMember == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
+            group.MembersCount--;
             _unitOfWork.GroupMembers.Remove(groupMember);
             _unitOfWork.Save();
 
@@ -200,7 +204,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -218,7 +222,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -239,7 +243,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -263,7 +267,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -271,6 +275,9 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             GroupMessage message = _unitOfWork.GroupMessages.Get(messageId);
+            if (message == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
+
             _unitOfWork.GroupMessages.Remove(message);
             _unitOfWork.Save();
 
@@ -283,7 +290,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
@@ -302,7 +309,7 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.GetGroupInfo(groupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 

@@ -15,6 +15,6 @@ namespace WebServer.Interfaces
         void AddRange(IEnumerable<Group> entities);
         void Remove(Group entity);
         void RemoveRange(IEnumerable<Group> entities);
-        Group GetGroupInfo(int groupId);
+        Group Get(int groupId);
     }
 }
