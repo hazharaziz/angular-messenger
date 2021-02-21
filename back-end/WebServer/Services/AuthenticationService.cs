@@ -36,7 +36,7 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
             
             if (dbUser.Password != user.Password) 
-                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.UnAuthorized);
+                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
 
             return new Response<UserModel>()
             {
@@ -76,14 +76,21 @@ namespace WebServer.Services
             };
         }
 
-        public string GenerateJSONWebToken(string id, string username)
+        public string GenerateJSONWebToken(int id, string username)
         {
+            User user = _unitOfWork.Users.Get(id);
+            if (user == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            if (user.Username != username)
+                throw new HttpException(StatusCodes.Status403Forbidden, Alerts.Forbidden);
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
                 new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.NameIdentifier, id)
+                new Claim(ClaimTypes.NameIdentifier, id.ToString())
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
