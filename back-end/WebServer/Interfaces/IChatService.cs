@@ -10,7 +10,6 @@ namespace WebServer.Interfaces
     public interface IChatService
     {
         Response<List<Message>> FetchFriendsMessages(int userId);
-        Response<List<Message>> FetchFriendsMessages(string username);
         Response<string> AddMessage(int userId, Message message);
         Response<string> EditMessage(int userId, int messageId, Message message);
         Response<string> DeleteMessage(int userId, int messageId);

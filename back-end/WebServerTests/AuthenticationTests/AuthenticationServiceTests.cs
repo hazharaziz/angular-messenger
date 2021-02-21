@@ -7,19 +7,17 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WebServer.DataContext;
 using WebServer.Exceptions;
 using WebServer.Interfaces;
 using WebServer.Messages;
 using WebServer.Models.DBModels;
 using WebServer.Models.RequestModels;
 using WebServer.Models.ResponseModels;
-using WebServer.Repositories;
 using WebServer.Services;
 using WebServerTests.TestData;
 using Xunit;
 
-namespace WebServerTests.AuthenticationTests
+namespace WebServerTests
 {
     public class AuthenticationServiceTests
     {
@@ -121,16 +119,12 @@ namespace WebServerTests.AuthenticationTests
             _unitOfWork.Setup(u => u.Users.GetByUsername(user.Username))
                        .Returns(Users.Null);
             
-            var expected = new 
-                HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
-
             // Act
             Action action = () => _authService.AuthenticateUser(user);
 
             // Assert
             Assert.Throws<HttpException>(action);
         }
-
 
         [Fact]
         public void AuthenticateUser_ThrowsHttpException_Status401Unauthorized()

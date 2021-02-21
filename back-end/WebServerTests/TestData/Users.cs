@@ -46,6 +46,15 @@ namespace WebServerTests.TestData
             IsPublic = 1
         };
 
+        public static User Nico = new User()
+        {
+            Id = 13,
+            Username = "nico",
+            Password = "1234",
+            Name = "Nico Lara",
+            IsPublic = 0
+        };
+
         public static User Null = null;
     }
 }
