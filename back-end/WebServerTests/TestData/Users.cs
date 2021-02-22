@@ -34,7 +34,7 @@ namespace WebServerTests.TestData
             Username = "adam",
             Password = "12346",
             Name = "Adam Bradley",
-            IsPublic = 1
+            IsPublic = 0
         };
 
         public static User Patrick = new User()

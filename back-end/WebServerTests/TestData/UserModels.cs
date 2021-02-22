@@ -30,7 +30,7 @@ namespace WebServerTests.TestData
             Id = 8,
             Username = "adam",
             Name = "Adam Bradley",
-            IsPublic = 1
+            IsPublic = 0
         };
 
         public static UserModel Patrick = new UserModel()
