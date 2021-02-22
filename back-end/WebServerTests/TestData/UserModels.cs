@@ -12,32 +12,40 @@ namespace WebServerTests.TestData
         public static UserModel Isaac = new UserModel()
         {
             Id = 1,
-            Username = "isaac",
-            Name = "Isaac Green",
+            Username = Users.Isaac.Username,
+            Name = Users.Isaac.Name,
             IsPublic = 0
         };
 
         public static UserModel Oscar = new UserModel()
         {
             Id = 2,
-            Username = "oscar",
-            Name = "Oscar Barker",
+            Username = Users.Oscar.Username,
+            Name = Users.Oscar.Name,
             IsPublic = 1
         };
 
         public static UserModel Adam = new UserModel()
         {
             Id = 8,
-            Username = "adam",
-            Name = "Adam Bradley",
+            Username = Users.Adam.Username,
+            Name = Users.Adam.Name,
             IsPublic = 0
         };
 
         public static UserModel Patrick = new UserModel()
         {
             Id = 10,
-            Username = "patrick",
-            Name = "Patrick Holmes",
+            Username = Users.Patrick.Username,
+            Name = Users.Patrick.Name,
+            IsPublic = 1
+        };
+
+        public static UserModel Nico = new UserModel()
+        {
+            Id = 10,
+            Username = Users.Nico.Username,
+            Name = Users.Nico.Name,
             IsPublic = 1
         };
     }

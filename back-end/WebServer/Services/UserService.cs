@@ -48,7 +48,8 @@ namespace WebServer.Services
             List<UserModel> filteredUsers = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(user =>
             {
-                if ((user.Username.Contains(text) || user.Name.Contains(text)) && user.Id != userId)
+                if ((user.Username.ToLower().Contains(text.ToLower()) || 
+                    user.Name.ToLower().Contains(text.ToLower())) && user.Id != userId)
                 {
                     filteredUsers.Add(new UserModel()
                     {
@@ -71,15 +72,18 @@ namespace WebServer.Services
             List<UserModel> friends = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(record =>
             {
-                if (_unitOfWork.Followers.IsFriend(userId, record.Id))
+                if (record.Id != userId)
                 {
-                    friends.Add(new UserModel()
+                    if (_unitOfWork.Followers.IsFriend(userId, record.Id))
                     {
-                        Id = record.Id,
-                        Username = record.Username,
-                        Name = record.Name,
-                        IsPublic = record.IsPublic
-                    });
+                        friends.Add(new UserModel()
+                        {
+                            Id = record.Id,
+                            Username = record.Username,
+                            Name = record.Name,
+                            IsPublic = record.IsPublic
+                        });
+                    }
                 }
             });
 
