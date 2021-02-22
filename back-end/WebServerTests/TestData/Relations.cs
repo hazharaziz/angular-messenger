@@ -60,7 +60,7 @@ namespace WebServerTests.TestData
         public static Follower Relation7 = new Follower()
         {
             RelationId = 7,
-            UserId = Users.Oscar.Id,
+            UserId = Users.Adam.Id,
             FollowerId = Users.Isaac.Id,
             Pending = 0
         };

@@ -47,5 +47,7 @@ namespace WebServer.Messages
         public const string ProfileEdited = "Profile edited successfully";
         public const string SomethingWentWrong = "Something went wrong";
         public const string GroupNotFound = "Group not found";
+        public const string MemberNotFound = "Member not found";
+        public const string NotGroupMember = "User is not a member of this group";
     }
 }

@@ -68,6 +68,28 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
+        [HttpGet("{groupId}/friends")]
+        public IActionResult GetAvailableFriends(int groupId)
+        {
+            try
+            {
+                int userId = int.Parse
+                    (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<UserModel>> response = 
+                    _groupService.GetAvailableFriends(userId, groupId);
+                return StatusCode(response.Status, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         public IActionResult CreateGroup([FromBody] Group group)
         {
@@ -209,13 +231,16 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut("{groupId}/messages")]
-        public IActionResult EditGroupMessage(int groupId, [FromBody] GroupMessage groupMessage)
+        [HttpPut("{groupId}/messages/{messageId}")]
+        public IActionResult EditGroupMessage
+            (int groupId, int messageId, [FromBody] GroupMessage groupMessage)
         {
             try
             {
-                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _groupService.EditGroupMessage(userId, groupId, groupMessage);
+                int userId = int.Parse
+                    (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = 
+                    _groupService.EditGroupMessage(userId, messageId, groupMessage);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

@@ -65,7 +65,8 @@ namespace WebServer.Services
 
         public Response<string> SendDirectMessage(int userId, int targetId, DirectMessage directMessage)
         {
-            if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(targetId) == null)
+            User user = _unitOfWork.Users.Get(userId);
+            if (user == null || _unitOfWork.Users.Get(targetId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             Direct direct = _unitOfWork.Directs.Get(directMessage.DirectId);
@@ -80,7 +81,8 @@ namespace WebServer.Services
 
             direct = _unitOfWork.Directs.Get(userId, targetId);
             directMessage.DirectId = direct.DirectId;
-            directMessage.ComposerId = userId;
+            directMessage.ComposerId = user.Id;
+            directMessage.ComposerName = user.Name;
             _unitOfWork.DirectMessages.Add(directMessage);
             _unitOfWork.Save();
 
@@ -134,27 +136,6 @@ namespace WebServer.Services
             };
         }
 
-        public Response<string> DeleteDirect(int userId, int directId)
-        {
-            if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
-
-            Direct direct = _unitOfWork.Directs.Get(directId);
-            if (direct == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.DirectNotFound);
-
-            if (direct.FirstUserId != userId && direct.SecondUserId != userId)
-                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
-
-            _unitOfWork.Directs.Remove(direct);
-            _unitOfWork.Save();
-            return new Response<string>()
-            {
-                Status = StatusCodes.Status200OK,
-                Data = Alerts.DirectDeleted
-            };
-        }
-
         public Response<string> DeleteDirectHistory(int userId, int directId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
@@ -180,5 +161,27 @@ namespace WebServer.Services
                 Data = Alerts.HistoryDeleted
             };
         }
+
+        public Response<string> DeleteDirect(int userId, int directId)
+        {
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            Direct direct = _unitOfWork.Directs.Get(directId);
+            if (direct == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.DirectNotFound);
+
+            if (direct.FirstUserId != userId && direct.SecondUserId != userId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            _unitOfWork.Directs.Remove(direct);
+            _unitOfWork.Save();
+            return new Response<string>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = Alerts.DirectDeleted
+            };
+        }
+
     }
 }
