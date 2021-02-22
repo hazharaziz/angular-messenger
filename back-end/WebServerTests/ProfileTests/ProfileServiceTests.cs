@@ -91,7 +91,6 @@ namespace WebServerTests
             Assert.Throws<HttpException>(action);
         }
 
-
         [Fact]
         public void EditProfile_ThrowsHttpException_Status409Conflict()
         {

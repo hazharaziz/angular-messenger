@@ -131,9 +131,15 @@ namespace WebServerTests
         {
             // Arrange
             LoginRequest user = LoginRequests.Isaac;
-            user.Password = "1234";
             _unitOfWork.Setup(u => u.Users.GetByUsername(user.Username))
-                       .Returns(Users.Isaac);
+                       .Returns(new User()
+                       {
+                           Id = Users.Isaac.Id,
+                           Username = Users.Isaac.Username,
+                           Password = "1234",
+                           Name = Users.Isaac.Name,
+                           IsPublic = Users.Isaac.IsPublic
+                       });
             var expected = new HttpException
                         (StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
 

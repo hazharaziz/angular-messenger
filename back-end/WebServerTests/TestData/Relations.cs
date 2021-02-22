@@ -104,5 +104,7 @@ namespace WebServerTests.TestData
             FollowerId = Users.Oscar.Id,
             Pending = 0
         };
+
+        public static Follower Null = null;
     }
 }

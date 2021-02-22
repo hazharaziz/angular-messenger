@@ -34,8 +34,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetClaim(principal, ClaimTypes.NameIdentifier);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<UserModel>> response = _relationService.GetFollowers(userId);
                 return StatusCode(response.Status, response.Data);
             }
@@ -55,8 +54,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetClaim(principal, ClaimTypes.NameIdentifier);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<UserModel>> response = _relationService.GetFollowings(userId);
                 return StatusCode(StatusCodes.Status200OK, response.Data);
             }
@@ -76,8 +74,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                var principal = HttpContext.User;
-                string userId = _authService.GetClaim(principal, ClaimTypes.NameIdentifier);
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<UserModel>> response = _relationService.GetFollowRequests(userId);
                 return StatusCode(StatusCodes.Status200OK, response.Data);
             }
@@ -158,7 +155,7 @@ namespace WebServer.Controllers
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.CancelRequest(followerId, userId);
+                Response<string> response = _relationService.CancelFollowRequest(followerId, userId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

@@ -18,6 +18,8 @@ namespace WebServer.Interfaces
         List<Follower> GetFollowers(int userId);
         List<Follower> GetFollowings(int userId);
         List<Follower> GetFollowRequests(int userId);
+        Follower GetRelation(int userId, int followerId);
+        Follower GetRequest(int userId, int followerId);
         bool IsFriend(int userId, int followerId);
         bool HasFollower(int userId, int followerId);
         bool HasRequestFrom(int userId, int followerId);
