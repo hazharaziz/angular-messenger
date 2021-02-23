@@ -892,7 +892,7 @@ namespace WebServerTests
             _unitOfWork.Setup(u => u.Save());
 
             // Act
-            var response = _groupService.EditGroupMessage(user.Id, group.GroupId, message);
+            var response = _groupService.EditGroupMessage(user.Id, group.GroupId, message.GroupMessageId, message);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -910,7 +910,7 @@ namespace WebServerTests
 
             // Act
             Action action =
-                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message);
+                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message.GroupMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -930,7 +930,7 @@ namespace WebServerTests
 
             // Act
             Action action =
-                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message);
+                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message.GroupMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -951,7 +951,7 @@ namespace WebServerTests
                 .Returns(false);
             // Act
             Action action =
-                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message);
+                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message.GroupMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -975,7 +975,7 @@ namespace WebServerTests
 
             // Act
             Action action =
-                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message);
+                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message.GroupMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -999,7 +999,7 @@ namespace WebServerTests
 
             // Act
             Action action =
-                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message);
+                () => _groupService.EditGroupMessage(user.Id, group.GroupId, message.GroupMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
