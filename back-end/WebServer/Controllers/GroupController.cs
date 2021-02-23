@@ -240,7 +240,7 @@ namespace WebServer.Controllers
                 int userId = int.Parse
                     (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = 
-                    _groupService.EditGroupMessage(userId, messageId, groupMessage);
+                    _groupService.EditGroupMessage(userId, groupId, messageId, groupMessage);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)

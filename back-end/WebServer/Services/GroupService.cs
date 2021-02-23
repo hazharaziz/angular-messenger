@@ -55,6 +55,7 @@ namespace WebServer.Services
                 User member = _unitOfWork.Users.Get(memberId);
                 if (member == null)
                 {
+                    userModel.Id = memberId;
                     userModel.Name = "Deleted Account";
                 }
                 else
@@ -128,6 +129,7 @@ namespace WebServer.Services
             if (user.Id != group.CreatorId)
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
+            group.CreatorName = user.Name;
             group.MembersCount = 1;
             _unitOfWork.Groups.Add(group);
             _unitOfWork.Save();
@@ -226,7 +228,7 @@ namespace WebServer.Services
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.GroupNotFound);
 
-            if (userId != group.CreatorId)
+            if (userId != group.CreatorId || userId == memberId)
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             GroupMember groupMember = _unitOfWork.GroupMembers.GetGroupMember(groupId, memberId);
@@ -248,7 +250,7 @@ namespace WebServer.Services
 
             Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.GroupNotFound);
 
             if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotGroupMember);
@@ -280,17 +282,17 @@ namespace WebServer.Services
             return new Response<string>() { Status = StatusCodes.Status201Created, Data = Alerts.MessageCreated };
         }
 
-        public Response<string> EditGroupMessage(int userId, int messageId, GroupMessage editedMessage)
+        public Response<string> EditGroupMessage(int userId, int groupId, int messageId, GroupMessage editedMessage)
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            Group group = _unitOfWork.Groups.Get(editedMessage.GroupId);
+            Group group = _unitOfWork.Groups.Get(groupId);
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.GroupNotFound);
 
-            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, editedMessage.GroupId))
+            if (!_unitOfWork.GroupMembers.IsMemberOfGroup(userId, groupId))
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotGroupMember);
 
             GroupMessage message = _unitOfWork.GroupMessages.Get(messageId);

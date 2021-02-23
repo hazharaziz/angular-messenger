@@ -80,7 +80,6 @@ namespace WebServer.Controllers
                 {
                     DirectId = directMessage.DirectId,
                     Text = directMessage.Text,
-                    ComposerName = directMessage.ComposerName,
                     DateTime = directMessage.DateTime,
                     ReplyToId = directMessage.ReplyToId
                 };

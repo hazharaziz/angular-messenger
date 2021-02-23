@@ -169,7 +169,7 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("unfollow/{id}")]
+        [HttpDelete("unfollow/{followingId}")]
         public IActionResult Unfollow(int followingId)
         {
             try

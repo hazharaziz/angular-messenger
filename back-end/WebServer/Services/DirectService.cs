@@ -77,6 +77,7 @@ namespace WebServer.Services
                     FirstUserId = userId,
                     SecondUserId = targetId
                 });
+                _unitOfWork.Save();
             }
 
             direct = _unitOfWork.Directs.Get(userId, targetId);
