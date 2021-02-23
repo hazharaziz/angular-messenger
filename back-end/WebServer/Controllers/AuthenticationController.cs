@@ -38,7 +38,7 @@ namespace WebServer.Controllers
             try
             {
                 Response<UserModel> response = _authService.AuthenticateUser(login);
-                response.Token = _authService.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
+                response.Token = _authService.GenerateJSONWebToken(response.Data.Id, response.Data.Username);
                 return StatusCode(response.Status, response);
             }
             catch (HttpException exception)
@@ -58,7 +58,7 @@ namespace WebServer.Controllers
             try
             {
                 Response<UserModel> response = _authService.SignUpUser(newUser);
-                response.Token = _authService.GenerateJSONWebToken(response.Data.Id.ToString(), response.Data.Username);
+                response.Token = _authService.GenerateJSONWebToken(response.Data.Id, response.Data.Username);
                 return StatusCode(response.Status, response);
             }
             catch (HttpException exception)

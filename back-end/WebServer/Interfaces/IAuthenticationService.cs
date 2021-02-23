@@ -13,7 +13,7 @@ namespace WebServer.Interfaces
     {
         Response<UserModel> AuthenticateUser(LoginRequest user);
         Response<UserModel> SignUpUser(User newUser);
-        string GenerateJSONWebToken(string id, string username);
+        string GenerateJSONWebToken(int id, string username);
         string GetClaim(ClaimsPrincipal principal, string type);
     }
 }

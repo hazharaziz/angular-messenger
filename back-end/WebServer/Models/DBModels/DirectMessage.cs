@@ -33,12 +33,10 @@ namespace WebServer.Models.DBModels
         [StringLength(400)]
         public string Text { get; set; }
 
-        [Required]
         [JsonPropertyName("composerName")]
         [StringLength(40, MinimumLength = 3)]
         public string ComposerName { get; set; }
 
-        [Required]
         [JsonPropertyName("dateTime")]
         [Column(TypeName = "datetime")]
         public DateTime DateTime { get; set; }

@@ -28,25 +28,20 @@ namespace WebServer.Services
             if (user == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            List<int> followingsIds = _relationService.GetFollowings(userId).Data.Select(f => f.Id).ToList();
+            List<int> followingsIds = _unitOfWork.Followers.GetFollowings(userId)
+                                                 .Select(f => f.UserId)
+                                                 .ToList();
             List<Message> allMessages = _unitOfWork.Messages.GetAll()
-                        .Where(message => followingsIds.Contains(message.ComposerId) || message.ComposerId == userId)
-                        .OrderByDescending(m => m.DateTime).ToList();
+                        .Where(message => followingsIds.Contains(message.ComposerId) || 
+                               message.ComposerId == userId)
+                        .OrderByDescending(m => m.DateTime)
+                        .ToList();
 
             return new Response<List<Message>>() 
             { 
                 Status = StatusCodes.Status200OK,
                 Data =  allMessages
             };
-        }
-
-        public Response<List<Message>> FetchFriendsMessages(string username)
-        {
-            User user = _unitOfWork.Users.GetByUsername(username);
-            if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
-
-            return FetchFriendsMessages(user.Id);
         }
 
         public Response<string> AddMessage(int userId, Message message)

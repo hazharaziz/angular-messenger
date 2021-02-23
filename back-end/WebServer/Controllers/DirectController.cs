@@ -80,7 +80,6 @@ namespace WebServer.Controllers
                 {
                     DirectId = directMessage.DirectId,
                     Text = directMessage.Text,
-                    ComposerName = directMessage.ComposerName,
                     DateTime = directMessage.DateTime,
                     ReplyToId = directMessage.ReplyToId
                 };
@@ -98,13 +97,15 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut("message")]
-        public IActionResult EditDirectMessage([FromBody] DirectMessage message)
+        [HttpPut("message/{messageId}")]
+        public IActionResult EditDirectMessage(int messageId, [FromBody] DirectMessage message)
         {
             try
             {
-                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _directService.EditDirectMessage(userId, message.DirectMessageId, message);
+                int userId = int.Parse
+                    (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<string> response = 
+                    _directService.EditDirectMessage(userId, messageId, message);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
