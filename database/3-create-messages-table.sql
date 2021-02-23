@@ -1,13 +1,36 @@
-CREATE TABLE Messenger.[dbo].[Messages]
-(
-	MessageID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-	ComposerID INT FOREIGN KEY REFERENCES Messenger.dbo.Users(ID) NOT NULL ,
-	ReplyToID INT,
-	Text NVARCHAR(400) NOT NULL DEFAULT '',
-	ComposerName NVARCHAR(70) NOT NULL,
-	DateTime datetime NOT NULL,
-);
+USE [Messenger]
+GO
 
-SELECT * FROM Messenger.dbo.Messages;
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Messages](
+	[MessageID] [int] IDENTITY(1,1) NOT NULL,
+	[ComposerID] [int] NOT NULL,
+	[ReplyToID] [int] NULL,
+	[Text] [nvarchar](400) NOT NULL,
+	[ComposerName] [nvarchar](70) NOT NULL,
+	[DateTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
+(
+	[MessageID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_ReplyToID]  DEFAULT ((0)) FOR [ReplyToID]
+GO
+
+ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Messages_Users] FOREIGN KEY([ComposerID])
+REFERENCES [dbo].[Users] ([ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Messages] CHECK CONSTRAINT [FK_Messages_Users]
+GO
 
 
