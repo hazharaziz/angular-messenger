@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="card bg-dark rounded-lg card-container">
+    <div class="card-body">
+      <h2 class="card-title d-flex justify-content-center title">Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username" class="input-label">Username</label>
+          <input
+            type="text"
+            formControlName="username"
+            id="username"
+            [ngClass]="{
+              'is-valid': validUsername && username.value.length != 0,
+              'is-invalid': !validUsername
+            }"
+            class="form-control bg-dark text-light rounded-lg"
+          />
+          <div
+            *ngIf="!validUsername"
+            class="invalid-feedback"
+            style="color: #fb3449"
+          >
+            Username should be 3 to 20 characters long
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="input-label">Password</label>
+          <input
+            type="text"
+            formControlName="password"
+            id="password"
+            [ngClass]="{
+              'is-valid': validPassword && password.value.length != 0,
+              'is-invalid': !validPassword
+            }"
+            class="form-control bg-dark text-light rounded-lg"
+          />
+          <div
+            *ngIf="!validPassword"
+            class="invalid-feedback"
+            style="color: #fb3449"
+          >
+            Password should be 4 to 16 characters long
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="!loginForm.valid"
+          class="btn btn-danger text-light rounded-lg btn-submit"
+        >
+          Login
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-link text-light text-decoration-none btn-signup"
+        >
+          Don't have an account?&nbsp;<span style="font-weight: 600"
+            >Sign Up</span
+          >
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

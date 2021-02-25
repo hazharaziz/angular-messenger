@@ -1,0 +1,41 @@
+* {
+  color: #fff;
+}
+
+.container {
+  width: 25rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.card-container {
+  padding: 10px;
+}
+
+.title {
+  padding: 10px;
+  color: #fff;
+}
+
+.input-label {
+  font-weight: 300;
+  margin-left: 5px;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 0 auto;
+}
+
+.btn-signup {
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 0 auto;
+}
