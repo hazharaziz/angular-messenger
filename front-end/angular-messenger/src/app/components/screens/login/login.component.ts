@@ -3,7 +3,8 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  AbstractControl
+  AbstractControl,
+  FormBuilder
 } from '@angular/forms';
 import { Login } from 'src/app/models/requests/login.model';
 import { Request } from 'src/app/models/requests/request.model';
@@ -15,51 +16,46 @@ import { CustomValidator } from 'src/app/utils/customValidator';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: Request<Login>;
+  private user: Request<Login>;
+  loginForm: FormGroup;
+  showWarning: boolean;
 
-  loginForm = new FormGroup({
-    username: new FormControl('', [
-      CustomValidator.ValidateString(3, 20),
-      Validators.required
-    ]),
-    password: new FormControl('', [
-      CustomValidator.ValidateString(4, 16),
-      Validators.required
-    ])
-  });
-
-  constructor() {
+  constructor(private fb: FormBuilder) {
     this.user = {
       payload: {
         username: '',
         password: ''
       }
     };
+    this.loginForm = this.fb.group({
+      username: [
+        '',
+        [CustomValidator.ValidateString(3, 20), Validators.required]
+      ],
+      password: [
+        '',
+        [CustomValidator.ValidateString(4, 16), Validators.required]
+      ]
+    });
+    this.showWarning = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit = (): void => {};
 
-  onSubmit() {
-    this.user.payload = {
-      username: this.username.value,
-      password: this.password.value
-    };
-
+  onSubmit = () => {
+    if (!this.loginForm.valid) {
+      this.showWarning = true;
+      return;
+    }
+    this.showWarning = false;
+    this.user.payload = this.loginForm.value;
     console.log(JSON.stringify(this.user.payload, undefined, 2));
-  }
+  };
 
   get username(): AbstractControl {
     return this.loginForm.get('username');
   }
   get password(): AbstractControl {
     return this.loginForm.get('password');
-  }
-
-  get validUsername(): boolean {
-    return this.username.valid || this.username.value.length == 0;
-  }
-
-  get validPassword(): boolean {
-    return this.password.valid || this.password.value.length == 0;
   }
 }

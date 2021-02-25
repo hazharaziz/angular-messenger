@@ -20,22 +20,18 @@
   color: #fff;
 }
 
-.input-label {
-  font-weight: 300;
-  margin-left: 5px;
+.warning {
+  transition-timing-function: linear;
+  transition: 0.2s;
 }
 
-.btn-submit {
+.btn-custom {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 15px auto 0 auto;
 }
 
-.btn-signup {
+.link-signup {
   font-weight: 300;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 15px auto 0 auto;
 }

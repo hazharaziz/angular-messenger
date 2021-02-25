@@ -6,9 +6,10 @@ import { LoginComponent } from './components/screens/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InputFormComponent } from './components/shared/input-form/input-form.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, InputFormComponent],
   imports: [
     BrowserModule,
     StoreModule.forRoot({}),

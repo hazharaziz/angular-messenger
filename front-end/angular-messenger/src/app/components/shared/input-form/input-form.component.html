@@ -1,0 +1,24 @@
+<div class="form-group">
+  <label class="input-label">{{ label }}</label>
+  <input
+    [type]="inputType"
+    [ngClass]="{
+      'is-valid':
+        checkValidation && formField.valid && formField.value.length != 0,
+      'is-invalid':
+        checkValidation && formField.invalid && formField.value.length != 0
+    }"
+    class="form-control bg-dark text-light rounded-lg"
+    [value]="value"
+    [disabled]="isDisabled"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+  />
+  <div
+    *ngIf="checkValidation && formField.invalid"
+    class="invalid-feedback"
+    style="color: #fb3449"
+  >
+    {{ error }}
+  </div>
+</div>
