@@ -8,9 +8,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InputFormComponent } from './components/shared/input-form/input-form.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { SignupComponent } from './components/screens/signup/signup.component';
+import { PageNotFoundComponent } from './components/screens/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, InputFormComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    InputFormComponent,
+    SignupComponent,
+    PageNotFoundComponent
+  ],
   imports: [
     BrowserModule,
     StoreModule.forRoot({}),
