@@ -5,7 +5,8 @@ import { PageNotFoundComponent } from '../components/screens/page-not-found/page
 import { SignupComponent } from '../components/screens/signup/signup.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'sign-up', component: SignupComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

@@ -6,7 +6,7 @@ import {
   AbstractControl,
   FormBuilder
 } from '@angular/forms';
-import { Login } from 'src/app/models/requests/login.model';
+import { Login } from 'src/app/models/data/login.model';
 import { Request } from 'src/app/models/requests/request.model';
 import { CustomValidator } from 'src/app/utils/customValidator';
 
