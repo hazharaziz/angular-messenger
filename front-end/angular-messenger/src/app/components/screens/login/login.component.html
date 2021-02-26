@@ -1,7 +1,7 @@
 <div class="container">
   <div class="card bg-dark rounded-lg card-container">
     <div class="card-body">
-      <h2 class="card-title d-flex justify-content-center title">Login</h2>
+      <h2 class="card-title d-flex justify-content-center title">LOGIN</h2>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <app-input-form
           [parentForm]="loginForm"
@@ -15,10 +15,23 @@
           [parentForm]="loginForm"
           fieldName="password"
           label="Password"
-          inputType="password"
+          [inputType]="hide ? 'password' : 'text'"
           formControlName="password"
           error="Password should be 4 to 16 characters long"
         ></app-input-form>
+        <div
+          class="form-group form-check"
+          style="margin-top: -5px; margin-left: 5px"
+        >
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [checked]="!hide"
+            (change)="togglePassword()"
+          />
+          <label class="form-check-label">Show password</label>
+        </div>
+
         <div
           *ngIf="showWarning"
           class="text-warning d-flex justify-content-center warning"
@@ -38,7 +51,7 @@
           routerLink="../sign-up"
         >
           Don't have an account?&nbsp;<span style="font-weight: 600"
-            >Sign Up</span
+            >SIGN UP</span
           >
         </button>
       </form>

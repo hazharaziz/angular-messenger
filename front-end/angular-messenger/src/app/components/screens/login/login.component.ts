@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   private user: Request<Login>;
   loginForm: FormGroup;
   showWarning: boolean;
+  hide: boolean;
 
   constructor(private fb: FormBuilder) {
     this.user = {
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
       ]
     });
     this.showWarning = false;
+    this.hide = true;
   }
 
   ngOnInit = (): void => {};
@@ -50,6 +52,10 @@ export class LoginComponent implements OnInit {
     this.showWarning = false;
     this.user.payload = this.loginForm.value;
     console.log(JSON.stringify(this.user.payload, undefined, 2));
+  };
+
+  togglePassword = () => {
+    this.hide = !this.hide;
   };
 
   get username(): AbstractControl {

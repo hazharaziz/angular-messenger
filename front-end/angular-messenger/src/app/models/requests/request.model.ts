@@ -1,4 +1,4 @@
 export type Request<T> = {
   token?: string;
-  payload: T;
+  payload?: T;
 };

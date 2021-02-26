@@ -2,7 +2,6 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
   FormGroup,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
@@ -26,6 +25,7 @@ export class InputFormComponent implements ControlValueAccessor {
   @Input() inputType: string;
   @Input() error: string;
   @Input() checkValidation?: boolean;
+  @Input() hidePassword?: boolean;
 
   get formField(): AbstractControl {
     return this.parentForm.get(this.fieldName);
