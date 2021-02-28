@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   private user: Request<Login>;
   loginForm: FormGroup;
   showWarning: boolean;
-  hide: boolean;
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) {
     this.user = {
@@ -43,7 +42,6 @@ export class LoginComponent implements OnInit {
       ]
     });
     this.showWarning = false;
-    this.hide = true;
   }
 
   ngOnInit = (): void => {};
@@ -56,10 +54,6 @@ export class LoginComponent implements OnInit {
     this.showWarning = false;
     this.user.data = this.loginForm.value;
     this.store.dispatch(AuthActions.LoginRequest(this.user));
-  };
-
-  togglePassword = () => {
-    this.hide = !this.hide;
   };
 
   get username(): AbstractControl {

@@ -1,4 +1,10 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -25,18 +31,21 @@ export class InputFormComponent implements ControlValueAccessor {
   @Input() inputType: string;
   @Input() error: string;
   @Input() checkValidation?: boolean;
-  @Input() hidePassword?: boolean;
+
+  value: string;
+  onChange: (value: string) => void;
+  onTouched: () => void;
+  isDisabled: boolean;
+  hidePassword?: boolean;
 
   get formField(): AbstractControl {
     return this.parentForm.get(this.fieldName);
   }
 
-  public value: string;
-  public onChange: (value: string) => void;
-  public onTouched: () => void;
-  public isDisabled: boolean;
+  constructor() {
+    this.hidePassword = this.inputType == 'password';
+  }
 
-  constructor() {}
   writeValue(value: string): void {
     this.value = value;
   }

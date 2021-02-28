@@ -21,9 +21,9 @@ import { CustomValidator } from 'src/app/utils/customValidator';
 export class SignupComponent implements OnInit {
   private user: Request<User>;
   signUpForm: FormGroup;
-  hide: boolean;
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) {
+    this.user = {};
     this.signUpForm = this.fb.group({
       name: ['', [CustomValidator.ValidateString(3, 40), Validators.required]],
       username: [
@@ -35,8 +35,6 @@ export class SignupComponent implements OnInit {
         [CustomValidator.ValidateString(4, 16), Validators.required]
       ]
     });
-    this.user = {};
-    this.hide = true;
   }
 
   ngOnInit(): void {}
@@ -44,10 +42,6 @@ export class SignupComponent implements OnInit {
   onSubmit = (): void => {
     this.user.data = this.signUpForm.value;
     this.store.dispatch(AuthActions.SignUpRequest(this.user));
-  };
-
-  togglePassword = () => {
-    this.hide = !this.hide;
   };
 
   get name(): AbstractControl {

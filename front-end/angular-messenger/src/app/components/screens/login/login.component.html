@@ -15,23 +15,10 @@
           [parentForm]="loginForm"
           fieldName="password"
           label="Password"
-          [inputType]="hide ? 'password' : 'text'"
+          inputType="password"
           formControlName="password"
           error="Password should be 4 to 16 characters long"
         ></app-input-form>
-        <div
-          class="form-group form-check"
-          style="margin-top: -5px; margin-left: 5px"
-        >
-          <input
-            type="checkbox"
-            class="form-check-input"
-            [checked]="!hide"
-            (change)="togglePassword()"
-          />
-          <label class="form-check-label">Show password</label>
-        </div>
-
         <div
           *ngIf="showWarning"
           class="text-warning d-flex justify-content-center warning"
