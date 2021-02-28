@@ -5,8 +5,12 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import AuthActions from 'src/app/actions/auth.actions';
 import { User } from 'src/app/models/data/user.model';
 import { Request } from 'src/app/models/requests/request.model';
+import { AppState } from 'src/app/state/app.state';
 import { CustomValidator } from 'src/app/utils/customValidator';
 
 @Component({
@@ -17,10 +21,9 @@ import { CustomValidator } from 'src/app/utils/customValidator';
 export class SignupComponent implements OnInit {
   private user: Request<User>;
   signUpForm: FormGroup;
-  showWarning: boolean;
   hide: boolean;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private store: Store<AppState>, private fb: FormBuilder) {
     this.signUpForm = this.fb.group({
       name: ['', [CustomValidator.ValidateString(3, 40), Validators.required]],
       username: [
@@ -33,23 +36,14 @@ export class SignupComponent implements OnInit {
       ]
     });
     this.user = {};
-    this.showWarning = false;
     this.hide = true;
   }
 
   ngOnInit(): void {}
 
-  onSubmit = () => {
-    if (!this.signUpForm.valid) {
-      this.showWarning = true;
-      return;
-    }
-    this.showWarning = false;
-    this.user.payload = {
-      ...this.signUpForm.value,
-      isPublic: 1
-    };
-    console.log(JSON.stringify(this.user.payload, undefined, 2));
+  onSubmit = (): void => {
+    this.user.data = this.signUpForm.value;
+    this.store.dispatch(AuthActions.SignUpRequest(this.user));
   };
 
   togglePassword = () => {

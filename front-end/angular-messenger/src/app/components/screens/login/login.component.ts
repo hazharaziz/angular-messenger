@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
-  FormControl,
   Validators,
   AbstractControl,
   FormBuilder
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Login } from 'src/app/models/data/login.model';
 import { Request } from 'src/app/models/requests/request.model';
+import { AuthService } from 'src/app/services/api/auth.service';
+import AuthActions from '../../../actions/auth.actions';
 import { CustomValidator } from 'src/app/utils/customValidator';
+import { AppState } from 'src/app/state/app.state';
 
 @Component({
   selector: 'app-login',
@@ -21,9 +25,9 @@ export class LoginComponent implements OnInit {
   showWarning: boolean;
   hide: boolean;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private store: Store<AppState>, private fb: FormBuilder) {
     this.user = {
-      payload: {
+      data: {
         username: '',
         password: ''
       }
@@ -44,14 +48,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit = (): void => {};
 
-  onSubmit = () => {
+  onSubmit = (): void => {
     if (!this.loginForm.valid) {
       this.showWarning = true;
       return;
     }
     this.showWarning = false;
-    this.user.payload = this.loginForm.value;
-    console.log(JSON.stringify(this.user.payload, undefined, 2));
+    this.user.data = this.loginForm.value;
+    this.store.dispatch(AuthActions.LoginRequest(this.user));
   };
 
   togglePassword = () => {

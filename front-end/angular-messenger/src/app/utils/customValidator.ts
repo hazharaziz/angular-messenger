@@ -6,7 +6,7 @@ export class CustomValidator {
       let result: any = null;
       if (control.value !== undefined) {
         let text: string = control.value.toString();
-        if (text.length < min || text.length > max) {
+        if (text.trim().length < min || text.trim().length > max) {
           result = { lengthRange: false };
         }
       }
