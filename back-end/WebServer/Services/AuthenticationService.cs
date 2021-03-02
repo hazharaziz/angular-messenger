@@ -36,7 +36,7 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
             
             if (dbUser.Password != user.Password) 
-                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
+                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongAuthenticationCredentials);
 
             return new Response<UserModel>()
             {

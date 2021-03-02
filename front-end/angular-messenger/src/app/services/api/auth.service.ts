@@ -1,17 +1,12 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpResponse
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Login } from 'src/app/models/data/login.model';
+
+import { Request, Response } from '../../models';
 import { User } from 'src/app/models/data/user.model';
-import { Request } from 'src/app/models/requests/request.model';
-import AuthActions from 'src/app/actions/auth.actions';
 import { API_URL } from 'src/secrets';
-import { AuthAPI } from '../interfaces/authApi';
-import { Response } from 'src/app/models/responses/response.model';
+import { AuthAPI } from '../../models/interfaces/authApi';
+import { log } from 'src/app/utils/logger';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +14,7 @@ import { Response } from 'src/app/models/responses/response.model';
 export class AuthService implements AuthAPI {
   constructor(private http: HttpClient) {}
 
-  login(user: Request<Login>): Observable<Response<User>> {
+  login(user: Request<User>): Observable<Response<User>> {
     return this.http.post<Response<User>>(API_URL + '/auth/login', user.data);
   }
   signUp(user: Request<User>): Observable<Response<User>> {

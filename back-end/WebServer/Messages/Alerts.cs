@@ -27,7 +27,7 @@ namespace WebServer.Messages
         public const string AlreadyFollowed = "User has already been followed";
         public const string AlreadySentRequest = "Request already sent";
         public const string AlreadyIsFollower = "User is already a follower";
-        public const string WrongPassword = "Wrong password";
+        public const string WrongAuthenticationCredentials = "Wrong authentication credentials";
         public const string PasswordChanged = "Password changed successfully";
         public const string UsernameExists = "Username already exists";
         public const string AccountDeleted = "Account deleted successfully";

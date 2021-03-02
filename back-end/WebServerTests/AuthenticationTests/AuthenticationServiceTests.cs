@@ -141,7 +141,7 @@ namespace WebServerTests
                            IsPublic = Users.Isaac.IsPublic
                        });
             var expected = new HttpException
-                        (StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
+                        (StatusCodes.Status401Unauthorized, Alerts.WrongAuthenticationCredentials);
 
             // Act
             Action action = () => _authService.AuthenticateUser(user);

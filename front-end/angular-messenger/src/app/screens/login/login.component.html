@@ -19,27 +19,17 @@
           formControlName="password"
           error="Password should be 4 to 16 characters long"
         ></app-input-form>
-        <div
-          *ngIf="showWarning"
-          class="text-warning d-flex justify-content-center warning"
-        >
+        <div *ngIf="showWarning" class="text-warning d-flex justify-content-center warning">
           Login info is not valid
         </div>
-        <button
-          type="submit"
-          class="btn btn-danger text-light rounded-lg btn-custom"
-        >
-          Login
-        </button>
+        <button type="submit" class="btn btn-danger text-light rounded-lg btn-custom">Login</button>
 
         <button
           type="button"
           class="btn btn-link text-light text-decoration-none btn-custom link-signup"
           routerLink="../sign-up"
         >
-          Don't have an account?&nbsp;<span style="font-weight: 600"
-            >SIGN UP</span
-          >
+          Don't have an account?&nbsp;<span style="font-weight: 600">SIGN UP</span>
         </button>
       </form>
     </div>
