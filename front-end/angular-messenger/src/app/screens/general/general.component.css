@@ -1,0 +1,39 @@
+.main-container {
+  width: 45vw;
+  height: 90vh;
+  padding: 10px;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition-duration: 0.5s;
+}
+
+@media (max-width: 1300px) and (min-width: 1100px) {
+  .main-container {
+    width: 55vw;
+    margin-left: 1vw !important;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 900px) {
+  .main-container {
+    width: 62vw;
+    margin-left: 3vw !important;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 800px) {
+  .main-container {
+    width: 67vw;
+    margin-left: 5vw !important;
+  }
+}
+
+@media (max-width: 800px) and (min-width: 700px) {
+  .main-container {
+    width: 70vw;
+    margin-left: 5vw !important;
+  }
+}

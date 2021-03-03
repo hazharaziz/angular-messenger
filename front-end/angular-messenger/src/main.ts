@@ -16,33 +16,18 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
-
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .then((module) => {
-    let store: Store<AppState> = module.injector.get(Store);
-    let jwtHelpler = module.injector.get(JwtHelperService);
-    CronJob.start('* */55 * * * *', () => {
-      let isLoggedIn = false;
-      store.pipe(select(AuthSelectors.selectisLoggedIn)).subscribe((data) => (isLoggedIn = data));
-      if (!isLoggedIn) {
-        return;
-      }
-      log('call cron job');
-      let token = '';
-      store.pipe(select(AuthSelectors.selectToken)).subscribe((data) => (token = data));
-      log(token);
-      if (jwtHelpler.isTokenExpired(token)) {
-        let user: Request<User>;
-        store.select(AuthSelectors.selectUser).subscribe(
-          (data) =>
-            (user = {
-              data: {
-                username: data.username
-              }
-            })
-        );
-      }
-    });
+    // the following lines are for refreshing tokens
+    // let store: Store<AppState> = module.injector.get(Store);
+    // let jwtHelpler = module.injector.get(JwtHelperService);
+    // CronJob.start('* */55 * * * *', () => {
+    //   let isLoggedIn = false;
+    //   store.pipe(select(AuthSelectors.selectisLoggedIn)).subscribe((data) => (isLoggedIn = data));
+    //   if (!isLoggedIn) {
+    //     return;
+    //   }
+    // });
   })
   .catch((err) => console.error(err));

@@ -22,6 +22,11 @@ import { fromEffects } from './effects';
 import { reducers, metaReducers } from './store';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
+import { GeneralComponent } from './screens/general/general.component';
+import { SearchComponent } from './screens/search/search.component';
+import { ProfileComponent } from './screens/profile/profile.component';
+import { DirectComponent } from './screens/direct/direct.component';
+import { GroupComponent } from './screens/group/group.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,12 @@ import { ToastrModule } from 'ngx-toastr';
     InputFormComponent,
     SignupComponent,
     PageNotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    GeneralComponent,
+    SearchComponent,
+    ProfileComponent,
+    DirectComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,

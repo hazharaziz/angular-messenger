@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/data/user.model';
 
 import { AppState } from 'src/app/store';
 import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
+import { log } from 'src/app/utils/logger';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +14,15 @@ import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  user$: Observable<User>;
+  childPath: string;
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+    this.childPath = '';
+  }
 
-  constructor(private store: Store<AppState>) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.user$ = this.store.select(AuthSelectors.selectUser);
+  changeRoute(url: string) {
+    this.childPath = url;
+    log(this.childPath);
   }
 }
