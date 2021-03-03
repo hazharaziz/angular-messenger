@@ -7,7 +7,6 @@ import { Request } from '../../models';
 import { CustomValidator } from 'src/app/utils/customValidator';
 import { User } from 'src/app/models/data/user.model';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
-import { log } from 'src/app/utils/logger';
 
 @Component({
   selector: 'app-login',

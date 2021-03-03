@@ -6,5 +6,4 @@ export type User = {
   name?: string;
   password?: string;
   isPublic?: number;
-  error?: string;
 };

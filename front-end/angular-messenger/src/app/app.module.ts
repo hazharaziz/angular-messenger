@@ -10,7 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './core/app.component';
 import { LoginComponent } from './screens/login/login.component';
 import { InputFormComponent } from './components/input-form/input-form.component';
 import { AppRoutingModule } from './app-routing.module';
