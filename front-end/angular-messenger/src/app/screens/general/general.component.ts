@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Chat } from 'src/app/models/data/chat.model';
-import { log } from 'src/app/utils/logger';
 
 @Component({
   selector: 'app-general',
@@ -29,99 +28,7 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.chat = [
-      {
-        date: '02-02-2020',
-        messages: [
-          {
-            id: 4,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            replyToId: 4,
-            replyToName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          },
-          {
-            id: 1,
-            composerId: 1,
-            composerName: 'hazhar',
-            dateTime: '12:32',
-            text: 'hello'
-          }
-        ]
-      }
-    ];
+    this.chat = [];
   }
 
   ngAfterViewChecked(): void {
