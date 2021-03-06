@@ -1,0 +1,29 @@
+<div class="message">
+  <div *ngIf="message.replyToId">
+    <button (click)="scrollToElement(message.replyToId)" class="badge btn text-light reply-badge">
+      Reply to {{ message.replyToName }}
+    </button>
+  </div>
+
+  <div
+    class="border-top border-bottom rounded-lg message-content"
+    style="border-radius: 10px !important; padding: 5px"
+  >
+    <div>
+      <span class="badge text-light">{{ message.composerName }}</span>
+      <div class="float-right">
+        <button class="custom-icon-btn mr-1 text-white">
+          <i class="bi bi-pencil-fill text-light"></i>
+        </button>
+        <button class="custom-icon-btn text-white">
+          <i class="bi bi-trash-fill text-danger"></i>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <p class="message-text">{{ message.text }}</p>
+      <span class="badge badge-pill badge-dark text-secondary">{{ message.dateTime }}</span>
+    </div>
+  </div>
+</div>

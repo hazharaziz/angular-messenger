@@ -11,18 +11,20 @@
   </div>
   <div
     class="d-flex flex-column card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+    #chatBox
   >
     <div class="chat-container">
-      <div *ngFor="let date of items">
+      <div *ngFor="let date of chat">
         <div class="d-flex justify-content-center align-items-center badge-wrap">
           <span class="badge badge-pill badge-secondary message-date-badge">
             {{ date.date }}
           </span>
         </div>
-        <div *ngFor="let message of date.messages" class="message">
-          <span>{{ message.composer }}</span>
-          <p>{{ message.text }}</p>
-          <span>{{ message.time }}</span>
+        <div *ngFor="let message of date.messages" #message [id]="message.id">
+          <app-message-container
+            [message]="message"
+            (scroll)="scrollToElement($event)"
+          ></app-message-container>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ import { SearchComponent } from './screens/search/search.component';
 import { ProfileComponent } from './screens/profile/profile.component';
 import { DirectComponent } from './screens/direct/direct.component';
 import { GroupComponent } from './screens/group/group.component';
+import { MessageContainerComponent } from './components/message-container/message-container.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { GroupComponent } from './screens/group/group.component';
     SearchComponent,
     ProfileComponent,
     DirectComponent,
-    GroupComponent
+    GroupComponent,
+    MessageContainerComponent
   ],
   imports: [
     BrowserModule,
