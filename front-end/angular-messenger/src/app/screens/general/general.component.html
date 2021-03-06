@@ -1,1 +1,41 @@
-<div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"></div>
+<div class="d-flex align-items-stretch wrap-container">
+  <div class="card align-self-center bg-dark text-light rounded-lg left-bar">
+    <button routerLink="../profile" class="bi bi-person btn btn-dark icons icon-first"></button>
+    <button routerLink="../group" class="bi bi-people btn btn-dark icons icon-middle"></button>
+    <button class="bi bi-house-door-fill btn btn-dark icons icon-middle"></button>
+    <button
+      routerLink="../direct"
+      class="bi bi-chat-square-dots btn btn-dark icons icon-middle"
+    ></button>
+    <button routerLink="../search" class="bi bi-search btn btn-dark icons icon-last"></button>
+  </div>
+  <div
+    class="d-flex flex-column card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+  >
+    <div class="chat-container">
+      <div *ngFor="let date of items">
+        <div class="d-flex justify-content-center align-items-center badge-wrap">
+          <span class="badge badge-pill badge-secondary message-date-badge">
+            {{ date.date }}
+          </span>
+        </div>
+        <div *ngFor="let message of date.messages" class="message">
+          <span>{{ message.composer }}</span>
+          <p>{{ message.text }}</p>
+          <span>{{ message.time }}</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex justify-content-center align-items-center bg-dark fixed-bottom message-input-container"
+    >
+      <input
+        [formControl]="messageForm"
+        type="text"
+        placeholder="Type your message"
+        class="flex-grow-1 form-control bg-dark text-light mr-2 rounded-lg"
+      />
+      <button (click)="onSendMessage()" class="btn btn-danger rounded-lg text-light">Send</button>
+    </div>
+  </div>
+</div>

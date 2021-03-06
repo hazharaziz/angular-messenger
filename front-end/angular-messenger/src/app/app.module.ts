@@ -17,7 +17,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { SignupComponent } from './screens/signup/signup.component';
 import { PageNotFoundComponent } from './screens/page-not-found/page-not-found.component';
 import { environment } from 'src/environments/environment';
-import { HomeComponent } from './screens/home/home.component';
 import { fromEffects } from './effects';
 import { reducers, metaReducers } from './store';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -35,7 +34,6 @@ import { GroupComponent } from './screens/group/group.component';
     InputFormComponent,
     SignupComponent,
     PageNotFoundComponent,
-    HomeComponent,
     GeneralComponent,
     SearchComponent,
     ProfileComponent,

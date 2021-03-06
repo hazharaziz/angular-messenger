@@ -25,8 +25,9 @@ export class InputFormComponent implements ControlValueAccessor {
   @Input() inputType: string;
   @Input() error: string;
   @Input() checkValidation?: boolean;
+  @Input() placeHolder?: string = '';
 
-  value: string;
+  value: string = '';
   isDisabled: boolean;
   hidePassword?: boolean;
   onChange: (value: string) => void;
@@ -38,6 +39,7 @@ export class InputFormComponent implements ControlValueAccessor {
 
   constructor() {
     this.hidePassword = this.inputType == 'password';
+    this.value = '';
   }
 
   writeValue(value: string): void {

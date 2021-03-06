@@ -40,7 +40,7 @@ export class SignUpEffects {
       this.actions$.pipe(
         ofType(AuthActions.SignUpSuccess),
         tap(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/general']);
         })
       ),
     { dispatch: false }
