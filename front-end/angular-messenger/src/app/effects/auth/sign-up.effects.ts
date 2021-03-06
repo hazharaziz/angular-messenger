@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { exhaustMap, map, catchError, tap, concatMap } from 'rxjs/operators';
 
-import { AuthService } from 'src/app/services/api/auth.service';
+import { AuthService } from 'src/app/services/api/authService/auth.service';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
 import { Messages } from 'src/assets/common/strings';
 

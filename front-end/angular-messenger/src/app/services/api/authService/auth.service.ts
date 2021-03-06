@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Request, Response } from '../../models';
+import { Request, Response } from '../../../models';
 import { User } from 'src/app/models/data/user.model';
 import { API_URL } from 'src/secrets';
-import { AuthAPI } from '../../models/interfaces/authApi';
+import { AuthAPI } from '../../../models/interfaces/authApi';
 import { log } from 'src/app/utils/logger';
 
 @Injectable({
