@@ -13,12 +13,14 @@ export const authReducer = createReducer(
   on(AuthActions.LoginSuccess, (state: User, action: Response<User>) => ({
     ...state,
     ...action.data,
-    isLoggedIn: true
+    isLoggedIn: true,
+    token: action.token
   })),
   on(AuthActions.SignUpSuccess, (state: User, action: Response<User>) => ({
     ...state,
     ...action.data,
-    isLoggedIn: true
+    isLoggedIn: true,
+    token: action.token
   })),
   on(AuthActions.ClearCredentials, (state: User) => undefined)
 );

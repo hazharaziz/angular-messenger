@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Response } from 'src/app/models';
-import { Chat } from 'src/app/models/data/chat.model';
+
+import { Request } from 'src/app/models';
+import { Message } from 'src/app/models/data/message.model';
 import { GeneralChatAPI } from 'src/app/models/interfaces/generalChatApi';
 import { API_URL } from 'src/secrets';
 
@@ -10,16 +11,11 @@ import { API_URL } from 'src/secrets';
   providedIn: 'root'
 })
 export class GeneralChatService implements GeneralChatAPI {
-  constructor(private http: HttpClient, token: string) {
-    let headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    http.head(API_URL, {
-      headers
-    });
-  }
+  constructor(private http: HttpClient) {}
 
-  getGeneralChatMessages(): Observable<Response<Chat[]>> {
-    return this.http.get('/chat');
+  getGeneralChatMessages(request: Request<null>): Observable<Message[]> {
+    return this.http.get<Message[]>(API_URL + '/chat', {
+      headers: { Authorization: `Bearer ${request.token}` }
+    });
   }
 }

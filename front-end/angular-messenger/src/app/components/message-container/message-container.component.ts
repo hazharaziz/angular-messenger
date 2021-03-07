@@ -8,6 +8,7 @@ import { Message } from 'src/app/models/data/message.model';
 })
 export class MessageContainerComponent implements OnInit {
   @Input() message: Message;
+  @Input() editInfoAccessibility?: boolean;
   @Output() scroll: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {}

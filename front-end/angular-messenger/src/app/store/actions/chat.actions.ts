@@ -8,7 +8,7 @@ export const ChatActions = {
   GetChatMessagesRequest: createAction(ActionTypes.GetChatMessagesRequest, props<Request<null>>()),
   GetChatMessagesSuccess: createAction(
     ActionTypes.GetChatMessagesSuccess,
-    props<Response<Chat[]>>()
+    props<{ chat: Chat[] }>()
   ),
   GetChatMessagesFail: createAction(ActionTypes.GetChatMessagesFail, props<{ error: string }>())
 };

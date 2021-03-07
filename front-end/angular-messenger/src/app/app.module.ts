@@ -72,7 +72,11 @@ import { MessageContainerComponent } from './components/message-container/messag
       maxAge: 25,
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([fromEffects.LoginEffects, fromEffects.SignUpEffects]),
+    EffectsModule.forRoot([
+      fromEffects.LoginEffects,
+      fromEffects.SignUpEffects,
+      fromEffects.GetChatMessagesEffects
+    ]),
     ToastrModule.forRoot({
       maxOpened: 1,
       preventDuplicates: true,

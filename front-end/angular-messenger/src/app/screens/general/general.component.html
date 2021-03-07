@@ -13,8 +13,8 @@
     class="d-flex flex-column card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
     #chatBox
   >
-    <div *ngIf="chat.length != 0" class="chat-container">
-      <div *ngFor="let date of chat">
+    <div *ngIf="(chat$ | async).length != 0" class="chat-container">
+      <div *ngFor="let date of chat$ | async">
         <div class="d-flex justify-content-center align-items-center badge-wrap">
           <span class="badge badge-pill badge-secondary message-date-badge">
             {{ date.date }}
@@ -24,12 +24,13 @@
           <app-message-container
             [message]="message"
             (scroll)="scrollToElement($event)"
+            [editInfoAccessibility]="message.composerId == (user$ | async).id"
           ></app-message-container>
         </div>
       </div>
     </div>
 
-    <div *ngIf="chat.length == 0" class="empty-chat">
+    <div *ngIf="(chat$ | async).length == 0" class="empty-chat">
       <span class="badge badge-secondary badge-pill custom-empty-badge">No messages yet ...</span>
     </div>
 
