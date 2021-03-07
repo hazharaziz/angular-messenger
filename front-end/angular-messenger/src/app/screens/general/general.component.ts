@@ -25,11 +25,11 @@ import { log } from 'src/app/utils/logger';
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit, AfterViewChecked, OnDestroy {
+  @ViewChild('chatBox') chatBox: ElementRef;
+  @ViewChildren('message') messages: QueryList<ElementRef>;
   messageForm: FormControl;
   user$: Observable<User> = this.store.select(AuthSelectors.selectUser);
   chat$: Observable<Chat[]> = this.store.select(ChatSelectors.selectChatMessages);
-  @ViewChild('chatBox') chatBox: ElementRef;
-  @ViewChildren('message') messages: QueryList<ElementRef>;
   doScrollToBottom: boolean;
 
   constructor(private store: Store<AppState>, fb: FormBuilder) {

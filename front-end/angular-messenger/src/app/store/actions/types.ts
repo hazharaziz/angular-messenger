@@ -8,5 +8,8 @@ export const ActionTypes = {
   ClearCredentials: 'Clear Credentials',
   GetChatMessagesRequest: '[General Screen] Get Messages Request',
   GetChatMessagesSuccess: '[General Effect] Get Messages Success',
-  GetChatMessagesFail: '[General Fail] Get Messages Fail'
+  GetChatMessagesFail: '[General Fail] Get Messages Fail',
+  SendMessageRequest: '[General Screen] Send Message Request',
+  SendMessageSuccess: '[General Effect] Send Message Success',
+  SendMessageFail: '[General Effect] Send Message Fail'
 };

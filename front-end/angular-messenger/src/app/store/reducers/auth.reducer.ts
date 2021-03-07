@@ -11,13 +11,11 @@ const initialState: User = {
 export const authReducer = createReducer(
   initialState,
   on(AuthActions.LoginSuccess, (state: User, action: Response<User>) => ({
-    ...state,
     ...action.data,
     isLoggedIn: true,
     token: action.token
   })),
   on(AuthActions.SignUpSuccess, (state: User, action: Response<User>) => ({
-    ...state,
     ...action.data,
     isLoggedIn: true,
     token: action.token

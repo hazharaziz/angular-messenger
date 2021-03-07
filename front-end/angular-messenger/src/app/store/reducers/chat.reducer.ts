@@ -8,5 +8,5 @@ const initialState: Chat[] = [];
 
 export const chatReducer = createReducer(
   initialState,
-  on(ChatActions.GetChatMessagesSuccess, (state: Chat[], action) => action.chat)
+  on(ChatActions.GetChatMessagesSuccess, (state: Chat[], action: Response<Chat[]>) => action.data)
 );
