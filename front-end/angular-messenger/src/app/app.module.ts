@@ -17,7 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SignupComponent } from './screens/signup/signup.component';
 import { PageNotFoundComponent } from './screens/page-not-found/page-not-found.component';
 import { environment } from 'src/environments/environment';
-import { fromEffects } from './effects';
+import { effects } from './effects';
 import { reducers, metaReducers } from './store';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
@@ -72,12 +72,7 @@ import { MessageContainerComponent } from './components/message-container/messag
       maxAge: 25,
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([
-      fromEffects.LoginEffects,
-      fromEffects.SignUpEffects,
-      fromEffects.GetGeneralChatMessagesEffects,
-      fromEffects.SendMessageEffects
-    ]),
+    EffectsModule.forRoot(effects),
     ToastrModule.forRoot({
       maxOpened: 1,
       preventDuplicates: true,

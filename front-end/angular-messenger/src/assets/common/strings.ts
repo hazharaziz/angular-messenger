@@ -4,5 +4,7 @@ export const Messages = {
   UserExists: 'User with this username already exists',
   Error: 'An error occurred',
   NotAllowedToAccessResource: 'You are not allowed to access resource',
-  FetchDataError: 'Error occured while fetching data'
+  FetchDataError: 'Error occured while fetching data',
+  MessageNotFound: 'Message not found',
+  EditMessageNotAllowed: 'You are not allowed to edit this message'
 };
