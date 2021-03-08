@@ -33,6 +33,12 @@ export class GeneralChatService implements GeneralChatAPI {
     });
   }
 
+  deleteMessageRequest(messageId: number): Observable<string> {
+    return this.http.delete<string>(API_URL + `/chat/${messageId}`, {
+      headers: this.getAuthHeader()
+    });
+  }
+
   getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
