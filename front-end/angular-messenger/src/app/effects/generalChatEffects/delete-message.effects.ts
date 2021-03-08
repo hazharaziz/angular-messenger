@@ -10,12 +10,12 @@ import { log } from 'src/app/utils/logger';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
-export class EditMessageEffects {
-  EditMessageRequest$ = createEffect(() =>
+export class DeleteMessageEffects {
+  DeleteMessageRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ChatActions.EditMessageRequest),
-      concatMap(({ messageId, message }) => {
-        return this.chatService.editMessageRequest(messageId, { text: message }).pipe(
+      ofType(ChatActions.DeleteMessageRequest),
+      concatMap(({ messageId }) => {
+        return this.chatService.deleteMessageRequest(messageId).pipe(
           map(() => {
             return ChatActions.GetChatMessagesRequest();
           }),
@@ -25,7 +25,7 @@ export class EditMessageEffects {
             if (status == 404) {
               errorMessage = Messages.MessageNotFound;
             } else if (status == 405) {
-              errorMessage = Messages.EditMessageNotAllowed;
+              errorMessage = Messages.DeleteMessageNotAllowed;
             } else {
               errorMessage = Messages.Error;
             }
@@ -36,10 +36,10 @@ export class EditMessageEffects {
     )
   );
 
-  EditMessageFail$ = createEffect(
+  DeleteMessageFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ChatActions.EditMessageFail),
+        ofType(ChatActions.DeleteMessageFail),
         tap(({ error }) => {
           this.toast.warning(error, 'Error', { progressBar: false });
         })
