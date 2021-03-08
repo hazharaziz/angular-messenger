@@ -27,6 +27,12 @@ export class GeneralChatService implements GeneralChatAPI {
     });
   }
 
+  editMessageRequest(messageId: number, message: Message): Observable<string> {
+    return this.http.put<string>(API_URL + `/chat/${messageId}`, message, {
+      headers: this.getAuthHeader()
+    });
+  }
+
   getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
