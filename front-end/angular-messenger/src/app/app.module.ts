@@ -75,7 +75,8 @@ import { MessageContainerComponent } from './components/message-container/messag
     EffectsModule.forRoot([
       fromEffects.LoginEffects,
       fromEffects.SignUpEffects,
-      fromEffects.GetChatMessagesEffects
+      fromEffects.GetGeneralChatMessagesEffects,
+      fromEffects.SendMessageEffects
     ]),
     ToastrModule.forRoot({
       maxOpened: 1,

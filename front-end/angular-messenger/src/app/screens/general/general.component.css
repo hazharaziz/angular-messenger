@@ -62,9 +62,25 @@
   position: sticky;
 }
 
+.reply-badge {
+  margin-left: 10px;
+  font-size: medium;
+  border-top: 1px;
+  border-right: 1px;
+  border-left: 1px;
+  border-bottom: 0;
+  border-color: white;
+  border-style: solid;
+  border-radius: 5px 5px 0 0;
+}
+
+.custom-close-icon {
+  border: none;
+  padding: 5px;
+}
+
 .chat-container {
-  height: 90%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   padding-top: 10px;
 }
 

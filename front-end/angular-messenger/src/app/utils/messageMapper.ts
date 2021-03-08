@@ -1,7 +1,6 @@
 import { Chat } from '../models/data/chat.model';
 import { Message } from '../models/data/message.model';
 import { DateTime } from './dateTime';
-import { log } from './logger';
 
 export class MessageMapper {
   static mapMessaegesToChat(messages: Message[]): Chat[] {
@@ -18,6 +17,12 @@ export class MessageMapper {
       let time = DateTime.getTime(message.dateTime);
 
       let dateMessages = result.get(date);
+      if (message.replyToId) {
+        let reply = messages.find((msg) => msg.id == message.replyToId);
+        if (reply) {
+          message.replyToName = reply.composerName;
+        }
+      }
       dateMessages.push({
         ...message,
         dateTime: time
@@ -28,9 +33,10 @@ export class MessageMapper {
     result.forEach((msgArray, key) => {
       chatHistory.push({
         date: key,
-        messages: msgArray
+        messages: msgArray.reverse()
       });
     });
+    chatHistory = chatHistory.reverse();
 
     return chatHistory;
   }

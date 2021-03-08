@@ -13,13 +13,21 @@
       <span class="badge text-light">{{ message.composerName }}</span>
 
       <div class="float-right">
-        <button class="custom-icon-btn mr-1">
+        <button (click)="replyTo(message.id)" class="custom-icon-btn mr-1">
           <i class="bi bi-reply-fill text-light"></i>
         </button>
-        <button *ngIf="editInfoAccessibility" class="custom-icon-btn mr-1">
+        <button
+          *ngIf="editInfoAccessibility"
+          (click)="editMessage(message.id, message.text)"
+          class="custom-icon-btn mr-1"
+        >
           <i class="bi bi-pencil-fill text-light"></i>
         </button>
-        <button *ngIf="editInfoAccessibility" class="custom-icon-btn">
+        <button
+          *ngIf="editInfoAccessibility"
+          (click)="deleteMessage(message.id)"
+          class="custom-icon-btn"
+        >
           <i class="bi bi-trash-fill text-danger"></i>
         </button>
       </div>

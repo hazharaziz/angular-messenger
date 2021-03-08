@@ -10,6 +10,12 @@ export class MessageContainerComponent implements OnInit {
   @Input() message: Message;
   @Input() editInfoAccessibility?: boolean;
   @Output() scroll: EventEmitter<number> = new EventEmitter<number>();
+  @Output() reply: EventEmitter<number> = new EventEmitter<number>();
+  @Output() edit: EventEmitter<{ id: number; message: string }> = new EventEmitter<{
+    id: number;
+    message: string;
+  }>();
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {}
 
@@ -17,5 +23,17 @@ export class MessageContainerComponent implements OnInit {
 
   scrollToElement(id: number) {
     this.scroll.emit(id);
+  }
+
+  replyTo(id: number) {
+    this.reply.emit(id);
+  }
+
+  editMessage(id: number, message: string) {
+    this.edit.emit({ id, message });
+  }
+
+  deleteMessage(id: number) {
+    this.delete.emit(id);
   }
 }

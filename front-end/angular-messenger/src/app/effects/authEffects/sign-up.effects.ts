@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
-import { exhaustMap, map, catchError, tap, concatMap } from 'rxjs/operators';
+import { map, catchError, tap, concatMap } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/api/authService/auth.service';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
@@ -20,13 +20,11 @@ export class SignUpEffects {
           map((response) => AuthActions.SignUpSuccess(response)),
           catchError((error) => {
             let errorMessage = '';
-            if (error as HttpErrorResponse) {
-              let status = (error as HttpErrorResponse).status;
-              if (status == 409) {
-                errorMessage = Messages.UserExists;
-              } else {
-                errorMessage = Messages.Error;
-              }
+            let status = error.status;
+            if (status == 409) {
+              errorMessage = Messages.UserExists;
+            } else {
+              errorMessage = Messages.Error;
             }
             return of(AuthActions.SignUpFail({ error }));
           })

@@ -20,15 +20,13 @@ export class LoginEffects {
           map((response) => AuthActions.LoginSuccess(response)),
           catchError((error) => {
             let errorMessage = '';
-            if (error as HttpErrorResponse) {
-              let status = (error as HttpErrorResponse).status;
-              if (status == 404) {
-                errorMessage = Messages.NoUserWithUsername;
-              } else if (status == 401) {
-                errorMessage = Messages.WrongAuthCredentials;
-              } else {
-                errorMessage = Messages.Error;
-              }
+            let status = error.status;
+            if (status == 404) {
+              errorMessage = Messages.NoUserWithUsername;
+            } else if (status == 401) {
+              errorMessage = Messages.WrongAuthCredentials;
+            } else {
+              errorMessage = Messages.Error;
             }
             return of(AuthActions.LoginFail({ error: errorMessage }));
           })
