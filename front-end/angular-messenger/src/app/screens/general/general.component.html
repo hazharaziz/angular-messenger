@@ -26,7 +26,7 @@
             (scroll)="scrollToElement($event)"
             (edit)="configInfo('edit', $event)"
             (reply)="configInfo('reply', { id: $event })"
-            (delete)="configInfo('delete', { id: $event })"
+            (delete)="deleteMessage($event)"
             [editInfoAccessibility]="message.composerId == (user$ | async).id"
           ></app-message-container>
         </div>
@@ -38,12 +38,16 @@
     </div>
 
     <div class="bg-dark fixed-bottom message-input-container">
-      <div *ngIf="submitMode == 'reply'" class="badge text-light reply-badge">
+      <button
+        *ngIf="submitMode == 'reply'"
+        class="d-flex justify-content-center align-items-center bg-transparent text-light top-reply-badge"
+        (click)="scrollToElement(data.replyId)"
+      >
         <button class="bg-transparent custom-close-icon" (click)="submitMode = 'send'">
           <i class="bi bi-x-circle text-danger"></i>
         </button>
         Reply to {{ data.replyToName }}
-      </div>
+      </button>
       <div class="d-flex justify-content-center align-items-center">
         <input
           [formControl]="messageForm"

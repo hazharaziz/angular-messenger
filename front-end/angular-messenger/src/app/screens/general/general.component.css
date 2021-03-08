@@ -62,8 +62,9 @@
   position: sticky;
 }
 
-.reply-badge {
+.top-reply-badge {
   margin-left: 10px;
+  padding-right: 8px;
   font-size: medium;
   border-top: 1px;
   border-right: 1px;

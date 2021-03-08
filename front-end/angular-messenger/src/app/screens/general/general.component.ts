@@ -17,6 +17,7 @@ import { AppState } from 'src/app/store';
 import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
 import { ChatSelectors } from 'src/app/store/selectors/chat.selectors';
+import { log } from 'src/app/utils/logger';
 
 @Component({
   selector: 'app-general',
@@ -89,8 +90,6 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
       case 'reply':
         this.sendMessage(this.messageForm.value, this.data.replyId);
         break;
-      case 'delete':
-        break;
       default:
         this.sendMessage(this.messageForm.value);
         break;
@@ -115,7 +114,9 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
     );
   }
 
-  deleteMessage(id: number) {}
+  deleteMessage(id: number) {
+    this.store.dispatch(ChatActions.DeleteMessageRequest({ messageId: id }));
+  }
 
   scrollToBottom(): void {
     this.chatBox.nativeElement.scroll({
