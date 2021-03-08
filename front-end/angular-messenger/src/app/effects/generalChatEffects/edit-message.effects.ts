@@ -38,7 +38,7 @@ export class EditMessageEffects {
     )
   );
 
-  SendMessageFail$ = createEffect(
+  EditMessageFail$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(ChatActions.EditMessageFail),

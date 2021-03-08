@@ -84,6 +84,7 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
     }
     switch (this.submitMode) {
       case 'edit':
+        this.editMessage(this.data.editId);
         break;
       case 'reply':
         this.sendMessage(this.messageForm.value, this.data.replyId);
@@ -108,9 +109,9 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
     );
   }
 
-  editMessage(data: { id: number; message: string }) {}
-
-  replyToMessage(id: number) {}
+  editMessage(id: number) {
+    this.store.dispatch(ChatActions.EditMessageRequest({ id, text: this.messageForm.value }));
+  }
 
   deleteMessage(id: number) {}
 
