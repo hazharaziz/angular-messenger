@@ -110,7 +110,9 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
   }
 
   editMessage(id: number) {
-    this.store.dispatch(ChatActions.EditMessageRequest({ id, text: this.messageForm.value }));
+    this.store.dispatch(
+      ChatActions.EditMessageRequest({ messageId: id, message: this.messageForm.value })
+    );
   }
 
   deleteMessage(id: number) {}

@@ -14,6 +14,14 @@ export const ChatActions = {
   GetChatMessagesFail: createAction(ActionTypes.GetChatMessagesFail, props<{ error: string }>()),
   SendMessageRequest: createAction(ActionTypes.SendMessageRequest, props<Message>()),
   SendMessageFail: createAction(ActionTypes.SendMessageFail, props<{ error: string }>()),
-  EditMessageRequest: createAction(ActionTypes.EditMessageRequest, props<Message>()),
-  EditMessageFail: createAction(ActionTypes.EditMessageFail, props<{ error: string }>())
+  EditMessageRequest: createAction(
+    ActionTypes.EditMessageRequest,
+    props<{ messageId: number; message: string }>()
+  ),
+  EditMessageFail: createAction(ActionTypes.EditMessageFail, props<{ error: string }>()),
+  DeleteMessageRequest: createAction(
+    ActionTypes.DeleteMessageRequest,
+    props<{ messageId: number }>()
+  ),
+  DeleteMessageFail: createAction(ActionTypes.DeleteMessageFail, props<{ error: string }>())
 };

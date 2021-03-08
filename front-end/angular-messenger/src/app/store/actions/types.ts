@@ -10,9 +10,9 @@ export const ActionTypes = {
   GetChatMessagesSuccess: '[General Effect] Get Messages Success',
   GetChatMessagesFail: '[General Fail] Get Messages Fail',
   SendMessageRequest: '[General Screen] Send Message Request',
-  SendMessageSuccess: '[General Effect] Send Message Success',
   SendMessageFail: '[General Effect] Send Message Fail',
   EditMessageRequest: '[General Screen] Edit Message Request',
-  EditMessageSuccess: '[General Screen] Edit Message Success',
-  EditMessageFail: '[General Screen] Edit Message Fail'
+  EditMessageFail: '[General Effect] Edit Message Fail',
+  DeleteMessageRequest: '[General Screen] Delete Message Request',
+  DeleteMessageFail: '[General Effect] Delete Message Fail'
 };

@@ -16,8 +16,8 @@ export class EditMessageEffects {
   EditMessageRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.EditMessageRequest),
-      concatMap((message) => {
-        return this.chatService.editMessageRequest(message?.id, { text: message.text }).pipe(
+      concatMap(({ messageId, message }) => {
+        return this.chatService.editMessageRequest(messageId, { text: message }).pipe(
           map(() => {
             return ChatActions.GetChatMessagesRequest();
           }),
