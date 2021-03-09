@@ -40,6 +40,12 @@ export class ProfileService implements ProfileAPI {
     );
   }
 
+  deleteAccountRequest(): Observable<string> {
+    return this.http.delete<string>(API_URL + '/profile', {
+      headers: this.getAuthHeader()
+    });
+  }
+
   private getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
