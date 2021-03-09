@@ -14,5 +14,8 @@ export const ProfileActions = {
     props<{ oldPassword: string; newPassword: string }>()
   ),
   ChangePasswordSuccess: createAction(ActionTypes.ChangePasswordSuccess),
-  ChangePasswordFail: createAction(ActionTypes.ChangePasswordFail, props<{ error: string }>())
+  ChangePasswordFail: createAction(ActionTypes.ChangePasswordFail, props<{ error: string }>()),
+  DeleteAccountRequest: createAction(ActionTypes.DeleteAccountRequest),
+  DeleteAccountSuccess: createAction(ActionTypes.DeleteAccountSuccess),
+  DeleteAccountFail: createAction(ActionTypes.DeleteAccountFail, props<{ error: string }>())
 };
