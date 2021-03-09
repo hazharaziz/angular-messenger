@@ -1,0 +1,67 @@
+<div class="d-flex align-items-stretch wrap-container">
+  <app-left-nav-bar class="align-self-center" page="profile"></app-left-nav-bar>
+  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container">
+    <h2 class="text-center p-2">Edit Profile</h2>
+    <form
+      [formGroup]="profileFormGroup"
+      (ngSubmit)="onSubmit()"
+      class="d-flex flex-column form-container"
+    >
+      <app-input-form
+        [parentForm]="profileFormGroup"
+        fieldName="name"
+        label="Name"
+        inputType="text"
+        formControlName="name"
+        error="Name should be 3 to 40 characters long"
+        checkValidation="true"
+      ></app-input-form>
+      <app-input-form
+        [parentForm]="profileFormGroup"
+        fieldName="username"
+        label="Username"
+        inputType="text"
+        formControlName="username"
+        error="Username should be 3 to 20 characters long"
+        checkValidation="true"
+      ></app-input-form>
+      <div
+        class="d-flex justify-content-between border border-right-0 border-left-0 rounded-lg p-2 m-1"
+      >
+        <label class="align-self-center">Account Privacy</label>
+        <div class="">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="account-privacy"
+              id="public-account"
+              [checked]="isPublicAccount"
+              (change)="isPublicAccount = true"
+            />
+            <label class="form-check-label" for="public-account">Public Account</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="account-privacy"
+              id="private-account"
+              (change)="isPublicAccount = false"
+              [checked]="!isPublicAccount"
+            />
+            <label class="form-check-label" for="private-account">Private Account</label>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column fixed-bottom m-5">
+        <button class="btn btn-outline-primary text-light rounded-lg custom-btn">
+          Change Password
+        </button>
+        <button type="submit" class="btn btn-danger text-light rounded-lg custom-btn">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

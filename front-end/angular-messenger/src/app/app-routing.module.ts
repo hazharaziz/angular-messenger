@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DirectComponent } from './screens/direct/direct.component';
+import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { GeneralComponent } from './screens/general/general.component';
 import { GroupComponent } from './screens/group/group.component';
 import { LoginComponent } from './screens/login/login.component';
@@ -17,7 +18,11 @@ const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'direct', component: DirectComponent },
   { path: 'group', component: GroupComponent },
-  { path: 'profile', component: ProfileComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    children: [{ path: 'edit/:name/:username/:access', component: EditProfileComponent }]
+  },
   { path: '**', component: PageNotFoundComponent }
 ];
 

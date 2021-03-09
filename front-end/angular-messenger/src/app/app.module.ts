@@ -4,8 +4,6 @@ import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +26,7 @@ import { DirectComponent } from './screens/direct/direct.component';
 import { GroupComponent } from './screens/group/group.component';
 import { MessageContainerComponent } from './components/message-container/message-container.component';
 import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
+import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,8 @@ import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.comp
     DirectComponent,
     GroupComponent,
     MessageContainerComponent,
-    LeftNavBarComponent
+    LeftNavBarComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -68,8 +68,6 @@ import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.comp
     NgbModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSliderModule,
-    MatFormFieldModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production

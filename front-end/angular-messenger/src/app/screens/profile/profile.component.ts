@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/data/user.model';
@@ -14,7 +15,7 @@ import { ProfileSelectors } from 'src/app/store/selectors/profile.selectors';
 export class ProfileComponent implements OnInit {
   profile$: Observable<User> = this.store.select(ProfileSelectors.selectUser);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchProfile();
