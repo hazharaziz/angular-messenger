@@ -28,7 +28,7 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatBox') chatBox: ElementRef;
   @ViewChildren('message') messages: QueryList<ElementRef>;
   messageForm: FormControl;
-  user$: Observable<User> = this.store.select(AuthSelectors.selectUser);
+  userId$: Observable<number> = this.store.select(AuthSelectors.selectUserId);
   chat$: Observable<Chat[]> = this.store.select(ChatSelectors.selectChatMessages);
   submitMode: 'send' | 'edit' | 'reply' | 'delete';
   data: { editId?: number; replyId?: number; replyToName?: string; deleteId?: number };

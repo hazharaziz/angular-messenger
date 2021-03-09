@@ -27,7 +27,7 @@
             (edit)="configInfo('edit', $event)"
             (reply)="configInfo('reply', { id: $event })"
             (delete)="deleteMessage($event)"
-            [editInfoAccessibility]="message.composerId == (user$ | async).id"
+            [editInfoAccessibility]="message.composerId == (userId$ | async)"
           ></app-message-container>
         </div>
       </div>
