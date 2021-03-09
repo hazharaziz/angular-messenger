@@ -4,6 +4,7 @@ import { DeleteMessageEffects } from './generalChatEffects/delete-message.effect
 import { EditMessageEffects } from './generalChatEffects/edit-message.effects';
 import { GetGeneralChatMessagesEffects } from './generalChatEffects/get-general-chat-messages.effects';
 import { SendMessageEffects } from './generalChatEffects/send-message.effects';
+import { GetProfileEffects } from './profileEffects/get-profile.effects';
 
 export const effects = [
   LoginEffects,
@@ -11,5 +12,6 @@ export const effects = [
   GetGeneralChatMessagesEffects,
   SendMessageEffects,
   EditMessageEffects,
-  DeleteMessageEffects
+  DeleteMessageEffects,
+  GetProfileEffects
 ];

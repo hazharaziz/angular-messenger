@@ -11,7 +11,7 @@ import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class SendMessageEffects {
-  SendMessageRequest$ = createEffect(() =>
+  sendMessageRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.SendMessageRequest),
       concatMap((action) =>
@@ -36,7 +36,7 @@ export class SendMessageEffects {
     )
   );
 
-  SendMessageFail$ = createEffect(
+  sendMessageFail$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(ChatActions.SendMessageFail),

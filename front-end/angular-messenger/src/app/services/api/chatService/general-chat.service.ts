@@ -39,7 +39,7 @@ export class GeneralChatService implements GeneralChatAPI {
     });
   }
 
-  getAuthHeader(): any {
+  private getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
       headerToken = `Bearer ${token}`;

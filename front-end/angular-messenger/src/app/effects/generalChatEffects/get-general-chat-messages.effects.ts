@@ -12,7 +12,7 @@ import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class GetGeneralChatMessagesEffects {
-  GetGeneralChatMessagesRequest$ = createEffect(() =>
+  getGeneralChatMessagesRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.GetChatMessagesRequest),
       concatMap(() => {
@@ -22,7 +22,6 @@ export class GetGeneralChatMessagesEffects {
             return ChatActions.GetChatMessagesSuccess({ data: result });
           }),
           catchError((error) => {
-            log(error);
             let errorMessage = '';
             let status = error.status;
             if (status == 404) {

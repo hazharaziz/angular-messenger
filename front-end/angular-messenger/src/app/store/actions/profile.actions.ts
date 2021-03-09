@@ -6,5 +6,5 @@ import { ActionTypes } from './types';
 export const ProfileActions = {
   GetProfileRequest: createAction(ActionTypes.GetProfileRequest),
   GetProfileSuccess: createAction(ActionTypes.GetProfileSuccess, props<User>()),
-  GetProfileFail: createAction(ActionTypes.GetProfileSuccess, props<{ error: string }>())
+  GetProfileFail: createAction(ActionTypes.GetProfileFail, props<{ error: string }>())
 };

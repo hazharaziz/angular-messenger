@@ -21,7 +21,7 @@ export class ProfileService implements ProfileAPI {
     });
   }
 
-  getAuthHeader(): any {
+  private getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
       headerToken = `Bearer ${token}`;

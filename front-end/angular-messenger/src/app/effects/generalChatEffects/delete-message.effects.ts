@@ -11,7 +11,7 @@ import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class DeleteMessageEffects {
-  DeleteMessageRequest$ = createEffect(() =>
+  deleteMessageRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.DeleteMessageRequest),
       concatMap(({ messageId }) => {
@@ -36,7 +36,7 @@ export class DeleteMessageEffects {
     )
   );
 
-  DeleteMessageFail$ = createEffect(
+  deleteMessageFail$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(ChatActions.DeleteMessageFail),
@@ -46,6 +46,7 @@ export class DeleteMessageEffects {
       ),
     { dispatch: false }
   );
+
   constructor(
     private actions$: Actions,
     private chatService: GeneralChatService,
