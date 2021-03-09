@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { User } from 'src/app/models/data/user.model';
 import { AppState } from 'src/app/store';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
-import { CustomValidator } from 'src/app/utils/customValidator';
+import { CustomValidator } from 'src/app/utils/custom-validator';
 import { log } from 'src/app/utils/logger';
 
 @Component({

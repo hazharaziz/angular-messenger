@@ -9,7 +9,7 @@ import { User } from './app/models/data/user.model';
 import { AppState } from './app/store';
 import { AuthActions } from './app/store/actions/auth.actions';
 import { AuthSelectors } from './app/store/selectors/auth.selectors';
-import { CronJob } from './app/utils/cronJob';
+import { CronJob } from './app/utils/cron-job';
 import { log } from './app/utils/logger';
 import { environment } from './environments/environment';
 

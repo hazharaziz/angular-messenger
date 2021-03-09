@@ -36,12 +36,12 @@ export class ProfileComponent implements OnInit {
   openModal() {
     const modalRef = this.modalService.open(ConfirmDialogComponent);
     modalRef.componentInstance.message = 'Are you sure of deleting your account?';
-    modalRef.result
-      .then((value) => {
-        log(value);
-      })
-      .catch((error) => {
-        log(error);
-      });
+    // modalRef.result
+    //   .then((value) => {
+    //     log(value);
+    //   })
+    //   .catch((error) => {
+    //     log(error);
+    //   });
   }
 }

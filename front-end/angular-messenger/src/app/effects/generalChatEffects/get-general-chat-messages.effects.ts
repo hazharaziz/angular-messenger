@@ -7,7 +7,7 @@ import { Chat } from 'src/app/models/data/chat.model';
 import { GeneralChatService } from 'src/app/services/api/chatService/general-chat.service';
 import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { log } from 'src/app/utils/logger';
-import { MessageMapper } from 'src/app/utils/messageMapper';
+import { MessageMapper } from 'src/app/utils/message-mapper';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()

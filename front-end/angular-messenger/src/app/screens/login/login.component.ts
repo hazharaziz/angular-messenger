@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Request } from '../../models';
-import { CustomValidator } from 'src/app/utils/customValidator';
+import { CustomValidator } from 'src/app/utils/custom-validator';
 import { User } from 'src/app/models/data/user.model';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
 

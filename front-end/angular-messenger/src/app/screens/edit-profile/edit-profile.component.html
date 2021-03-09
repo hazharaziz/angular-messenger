@@ -55,7 +55,10 @@
         </div>
       </div>
       <div class="d-flex flex-column fixed-bottom m-5">
-        <button class="btn btn-outline-primary text-light rounded-lg custom-btn">
+        <button
+          routerLink="./change-pass"
+          class="btn btn-outline-primary text-light rounded-lg custom-btn"
+        >
           Change Password
         </button>
         <button type="submit" class="btn btn-danger text-light rounded-lg custom-btn">
@@ -65,3 +68,5 @@
     </form>
   </div>
 </div>
+
+<router-outlet></router-outlet>

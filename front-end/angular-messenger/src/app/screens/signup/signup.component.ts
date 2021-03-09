@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/data/user.model';
 import { Request } from '../../models';
-import { CustomValidator } from 'src/app/utils/customValidator';
+import { CustomValidator } from 'src/app/utils/custom-validator';
 import { AppState } from 'src/app/store';
 
 @Component({

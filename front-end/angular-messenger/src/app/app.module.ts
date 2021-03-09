@@ -28,6 +28,7 @@ import { MessageContainerComponent } from './components/message-container/messag
 import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MessageContainerComponent,
     LeftNavBarComponent,
     EditProfileComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

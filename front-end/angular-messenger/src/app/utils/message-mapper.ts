@@ -1,6 +1,6 @@
 import { Chat } from '../models/data/chat.model';
 import { Message } from '../models/data/message.model';
-import { DateTime } from './dateTime';
+import { DateTime } from './date-time';
 
 export class MessageMapper {
   static mapMessaegesToChat(messages: Message[]): Chat[] {

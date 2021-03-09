@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { DirectComponent } from './screens/direct/direct.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { GeneralComponent } from './screens/general/general.component';
@@ -21,7 +22,13 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    children: [{ path: 'edit/:name/:username/:access', component: EditProfileComponent }]
+    children: [
+      {
+        path: 'edit/:name/:username/:access',
+        component: EditProfileComponent,
+        children: [{ path: 'change-pass', component: ChangePasswordComponent }]
+      }
+    ]
   },
   { path: '**', component: PageNotFoundComponent }
 ];
