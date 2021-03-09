@@ -17,5 +17,7 @@ export const ActionTypes = {
   DeleteMessageFail: '[General Effects] Delete Message Fail',
   GetProfileRequest: '[Profile Screen] Get Profile Request',
   GetProfileSuccess: '[Profile Effects] Get Profile Success',
-  GetProfileFail: '[Profile Effects] Get Profile Fail'
+  GetProfileFail: '[Profile Effects] Get Profile Fail',
+  EditProfileRequest: '[EditProfile Screen] Edit Profile Request',
+  EditProfileFail: '[EditProfile Effects] Edit Profile Fail'
 };

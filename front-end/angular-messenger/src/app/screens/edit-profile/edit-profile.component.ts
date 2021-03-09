@@ -41,11 +41,6 @@ export class EditProfileComponent implements OnInit {
       name === this.userParams.name &&
       isPublic === this.userParams.isPublic;
     if (unChanged) return;
-    log({
-      name,
-      username,
-      isPublic
-    });
   }
 
   getRouteParams(): User {
