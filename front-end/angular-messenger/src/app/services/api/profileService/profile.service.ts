@@ -21,6 +21,12 @@ export class ProfileService implements ProfileAPI {
     });
   }
 
+  editProfileRequest(editedUser: User): Observable<string> {
+    return this.http.put<string>(API_URL + '/profile', editedUser, {
+      headers: this.getAuthHeader()
+    });
+  }
+
   private getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
