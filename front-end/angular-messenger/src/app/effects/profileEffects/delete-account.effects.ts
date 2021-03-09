@@ -9,45 +9,43 @@ import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
-export class ChangePasswordEffects {
-  changePasswordRequest$ = createEffect(() =>
+export class DeleteAccountEffects {
+  DeleteAccountRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProfileActions.ChangePasswordRequest),
-      concatMap((payload) =>
-        this.profileService.changePasswordRequest(payload.oldPassword, payload.newPassword).pipe(
-          map(() => ProfileActions.ChangePasswordSuccess()),
+      ofType(ProfileActions.DeleteAccountRequest),
+      concatMap(() =>
+        this.profileService.deleteAccountRequest().pipe(
+          map(() => ProfileActions.DeleteAccountSuccess()),
           catchError((error) => {
             let errorMessage = '';
             let status: number = error.status;
             if (status == 404) {
               errorMessage = Messages.NoUserWithUsername;
-            } else if (status == 401) {
-              errorMessage = Messages.WrongAuthCredentials;
             } else {
               errorMessage = Messages.Error;
             }
-            return of(ProfileActions.ChangePasswordFail({ error: errorMessage }));
+            return of(ProfileActions.DeleteAccountFail({ error: errorMessage }));
           })
         )
       )
     )
   );
 
-  changePasswordSuccess$ = createEffect(
+  DeleteAccountSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProfileActions.ChangePasswordSuccess),
+        ofType(ProfileActions.DeleteAccountSuccess),
         tap(() => {
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/login']);
         })
       ),
     { dispatch: false }
   );
 
-  changePasswordFail$ = createEffect(
+  DeleteAccountFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProfileActions.ChangePasswordFail),
+        ofType(ProfileActions.DeleteAccountFail),
         tap(({ error }) => {
           this.toast.warning(error, 'Error');
         })
