@@ -33,6 +33,10 @@ export class ProfileComponent implements OnInit {
     this.store.dispatch(ProfileActions.GetProfileRequest());
   }
 
+  logout(): void {
+    this.router.navigate(['/login']);
+  }
+
   deleteAccount(): void {
     const modalRef = this.modalService.open(ConfirmDialogComponent);
     modalRef.componentInstance.message = 'Are you sure of deleting your account?';

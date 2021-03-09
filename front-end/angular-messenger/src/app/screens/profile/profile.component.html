@@ -35,7 +35,10 @@
           <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
             Follow Requests
           </button>
-          <button class="btn btn-outline-danger btn-lg btn-block m-2 border-right-0 border-left-0">
+          <button
+            (click)="logout()"
+            class="btn btn-outline-danger btn-lg btn-block m-2 border-right-0 border-left-0"
+          >
             <i class="bi bi-box-arrow-left pr-2"></i>
             Logout
           </button>
