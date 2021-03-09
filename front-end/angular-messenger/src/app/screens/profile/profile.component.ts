@@ -33,15 +33,17 @@ export class ProfileComponent implements OnInit {
     this.store.dispatch(ProfileActions.GetProfileRequest());
   }
 
-  openModal() {
+  deleteAccount(): void {
     const modalRef = this.modalService.open(ConfirmDialogComponent);
     modalRef.componentInstance.message = 'Are you sure of deleting your account?';
-    // modalRef.result
-    //   .then((value) => {
-    //     log(value);
-    //   })
-    //   .catch((error) => {
-    //     log(error);
-    //   });
+    modalRef.result
+      .then((value: string) => {
+        if (value == 'confirm') {
+          this.store.dispatch(ProfileActions.DeleteAccountRequest());
+        }
+      })
+      .catch((error) => {
+        log(error);
+      });
   }
 }

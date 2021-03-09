@@ -37,6 +37,9 @@ export class DeleteAccountEffects {
         ofType(ProfileActions.DeleteAccountSuccess),
         tap(() => {
           this.router.navigate(['/login']);
+          this.toast.success('Account deleted successfully', undefined, {
+            progressBar: false
+          });
         })
       ),
     { dispatch: false }
