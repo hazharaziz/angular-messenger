@@ -1,40 +1,47 @@
 <div class="d-flex align-items-stretch wrap-container">
   <app-left-nav-bar class="align-self-center" page="profile"></app-left-nav-bar>
   <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container">
-    <div *ngIf="profile$ | async as user" class="p-4 text-center">
-      <div
-        class="d-flex flex-column justify-content-center align-items-center fixed-top profile-info-container"
-      >
-        <div class="text-light text-name">
-          {{ user.name }}
+    <div *ngIf="profile$ | async as user" class="p-4 text-center content-container">
+      <div *ngIf="user.id != undefined">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center fixed-top profile-info-container"
+        >
+          <div class="text-light text-name">
+            {{ user.name }}
+          </div>
+          <div class="text-username">
+            {{ user.username }}
+          </div>
+          <div *ngIf="user.isPublic == 1" class="text-account-privacy">Public Account</div>
+          <div *ngIf="user.isPublic != 1" class="text-account-privacy">Private Account</div>
         </div>
-        <div class="text-username">
-          {{ user.username }}
-        </div>
-        <div *ngIf="user.isPublic == 1" class="text-account-privacy">Public Account</div>
-        <div *ngIf="user.isPublic != 1" class="text-account-privacy">Private Account</div>
-      </div>
 
-      <div
-        class="d-flex flex-column justify-content-center align-items-center fixed-bottom profile-buttons-container"
-      >
-        <button class="btn btn-outline-primary btn-lg btn-block m-2 border-right-0 border-left-0">
-          <i class="bi bi-pencil-square pr-2"></i>
-          Edit Profile
-        </button>
-        <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
-          Followers
-        </button>
-        <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
-          Followings
-        </button>
-        <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
-          Follow Requests
-        </button>
-        <button class="btn btn-outline-danger btn-lg btn-block m-2 border-right-0 border-left-0">
-          <i class="bi bi-box-arrow-left pr-2"></i>
-          Logout
-        </button>
+        <div
+          class="d-flex flex-column justify-content-center align-items-center fixed-bottom profile-buttons-container"
+        >
+          <button class="btn btn-outline-primary btn-lg btn-block m-2 border-right-0 border-left-0">
+            <i class="bi bi-pencil-square pr-2"></i>
+            Edit Profile
+          </button>
+          <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
+            Followers
+          </button>
+          <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
+            Followings
+          </button>
+          <button class="btn btn-outline-light btn-lg btn-block m-2 border-right-0 border-left-0">
+            Follow Requests
+          </button>
+          <button class="btn btn-outline-danger btn-lg btn-block m-2 border-right-0 border-left-0">
+            <i class="bi bi-box-arrow-left pr-2"></i>
+            Logout
+          </button>
+        </div>
+      </div>
+      <div *ngIf="user.id == undefined" class="empty-chat">
+        <span class="badge badge-danger badge-pill custom-empty-badge"
+          >An error occured while fetching data</span
+        >
       </div>
     </div>
   </div>

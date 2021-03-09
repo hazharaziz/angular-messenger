@@ -29,6 +29,10 @@
   display: none;
 }
 
+.content-container {
+  height: 100%;
+}
+
 .profile-info-container {
   height: 25%;
   margin: 30px;
@@ -53,6 +57,19 @@
 .profile-buttons-container {
   height: 60%;
   margin: 30px;
+}
+
+.empty-chat {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-empty-badge {
+  font-weight: 400;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
 }
 
 @media (max-width: 1300px) and (min-width: 1100px) {
