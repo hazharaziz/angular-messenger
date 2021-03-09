@@ -4,6 +4,9 @@
     class="d-flex flex-column card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
     #chatBox
   >
+    <div class="fixed-top bg-dark text-center screen-header">
+      <h3>General Chat</h3>
+    </div>
     <div *ngIf="(chat$ | async).length != 0" class="chat-container">
       <div *ngFor="let date of chat$ | async">
         <div class="d-flex justify-content-center align-items-center badge-wrap">

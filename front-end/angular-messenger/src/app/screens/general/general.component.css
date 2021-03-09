@@ -29,6 +29,15 @@
   display: none;
 }
 
+.screen-header {
+  border-bottom: 1px solid #ffffffaa;
+  padding: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+  position: sticky;
+  z-index: 2;
+}
+
 .message-input-container {
   padding: 20px;
   position: sticky;
@@ -67,7 +76,7 @@
 }
 
 .empty-chat {
-  height: 90%;
+  height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
