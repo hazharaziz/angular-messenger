@@ -1,14 +1,5 @@
 <div class="d-flex align-items-stretch wrap-container">
-  <div class="card align-self-center bg-dark text-light rounded-lg left-bar">
-    <button routerLink="../profile" class="bi bi-person btn btn-dark icons icon-first"></button>
-    <button routerLink="../group" class="bi bi-people btn btn-dark icons icon-middle"></button>
-    <button class="bi bi-house-door-fill btn btn-dark icons icon-middle"></button>
-    <button
-      routerLink="../direct"
-      class="bi bi-chat-square-dots btn btn-dark icons icon-middle"
-    ></button>
-    <button routerLink="../search" class="bi bi-search btn btn-dark icons icon-last"></button>
-  </div>
+  <app-left-nav-bar class="align-self-center" page="general"></app-left-nav-bar>
   <div
     class="d-flex flex-column card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
     #chatBox

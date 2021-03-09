@@ -1,5 +1,5 @@
 .wrap-container {
-  width: 60vw;
+  width: 55vw;
   height: 95vh;
   padding: 10px;
   z-index: 1;
@@ -10,7 +10,7 @@
 }
 
 .main-container {
-  width: 45vw;
+  width: 40vw;
   height: 90vh;
   z-index: 1;
   position: absolute;
@@ -29,32 +29,30 @@
   display: none;
 }
 
-.left-bar {
-  position: relative;
-  border-radius: 2.5rem 10px 10px 2.5rem !important;
-  transition-duration: 0.5s;
+.profile-info-container {
+  height: 25%;
+  margin: 30px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-radius: 10px;
 }
 
-.icons {
-  font-size: 2rem;
-  line-height: 0px;
-  width: 4rem;
-  height: 4rem;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
+.text-name {
+  font-weight: 800;
+  font-size: 30px;
 }
 
-.icon-first {
-  border-radius: 2rem 10px 10px 10px !important;
+.text-username {
+  font-size: 20px;
 }
 
-.icon-middle {
-  border-radius: 10px 10px 10px 10px !important;
+.text-account-privacy {
+  font-size: 15px;
 }
 
-.icon-last {
-  border-radius: 10px 10px 10px 2rem !important;
+.profile-buttons-container {
+  height: 60%;
+  margin: 30px;
 }
 
 @media (max-width: 1300px) and (min-width: 1100px) {

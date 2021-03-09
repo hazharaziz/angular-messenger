@@ -27,6 +27,7 @@ import { ProfileComponent } from './screens/profile/profile.component';
 import { DirectComponent } from './screens/direct/direct.component';
 import { GroupComponent } from './screens/group/group.component';
 import { MessageContainerComponent } from './components/message-container/message-container.component';
+import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MessageContainerComponent } from './components/message-container/messag
     ProfileComponent,
     DirectComponent,
     GroupComponent,
-    MessageContainerComponent
+    MessageContainerComponent,
+    LeftNavBarComponent
   ],
   imports: [
     BrowserModule,

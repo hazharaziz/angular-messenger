@@ -1,0 +1,27 @@
+.left-nav-bar {
+  position: relative;
+  border-radius: 2.5rem 10px 10px 2.5rem !important;
+  transition-duration: 0.5s;
+}
+
+.icons {
+  font-size: 2rem;
+  line-height: 0px;
+  width: 4rem;
+  height: 4rem;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+.icon-first {
+  border-radius: 2rem 10px 10px 10px !important;
+}
+
+.icon-middle {
+  border-radius: 10px 10px 10px 10px !important;
+}
+
+.icon-last {
+  border-radius: 10px 10px 10px 2rem !important;
+}
