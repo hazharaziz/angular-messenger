@@ -12,5 +12,18 @@
     ></button>
     <button routerLink="../search" class="bi bi-search btn btn-dark icons icon-last"></button>
   </div>
-  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"></div>
+  <div
+    *ngIf="profile$ | async as user"
+    class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+  >
+    <div>
+      {{ user.name }}
+    </div>
+    <div>
+      {{ user.username }}
+    </div>
+    <div>
+      {{ user.isPublic }}
+    </div>
+  </div>
 </div>
