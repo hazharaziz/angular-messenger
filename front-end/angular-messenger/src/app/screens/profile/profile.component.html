@@ -39,6 +39,13 @@
             <i class="bi bi-box-arrow-left pr-2"></i>
             Logout
           </button>
+          <button
+            (click)="openModal()"
+            class="btn btn-outline-danger btn-lg btn-block m-2 border-right-0 border-left-0"
+          >
+            <i class="bi bi-trash-fill pr-2"></i>
+            Delete Account
+          </button>
         </div>
       </div>
       <div *ngIf="user.id == undefined" class="empty-chat">

@@ -27,6 +27,7 @@ import { GroupComponent } from './screens/group/group.component';
 import { MessageContainerComponent } from './components/message-container/message-container.component';
 import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { EditProfileComponent } from './screens/edit-profile/edit-profile.compon
     GroupComponent,
     MessageContainerComponent,
     LeftNavBarComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
