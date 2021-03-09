@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { concatMap, map, catchError, tap } from 'rxjs/operators';
 
-import { GeneralChatService } from 'src/app/services/chatService/general-chat.service';
+import { GeneralChatService } from 'src/app/services/api/chatService/general-chat.service';
 import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { Messages } from 'src/assets/common/strings';
 

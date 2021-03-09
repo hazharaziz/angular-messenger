@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Message } from 'src/app/models/data/message.model';
-import { GeneralChatAPI } from 'src/app/models/interfaces/generalChatApi';
+import { GeneralChatAPI } from 'src/app/models/interfaces/general-chat.api';
 import { AppState } from 'src/app/store';
 import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
 import { API_URL } from 'src/secrets';
