@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { User } from 'src/app/models/data/user.model';
+import { AppState } from 'src/app/store';
+import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { CustomValidator } from 'src/app/utils/customValidator';
 import { log } from 'src/app/utils/logger';
 
@@ -16,7 +19,11 @@ export class EditProfileComponent implements OnInit {
   isPublicAccount: boolean;
   userParams: User = this.getRouteParams();
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(
+    private store: Store<AppState>,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {
     this.profileFormGroup = this.fb.group({
       name: [this.userParams.name, [CustomValidator.ValidateString(3, 40), Validators.required]],
       username: [
@@ -41,6 +48,13 @@ export class EditProfileComponent implements OnInit {
       name === this.userParams.name &&
       isPublic === this.userParams.isPublic;
     if (unChanged) return;
+    this.store.dispatch(
+      ProfileActions.EditProfileRequest({
+        username,
+        name,
+        isPublic
+      })
+    );
   }
 
   getRouteParams(): User {
