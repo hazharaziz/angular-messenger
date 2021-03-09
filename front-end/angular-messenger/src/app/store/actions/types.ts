@@ -19,5 +19,8 @@ export const ActionTypes = {
   GetProfileSuccess: '[Profile Effects] Get Profile Success',
   GetProfileFail: '[Profile Effects] Get Profile Fail',
   EditProfileRequest: '[EditProfile Screen] Edit Profile Request',
-  EditProfileFail: '[EditProfile Effects] Edit Profile Fail'
+  EditProfileFail: '[EditProfile Effects] Edit Profile Fail',
+  ChangePasswordRequest: '[ChangePassword Screen] Change Password Request',
+  ChangePasswordSuccess: '[ChangePassword Effects] Change Password Success',
+  ChangePasswordFail: '[ChangePassword Effects] Change Password Fail'
 };
