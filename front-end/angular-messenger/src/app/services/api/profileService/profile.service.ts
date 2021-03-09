@@ -27,6 +27,19 @@ export class ProfileService implements ProfileAPI {
     });
   }
 
+  changePasswordRequest(oldPassword: string, newPassword: string): Observable<string> {
+    return this.http.put<string>(
+      API_URL + '/profile/change-pass',
+      {
+        oldPassword,
+        newPassword
+      },
+      {
+        headers: this.getAuthHeader()
+      }
+    );
+  }
+
   private getAuthHeader(): any {
     let headerToken = '';
     this.store.select(AuthSelectors.selectToken).subscribe((token) => {
