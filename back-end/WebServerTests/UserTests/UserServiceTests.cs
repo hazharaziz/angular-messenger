@@ -87,10 +87,12 @@ namespace WebServerTests
                 {
                     Users.Adam,
                     Users.Patrick,
-                    Users.Nico,
-                    Users.Isaac,
-                    Users.Oscar
+                    Users.Nico
                 });
+            _unitOfWork.SetupSequence(u => u.Followers.HasFollower(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(true)
+                .Returns(false)
+                .Returns(false);
             List<UserModel> expected = new List<UserModel>()
             {
                 UserModels.Patrick,

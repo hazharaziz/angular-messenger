@@ -9,7 +9,7 @@
       (click)="followUser(user.id)"
       class="btn btn-primary btn-sm"
     >
-      Follow
+      {{ user.isPublic ? 'Follow' : 'Send Follow Request' }}
     </button>
     <div
       *ngIf="relationStatus == 'request-sent'"
