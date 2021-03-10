@@ -9,13 +9,13 @@ import { RelationActions } from 'src/app/store/actions/relation.actinos';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
-export class CancelRequestEffects {
-  cancelRequestRequest$ = createEffect(() =>
+export class RejectRequestEffects {
+  rejectRequestRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RelationActions.CancelRequestRequest),
+      ofType(RelationActions.RejectRequestRequest),
       concatMap((payload) =>
-        this.relationService.cancelRequestRequest(payload.userId).pipe(
-          map(() => RelationActions.GetRequestsSentRequest()),
+        this.relationService.rejectRequestRequest(payload.userId).pipe(
+          map(() => RelationActions.GetRequestsReceivedRequest()),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
@@ -28,16 +28,16 @@ export class CancelRequestEffects {
             } else {
               errorMessage = Messages.Error;
             }
-            return of(RelationActions.CancelRequestFail({ error: errorMessage }));
+            return of(RelationActions.RejectRequestFail({ error: errorMessage }));
           })
         )
       )
     )
   );
 
-  cancelRequestFail$ = createEffect(() =>
+  rejectRequestFail$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RelationActions.CancelRequestFail),
+      ofType(RelationActions.RejectRequestFail),
       tap(({ error }) => {
         this.toast.warning(error, undefined);
       })

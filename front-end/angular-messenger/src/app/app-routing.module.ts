@@ -10,7 +10,9 @@ import { GroupComponent } from './screens/group/group.component';
 import { LoginComponent } from './screens/login/login.component';
 import { PageNotFoundComponent } from './screens/page-not-found/page-not-found.component';
 import { ProfileComponent } from './screens/profile/profile.component';
+import { ReceivedRequestsComponent } from './screens/received-requests/received-requests.component';
 import { SearchComponent } from './screens/search/search.component';
+import { SentRequestsComponent } from './screens/sent-requests/sent-requests.component';
 import { SignupComponent } from './screens/signup/signup.component';
 import { AuthGuard } from './services/guards/auth.guard';
 
@@ -38,6 +40,14 @@ const routes: Routes = [
       {
         path: 'followings',
         component: FollowingsComponent
+      },
+      {
+        path: 'sent-requests',
+        component: SentRequestsComponent
+      },
+      {
+        path: 'received-requests',
+        component: ReceivedRequestsComponent
       }
     ]
   },

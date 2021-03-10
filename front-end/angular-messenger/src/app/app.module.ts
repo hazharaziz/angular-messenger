@@ -32,6 +32,8 @@ import { ChangePasswordComponent } from './screens/change-password/change-passwo
 import { FollowersComponent } from './screens/followers/followers.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { FollowingsComponent } from './screens/followings/followings.component';
+import { SentRequestsComponent } from './screens/sent-requests/sent-requests.component';
+import { ReceivedRequestsComponent } from './screens/received-requests/received-requests.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { FollowingsComponent } from './screens/followings/followings.component';
     ChangePasswordComponent,
     FollowersComponent,
     UserItemComponent,
-    FollowingsComponent
+    FollowingsComponent,
+    SentRequestsComponent,
+    ReceivedRequestsComponent
   ],
   imports: [
     BrowserModule,
