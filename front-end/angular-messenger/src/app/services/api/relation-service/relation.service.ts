@@ -60,4 +60,10 @@ export class RelationService implements RelationAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  rejectRequestRequest(userId: number): Observable<string> {
+    return this.http.delete<string>(API_URL + `/relations/reject-request/${userId}`, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }

@@ -10,4 +10,5 @@ export interface RelationAPI {
   cancelRequestRequest(userId: number): Observable<string>;
   getRequestsReceivedRequest(): Observable<User[]>;
   acceptRequestRequest(userId: number): Observable<string>;
+  rejectRequestRequest(userId: number): Observable<string>;
 }
