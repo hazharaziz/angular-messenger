@@ -4,7 +4,12 @@ import { Relation } from 'src/app/models/data/relation.model';
 import { User } from 'src/app/models/data/user.model';
 import { RelationActions } from '../actions/relation.actinos';
 
-const initialState: Relation = {};
+const initialState: Relation = {
+  followers: [],
+  followings: [],
+  receivedRequest: [],
+  sentRequests: []
+};
 
 export const relationReducer = createReducer(
   initialState,

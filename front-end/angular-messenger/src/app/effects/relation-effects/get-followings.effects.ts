@@ -10,6 +10,40 @@ import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class GetFollowingsEffects {
+  getFollowingsRequest$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RelationActions.GetFollowingsRequest),
+      concatMap(() =>
+        this.relationService.getFollowingsRequest().pipe(
+          map((response) => RelationActions.GetFollowingsSucces({ followings: response })),
+          catchError((error) => {
+            let errorMessage = '';
+            let status = error.status;
+            if (status == 401) {
+              errorMessage = Messages.AuthorizationFailed;
+            } else if (status == 404) {
+              errorMessage = Messages.NoUserWithUsername;
+            } else {
+              errorMessage = Messages.Error;
+            }
+            return of(RelationActions.GetFollowingsFail({ error: errorMessage }));
+          })
+        )
+      )
+    )
+  );
+
+  // getFollowingsFail$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(RelationActions.GetFollowingsFail),
+  //       tap(({ error }) => {
+  //         this.toast.warning(error, undefined);
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
+
   constructor(
     private actions$: Actions,
     private relationService: RelationService,
