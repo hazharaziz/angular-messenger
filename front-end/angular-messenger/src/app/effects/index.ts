@@ -18,6 +18,7 @@ import { GetRequestsSentEffects } from './relation-effects/get-requests-sent.eff
 import { RejectRequestEffects } from './relation-effects/reject-request.effects';
 import { RemoveFollowerEffects } from './relation-effects/remove-follower.effects';
 import { UnfollowEffects } from './relation-effects/unfollow.effects';
+import { SearchEffects } from './search-effects/search.effects';
 
 export const effects = [
   LoginEffects,
@@ -39,5 +40,6 @@ export const effects = [
   CancelRequestEffects,
   GetRequestsReceivedEffects,
   RejectRequestEffects,
-  FollowEffects
+  FollowEffects,
+  SearchEffects
 ];
