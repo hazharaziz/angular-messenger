@@ -8,7 +8,8 @@ const initialState: Relation = {
   followers: [],
   followings: [],
   receivedRequest: [],
-  sentRequests: []
+  sentRequests: [],
+  friends: []
 };
 
 export const relationReducer = createReducer(
@@ -33,6 +34,13 @@ export const relationReducer = createReducer(
     (state: Relation, payload: { receivedRequests: User[] }) => ({
       ...state,
       receivedRequest: payload.receivedRequests
+    })
+  ),
+  on(
+    RelationActions.GetAvailableFriendsSuccess,
+    (state: Relation, payload: { friends: User[] }) => ({
+      ...state,
+      friends: payload.friends
     })
   )
 );
