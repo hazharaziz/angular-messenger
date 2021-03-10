@@ -67,4 +67,10 @@ export class RelationService implements RelationAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  followRequest(userId: number): Observable<string> {
+    return this.http.post<string>(API_URL + `/relations/send-request/${userId}`, undefined, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }
