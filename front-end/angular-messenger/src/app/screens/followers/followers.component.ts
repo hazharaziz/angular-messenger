@@ -26,6 +26,6 @@ export class FollowersComponent implements OnInit {
   }
 
   removeFollower(followerId: number) {
-    log(followerId);
+    this.store.dispatch(RelationActions.RemoveFollowerRequest({ followerId }));
   }
 }
