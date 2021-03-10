@@ -24,4 +24,10 @@ export class RelationService implements RelationAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  getFollowingsRequest(): Observable<User[]> {
+    return this.http.get<User[]>(API_URL + '/relations/followings', {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }
