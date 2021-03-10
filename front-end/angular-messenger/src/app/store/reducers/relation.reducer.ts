@@ -20,5 +20,12 @@ export const relationReducer = createReducer(
   on(RelationActions.GetFollowingsSucces, (state: Relation, payload: { followings: User[] }) => ({
     ...state,
     followings: payload.followings
-  }))
+  })),
+  on(
+    RelationActions.GetRequestsSentSucces,
+    (state: Relation, payload: { sentRequests: User[] }) => ({
+      ...state,
+      sentRequests: payload.sentRequests
+    })
+  )
 );

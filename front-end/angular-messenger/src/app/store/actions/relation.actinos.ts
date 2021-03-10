@@ -19,10 +19,10 @@ export const RelationActions = {
   GetFollowingsFail: createAction(ActionTypes.GetFollowingsFail, props<{ error: string }>()),
   UnfollowRequest: createAction(ActionTypes.UnfollowRequest, props<{ followingId: number }>()),
   UnfollowFail: createAction(ActionTypes.UnfollowFail, props<{ error: string }>()),
-  GetSentRequestsRequest: createAction(ActionTypes.GetSentRequestsRequest),
-  GetSentRequestsSucces: createAction(
-    ActionTypes.GetSentRequestsSuccess,
+  GetRequestsSentRequest: createAction(ActionTypes.GetRequestsSentRequest),
+  GetRequestsSentSucces: createAction(
+    ActionTypes.GetRequestsSentSuccess,
     props<{ sentRequests: User[] }>()
   ),
-  GetSentRequestsFail: createAction(ActionTypes.GetSentRequestsFail, props<{ error: string }>())
+  GetRequestsSentsFail: createAction(ActionTypes.GetRequestsSentFail, props<{ error: string }>())
 };
