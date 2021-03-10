@@ -29,6 +29,7 @@ import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.comp
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
+import { FollowersComponent } from './screens/followers/followers.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ChangePasswordComponent } from './screens/change-password/change-passwo
     LeftNavBarComponent,
     EditProfileComponent,
     ConfirmDialogComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    FollowersComponent
   ],
   imports: [
     BrowserModule,

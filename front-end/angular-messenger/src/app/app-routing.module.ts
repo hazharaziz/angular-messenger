@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { DirectComponent } from './screens/direct/direct.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
+import { FollowersComponent } from './screens/followers/followers.component';
 import { GeneralComponent } from './screens/general/general.component';
 import { GroupComponent } from './screens/group/group.component';
 import { LoginComponent } from './screens/login/login.component';
@@ -27,6 +28,10 @@ const routes: Routes = [
         path: 'edit/:name/:username/:access',
         component: EditProfileComponent,
         children: [{ path: 'change-pass', component: ChangePasswordComponent }]
+      },
+      {
+        path: 'followers',
+        component: FollowersComponent
       }
     ]
   },
