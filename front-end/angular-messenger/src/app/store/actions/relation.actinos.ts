@@ -41,5 +41,14 @@ export const RelationActions = {
   RejectRequestRequest: createAction(ActionTypes.RejectRequestRequest, props<{ userId: number }>()),
   RejectRequestFail: createAction(ActionTypes.RejectRequestFail, props<{ error: string }>()),
   FollowRequest: createAction(ActionTypes.FollowRequest, props<{ userId: number }>()),
-  FollowFail: createAction(ActionTypes.FollowFail, props<{ error: string }>())
+  FollowFail: createAction(ActionTypes.FollowFail, props<{ error: string }>()),
+  GetAvailableFriendsRequest: createAction(ActionTypes.GetAvailableFriendsRequest),
+  GetAvailableFriendsSuccess: createAction(
+    ActionTypes.GetAvailableFriendsSuccess,
+    props<{ friends: User[] }>()
+  ),
+  GetAvailableFriendsFail: createAction(
+    ActionTypes.GetAvailableFriendsFail,
+    props<{ error: string }>()
+  )
 };
