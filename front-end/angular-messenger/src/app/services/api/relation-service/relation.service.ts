@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { User } from 'src/app/models/data/user.model';
 import { RelationAPI } from 'src/app/models/interfaces/relation.api';
+import { log } from 'src/app/utils/logger';
 import { API_URL } from 'src/secrets';
 import { HttpService } from '../http-service/http.service';
 
@@ -56,7 +57,7 @@ export class RelationService implements RelationAPI {
   }
 
   acceptRequestRequest(userId: number): Observable<string> {
-    return this.http.put<string>(API_URL + `/relations/accept-request/${userId}`, {
+    return this.http.put<string>(API_URL + `/relations/accept-request/${userId}`, undefined, {
       headers: this.httpService.authorizationHeader()
     });
   }

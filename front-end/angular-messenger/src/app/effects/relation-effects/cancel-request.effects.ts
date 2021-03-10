@@ -35,13 +35,15 @@ export class CancelRequestEffects {
     )
   );
 
-  cancelRequestFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(RelationActions.CancelRequestFail),
-      tap(({ error }) => {
-        this.toast.warning(error, undefined);
-      })
-    )
+  cancelRequestFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RelationActions.CancelRequestFail),
+        tap(({ error }) => {
+          this.toast.warning(error, undefined);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

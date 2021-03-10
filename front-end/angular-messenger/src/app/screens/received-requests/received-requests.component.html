@@ -1,6 +1,9 @@
 <div class="d-flex align-items-stretch wrap-container">
-  <app-left-nav-bar class="align-self-center" page="profile"></app-left-nav-bar>
-  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container">
+  <app-left-nav-bar class="align-self-center"></app-left-nav-bar>
+  <div
+    *ngIf="receivedRequests$ | async as requests"
+    class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+  >
     <div
       class="d-flex justify-content-between align-items-center fixed-top bg-dark text-center screen-header"
     >
@@ -15,6 +18,20 @@
       <div class="d-flex flex-fill">
         <button class="flex-fill align-self-center btn btn-primary active-tab">Received</button>
       </div>
+    </div>
+    <div *ngIf="requests.length != 0" class="items-container">
+      <app-user-item
+        *ngFor="let request of requests"
+        [user]="request"
+        relationStatus="request-received"
+        (accept)="acceptRequest($event)"
+        (reject)="rejectRequest($event)"
+      ></app-user-item>
+    </div>
+    <div *ngIf="requests.length == 0" class="empty-container">
+      <span class="badge badge-secondary badge-pill custom-empty-badge"
+        >No Requests Received yet ...</span
+      >
     </div>
   </div>
 </div>

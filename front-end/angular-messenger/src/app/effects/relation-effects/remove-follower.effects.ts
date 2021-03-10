@@ -33,13 +33,15 @@ export class RemoveFollowerEffects {
     )
   );
 
-  removeFollowerFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(RelationActions.RemoveFollowerFail),
-      tap(({ error }) => {
-        this.toast.warning(error, undefined);
-      })
-    )
+  removeFollowerFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RelationActions.RemoveFollowerFail),
+        tap(({ error }) => {
+          this.toast.warning(error, undefined);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

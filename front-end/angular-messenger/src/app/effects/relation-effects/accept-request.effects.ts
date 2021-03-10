@@ -6,6 +6,7 @@ import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
 import { RelationService } from 'src/app/services/api/relation-service/relation.service';
 import { RelationActions } from 'src/app/store/actions/relation.actinos';
+import { log } from 'src/app/utils/logger';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
@@ -19,6 +20,7 @@ export class AcceptRequestEffects {
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
+            log(error);
             if (status == 400) {
               errorMessage = Messages.AlreadyFollower;
             } else if (status == 401) {
@@ -35,13 +37,15 @@ export class AcceptRequestEffects {
     )
   );
 
-  acceptRequestFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(RelationActions.AcceptRequestFail),
-      tap(({ error }) => {
-        this.toast.warning(error, undefined);
-      })
-    )
+  acceptRequestFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RelationActions.AcceptRequestFail),
+        tap(({ error }) => {
+          this.toast.warning(error, undefined);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

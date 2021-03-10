@@ -32,6 +32,7 @@ export class GetRequestsSentEffects {
       )
     )
   );
+
   constructor(
     private actions$: Actions,
     private relationService: RelationService,

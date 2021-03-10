@@ -33,13 +33,15 @@ export class UnfollowEffects {
     )
   );
 
-  unfollowFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(RelationActions.UnfollowFail),
-      tap(({ error }) => {
-        this.toast.warning(error, undefined);
-      })
-    )
+  unfollowFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RelationActions.UnfollowFail),
+        tap(({ error }) => {
+          this.toast.warning(error, undefined);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

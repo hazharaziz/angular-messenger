@@ -33,17 +33,6 @@ export class GetFollowingsEffects {
     )
   );
 
-  // getFollowingsFail$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(RelationActions.GetFollowingsFail),
-  //       tap(({ error }) => {
-  //         this.toast.warning(error, undefined);
-  //       })
-  //     ),
-  //   { dispatch: false }
-  // );
-
   constructor(
     private actions$: Actions,
     private relationService: RelationService,

@@ -35,13 +35,15 @@ export class RejectRequestEffects {
     )
   );
 
-  rejectRequestFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(RelationActions.RejectRequestFail),
-      tap(({ error }) => {
-        this.toast.warning(error, undefined);
-      })
-    )
+  rejectRequestFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RelationActions.RejectRequestFail),
+        tap(({ error }) => {
+          this.toast.warning(error, undefined);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(
