@@ -63,5 +63,5 @@ export const ActionTypes = {
   GetAvailableFriendsRequest: '[AddMember Screen] Get Available Friends Request',
   GetAvailableFriendsSuccess: '[GetAvailableFriends Effects] Get Available Friends Success',
   GetAvailableFriendsFail: '[GetAvailableFriends Effects] Get Available Friends Fail',
-  ClearAvailableFriends: '[AddMember Effects] Clear Available Friends'
+  ClearAvailableFriends: '[AddMember Screen] Clear Available Friends'
 };

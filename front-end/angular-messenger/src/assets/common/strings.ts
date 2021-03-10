@@ -10,7 +10,7 @@ export const Messages = {
   MessageNotFound: 'Message not found',
   EditMessageNotAllowed: 'You are not allowed to edit this message',
   DeleteMessageNotAllowed: 'You are not allowed to delete this message',
-  NotFound: 'Record Not found',
+  NotFound: 'Resource Not found',
   AlreadyFollower: 'This user is already your follower',
   AlreadyDone: 'Operation is already done'
 };
