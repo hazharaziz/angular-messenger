@@ -2,7 +2,6 @@ import { createReducer, on } from '@ngrx/store';
 
 import { Relation } from 'src/app/models/data/relation.model';
 import { User } from 'src/app/models/data/user.model';
-import { GroupActions } from '../actions/group.actions';
 import { RelationActions } from '../actions/relation.actinos';
 
 const initialState: Relation = {
