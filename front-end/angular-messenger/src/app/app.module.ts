@@ -30,6 +30,7 @@ import { EditProfileComponent } from './screens/edit-profile/edit-profile.compon
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { FollowersComponent } from './screens/followers/followers.component';
+import { UserItemComponent } from './components/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { FollowersComponent } from './screens/followers/followers.component';
     EditProfileComponent,
     ConfirmDialogComponent,
     ChangePasswordComponent,
-    FollowersComponent
+    FollowersComponent,
+    UserItemComponent
   ],
   imports: [
     BrowserModule,
