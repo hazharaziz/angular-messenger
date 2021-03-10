@@ -10,15 +10,13 @@ export const RelationActions = {
     ActionTypes.RemoveFollowerRequest,
     props<{ followerId: number }>()
   ),
-  RemoveFollowerSuccess: createAction(
-    ActionTypes.RemoveFollowerSuccess,
-    props<{ followers: User[] }>()
-  ),
   RemoveFollowerFail: createAction(ActionTypes.RemoveFollowerFail, props<{ error: string }>()),
   GetFollowingsRequest: createAction(ActionTypes.GetFollowingsRequest),
   GetFollowingsSucces: createAction(
     ActionTypes.GetFollowingsSuccess,
     props<{ followings: User[] }>()
   ),
-  GetFollowingsFail: createAction(ActionTypes.GetFollowingsFail, props<{ error: string }>())
+  GetFollowingsFail: createAction(ActionTypes.GetFollowingsFail, props<{ error: string }>()),
+  UnfollowRequest: createAction(ActionTypes.UnfollowRequest, props<{ followingId: number }>()),
+  UnfollowFail: createAction(ActionTypes.UnfollowFail, props<{ error: string }>())
 };
