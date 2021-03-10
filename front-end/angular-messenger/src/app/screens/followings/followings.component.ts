@@ -24,5 +24,7 @@ export class FollowingsComponent implements OnInit {
     this.store.dispatch(RelationActions.GetFollowingsRequest());
   }
 
-  unfollowUser(followingId: number) {}
+  unfollowUser(followingId: number) {
+    this.store.dispatch(RelationActions.UnfollowRequest({ followingId }));
+  }
 }
