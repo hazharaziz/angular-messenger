@@ -47,5 +47,8 @@ export const ActionTypes = {
   AcceptRequestRequest: '[ReceivedRequests Screen] Accept Request Request',
   AcceptRequestFail: '[ReceivedRequests Effects] Accept Request Fail',
   RejectRequestRequest: '[ReceivedRequests Screen] Reject Request Request',
-  RejectRequestFail: '[ReceivedRequests Effects] Reject Request Fail'
+  RejectRequestFail: '[ReceivedRequests Effects] Reject Request Fail',
+  FollowRequest: '[Search Screen] Follow Request',
+  FollowSuccess: '[Search Effects] Follow Success',
+  FollowFail: '[Search Effects] Follow Fail'
 };

@@ -39,5 +39,7 @@ export const RelationActions = {
   AcceptRequestRequest: createAction(ActionTypes.AcceptRequestRequest, props<{ userId: number }>()),
   AcceptRequestFail: createAction(ActionTypes.AcceptRequestFail, props<{ error: string }>()),
   RejectRequestRequest: createAction(ActionTypes.RejectRequestRequest, props<{ userId: number }>()),
-  RejectRequestFail: createAction(ActionTypes.RejectRequestFail, props<{ error: string }>())
+  RejectRequestFail: createAction(ActionTypes.RejectRequestFail, props<{ error: string }>()),
+  FollowRequest: createAction(ActionTypes.FollowRequest, props<{ userId: number }>()),
+  FollowFail: createAction(ActionTypes.FollowFail, props<{ error: string }>())
 };
