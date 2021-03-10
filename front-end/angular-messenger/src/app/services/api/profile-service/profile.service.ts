@@ -6,24 +6,28 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/models/data/user.model';
 import { ProfileAPI } from 'src/app/models/interfaces/profile.api';
 import { AppState } from 'src/app/store';
-import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
 import { API_URL } from 'src/secrets';
+import { HttpService } from '../http-service/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService implements ProfileAPI {
-  constructor(private store: Store<AppState>, private http: HttpClient) {}
+  constructor(
+    private store: Store<AppState>,
+    private http: HttpClient,
+    private httpService: HttpService
+  ) {}
 
   getProfileRequest(): Observable<User> {
     return this.http.get<User>(API_URL + '/profile', {
-      headers: this.getAuthHeader()
+      headers: this.httpService.authorizationHeader()
     });
   }
 
   editProfileRequest(editedUser: User): Observable<string> {
     return this.http.put<string>(API_URL + '/profile', editedUser, {
-      headers: this.getAuthHeader()
+      headers: this.httpService.authorizationHeader()
     });
   }
 
@@ -35,24 +39,14 @@ export class ProfileService implements ProfileAPI {
         newPassword
       },
       {
-        headers: this.getAuthHeader()
+        headers: this.httpService.authorizationHeader()
       }
     );
   }
 
   deleteAccountRequest(): Observable<string> {
     return this.http.delete<string>(API_URL + '/profile', {
-      headers: this.getAuthHeader()
+      headers: this.httpService.authorizationHeader()
     });
-  }
-
-  private getAuthHeader(): any {
-    let headerToken = '';
-    this.store.select(AuthSelectors.selectToken).subscribe((token) => {
-      headerToken = `Bearer ${token}`;
-    });
-    return {
-      Authorization: headerToken
-    };
   }
 }
