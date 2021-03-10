@@ -27,8 +27,6 @@ export const RelationActions = {
   GetRequestsSentFail: createAction(ActionTypes.GetRequestsSentFail, props<{ error: string }>()),
   CancelRequestRequest: createAction(ActionTypes.CancelRequestRequest, props<{ userId: number }>()),
   CancelRequestFail: createAction(ActionTypes.CancelRequestFail, props<{ error: string }>()),
-  AcceptRequestRequest: createAction(ActionTypes.AcceptRequestRequest, props<{ userId: number }>()),
-  AcceptRequestFail: createAction(ActionTypes.AcceptRequestFail, props<{ error: string }>()),
   GetRequestsReceivedRequest: createAction(ActionTypes.GetRequestsReceivedRequest),
   GetRequestsReceivedSuccess: createAction(
     ActionTypes.GetRequestsReceivedSuccess,
@@ -37,5 +35,9 @@ export const RelationActions = {
   GetRequestsReceivedFail: createAction(
     ActionTypes.GetRequestsReceivedFail,
     props<{ error: string }>()
-  )
+  ),
+  AcceptRequestRequest: createAction(ActionTypes.AcceptRequestRequest, props<{ userId: number }>()),
+  AcceptRequestFail: createAction(ActionTypes.AcceptRequestFail, props<{ error: string }>()),
+  RejectRequestRequest: createAction(ActionTypes.RejectRequestRequest, props<{ userId: number }>()),
+  RejectRequestFail: createAction(ActionTypes.RejectRequestFail, props<{ error: string }>())
 };
