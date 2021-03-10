@@ -52,7 +52,7 @@ export class SignUpEffects {
         ofType(AuthActions.SignUpFail),
         tap(({ error }) => {
           log(error);
-          this.toast.error(error, 'Error');
+          this.toast.error(error);
         })
       ),
     { dispatch: false }

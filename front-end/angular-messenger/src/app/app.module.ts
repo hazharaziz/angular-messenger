@@ -78,10 +78,9 @@ import { ChangePasswordComponent } from './screens/change-password/change-passwo
     }),
     EffectsModule.forRoot(effects),
     ToastrModule.forRoot({
+      timeOut: 1500,
       maxOpened: 1,
       preventDuplicates: true,
-      progressBar: true,
-      progressAnimation: 'decreasing',
       closeButton: true,
       positionClass: 'toast-top-left'
     })

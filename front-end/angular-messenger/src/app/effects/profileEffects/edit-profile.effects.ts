@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
@@ -46,6 +47,7 @@ export class EditProfileEffects {
   constructor(
     private actions$: Actions,
     private profileService: ProfileService,
+    private router: Router,
     private toast: ToastrService
   ) {}
 }

@@ -51,7 +51,7 @@ export class LoginEffects {
       this.actions$.pipe(
         ofType(AuthActions.LoginFail),
         tap(({ error }) => {
-          this.toast.error(error, 'Error');
+          this.toast.error(error, undefined);
         })
       ),
     { dispatch: false }
