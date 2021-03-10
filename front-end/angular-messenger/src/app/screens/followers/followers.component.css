@@ -38,6 +38,24 @@
   display: none;
 }
 
+.items-container {
+  margin-bottom: 15px;
+  padding-top: 10px;
+}
+
+.empty-container {
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-empty-badge {
+  font-weight: 400;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+}
+
 @media (max-width: 1300px) and (min-width: 1100px) {
   .main-container {
     transform: translate(-46%, -50%);

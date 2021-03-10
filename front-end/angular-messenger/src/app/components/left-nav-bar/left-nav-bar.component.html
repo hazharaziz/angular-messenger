@@ -1,21 +1,21 @@
 <div class="card bg-dark text-light rounded-lg left-nav-bar">
   <button
-    [routerLink]="page != 'profile' ? '../profile' : undefined"
+    [routerLink]="page != 'profile' ? ['/profile'] : undefined"
     class="bi btn btn-dark icons icon-first"
     [ngClass]="{ 'bi-person': page != 'profile', 'bi-person-fill': page == 'profile' }"
   ></button>
   <button
-    [routerLink]="page != 'group' ? '../group' : undefined"
+    [routerLink]="page != 'group' ? ['/group'] : undefined"
     class="bi bi-people btn btn-dark icons icon-middle"
     [ngClass]="{ 'bi-people': page != 'group', 'bi-people-fill': page == 'group' }"
   ></button>
   <button
-    [routerLink]="page != 'general' ? '../general' : undefined"
+    [routerLink]="page != 'general' ? ['/general'] : undefined"
     class="bi bi-house-door btn btn-dark icons icon-middle"
     [ngClass]="{ 'bi-house-door': page != 'general', 'bi-house-door-fill': page == 'general' }"
   ></button>
   <button
-    [routerLink]="page != 'direct' ? '../direct' : undefined"
+    [routerLink]="page != 'direct' ? ['/direct'] : undefined"
     class="bi bi-chat-square-dots btn btn-dark icons icon-middle"
     [ngClass]="{
       'bi-chat-square-dots': page != 'direct',
@@ -23,7 +23,7 @@
     }"
   ></button>
   <button
-    [routerLink]="page != 'search' ? '../search' : undefined"
+    [routerLink]="page != 'search' ? ['/search'] : undefined"
     class="bi bi-search btn btn-dark icons icon-last"
   ></button>
 </div>
