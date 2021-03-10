@@ -12,6 +12,7 @@ import { AcceptRequestEffects } from './relation-effects/accept-request.effects'
 import { CancelRequestEffects } from './relation-effects/cancel-request.effects';
 import { GetFollowersEffects } from './relation-effects/get-followers.effects';
 import { GetFollowingsEffects } from './relation-effects/get-followings.effects';
+import { GetRequestsReceivedEffects } from './relation-effects/get-requests-received.effects';
 import { GetRequestsSentEffects } from './relation-effects/get-requests-sent.effects';
 import { RemoveFollowerEffects } from './relation-effects/remove-follower.effects';
 import { UnfollowEffects } from './relation-effects/unfollow.effects';
@@ -33,5 +34,6 @@ export const effects = [
   UnfollowEffects,
   GetRequestsSentEffects,
   AcceptRequestEffects,
-  CancelRequestEffects
+  CancelRequestEffects,
+  GetRequestsReceivedEffects
 ];

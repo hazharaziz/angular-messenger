@@ -9,13 +9,15 @@ import { RelationActions } from 'src/app/store/actions/relation.actinos';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
-export class GetRequestsSentEffects {
-  getRequestsSentRequest$ = createEffect(() =>
+export class GetRequestsReceivedEffects {
+  getRequestsReceivedRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RelationActions.GetRequestsSentRequest),
+      ofType(RelationActions.GetRequestsReceivedRequest),
       concatMap(() =>
-        this.relationService.getRequestsSentRequest().pipe(
-          map((response) => RelationActions.GetRequestsSentSuccess({ sentRequests: response })),
+        this.relationService.getRequestsReceivedRequest().pipe(
+          map((response) =>
+            RelationActions.GetRequestsReceivedSuccess({ receivedRequests: response })
+          ),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
@@ -26,12 +28,13 @@ export class GetRequestsSentEffects {
             } else {
               errorMessage = Messages.Error;
             }
-            return of(RelationActions.GetRequestsSentFail({ error: errorMessage }));
+            return of(RelationActions.GetRequestsReceivedFail({ error: errorMessage }));
           })
         )
       )
     )
   );
+
   constructor(
     private actions$: Actions,
     private relationService: RelationService,

@@ -20,7 +20,7 @@ export const RelationActions = {
   UnfollowRequest: createAction(ActionTypes.UnfollowRequest, props<{ followingId: number }>()),
   UnfollowFail: createAction(ActionTypes.UnfollowFail, props<{ error: string }>()),
   GetRequestsSentRequest: createAction(ActionTypes.GetRequestsSentRequest),
-  GetRequestsSentSucces: createAction(
+  GetRequestsSentSuccess: createAction(
     ActionTypes.GetRequestsSentSuccess,
     props<{ sentRequests: User[] }>()
   ),
