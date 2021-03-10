@@ -4,6 +4,7 @@ import { DeleteMessageEffects } from './general-chat-effects/delete-message.effe
 import { EditMessageEffects } from './general-chat-effects/edit-message.effects';
 import { GetGeneralChatMessagesEffects } from './general-chat-effects/get-general-chat-messages.effects';
 import { SendMessageEffects } from './general-chat-effects/send-message.effects';
+import { GetGroupsEffects } from './group-effects/get-groups.effects';
 import { ChangePasswordEffects } from './profile-effects/change-password.effects';
 import { DeleteAccountEffects } from './profile-effects/delete-account.effects';
 import { EditProfileEffects } from './profile-effects/edit-profile.effects';
@@ -41,5 +42,6 @@ export const effects = [
   GetRequestsReceivedEffects,
   RejectRequestEffects,
   FollowEffects,
-  SearchEffects
+  SearchEffects,
+  GetGroupsEffects
 ];
