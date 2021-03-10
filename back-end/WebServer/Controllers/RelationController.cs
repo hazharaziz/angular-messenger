@@ -115,8 +115,8 @@ namespace WebServer.Controllers
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<bool> response = _relationService.SendFollowRequest(targetId, userId);
-                return StatusCode(response.Status, new { followed = response.Data });
+                Response<string> response = _relationService.SendFollowRequest(targetId, userId);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {

@@ -133,7 +133,7 @@ namespace WebServer.Services
         }
 
 
-        public Response<bool> SendFollowRequest(int userId, int followerId)
+        public Response<string> SendFollowRequest(int userId, int followerId)
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null || _unitOfWork.Users.Get(followerId) == null)
@@ -158,10 +158,10 @@ namespace WebServer.Services
             _unitOfWork.Followers.Add(follower);
             _unitOfWork.Save();
 
-            return new Response<bool>()
+            return new Response<string>()
             {
                 Status = StatusCodes.Status201Created,
-                Data = isPublicUser
+                Data = isPublicUser ? Alerts.UserFollowed : Alerts.FollowRequestSent
             };
         }
 

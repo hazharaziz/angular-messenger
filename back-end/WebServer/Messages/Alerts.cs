@@ -17,6 +17,7 @@ namespace WebServer.Messages
         public const string InternalServerError = "Internal server error";
         public const string UsersNotFound = "User(s) not found";
         public const string FollowRequestSent = "Follow request sent successfully";
+        public const string UserFollowed = "User followed successfully";
         public const string NoRequestFromThisUser = "No requests from this user";
         public const string RequestAccepted = "Request accepted successfully";
         public const string RequestRejected = "Request rejected successfully";
