@@ -17,7 +17,8 @@ namespace WebServer.Interfaces
         void RemoveRange(IEnumerable<Follower> entities);
         List<Follower> GetFollowers(int userId);
         List<Follower> GetFollowings(int userId);
-        List<Follower> GetFollowRequests(int userId);
+        List<Follower> GetReceivedRequests(int userId);
+        List<Follower> GetSentRequests(int userId);
         Follower GetRelation(int userId, int followerId);
         Follower GetRequest(int userId, int followerId);
         bool IsFriend(int userId, int followerId);

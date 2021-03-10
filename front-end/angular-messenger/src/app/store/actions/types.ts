@@ -25,5 +25,8 @@ export const ActionTypes = {
   ChangePasswordFail: '[ChangePassword Effects] Change Password Fail',
   DeleteAccountRequest: '[Profile Screen] Delete Account Request',
   DeleteAccountSuccess: '[DeleteAccount Effects] Delete Account Success',
-  DeleteAccountFail: '[DeleteAccount Effects] Delete Account Fail'
+  DeleteAccountFail: '[DeleteAccount Effects] Delete Account Fail',
+  GetFollowersRequest: '[Followers Screen] Get Followers Request',
+  GetFollowersSuccess: '[Followers Effects] Get Followers Success',
+  GetFollowersFail: '[Followers Effects] Get Followers Fail'
 };

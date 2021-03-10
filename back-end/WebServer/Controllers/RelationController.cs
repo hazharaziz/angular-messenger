@@ -69,13 +69,33 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet("requests")]
-        public IActionResult GetFollowRequests()
+        [HttpGet("requests/received")]
+        public IActionResult GetReceivedRequests()
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<List<UserModel>> response = _relationService.GetFollowRequests(userId);
+                Response<List<UserModel>> response = _relationService.GetReceivedRequests(userId);
+                return StatusCode(StatusCodes.Status200OK, response.Data);
+            }
+            catch (HttpException exception)
+            {
+                return StatusCode(exception.Status, exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Alerts.SomethingWentWrong);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("requests/sent")]
+        public IActionResult GetSentRequests()
+        {
+            try
+            {
+                int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
+                Response<List<UserModel>> response = _relationService.GetSentRequests(userId);
                 return StatusCode(StatusCodes.Status200OK, response.Data);
             }
             catch (HttpException exception)
@@ -95,8 +115,8 @@ namespace WebServer.Controllers
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _relationService.SendFollowRequest(targetId, userId);
-                return StatusCode(response.Status, new { message = response.Data });
+                Response<bool> response = _relationService.SendFollowRequest(targetId, userId);
+                return StatusCode(response.Status, new { followed = response.Data });
             }
             catch (HttpException exception)
             {

@@ -22,7 +22,7 @@ namespace WebServer.Services
 
         public Response<List<UserModel>> GetFollowers(int userId)
         {
-            if (_unitOfWork.Users.Get(userId) == null) 
+            if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             List<UserModel> followers = new List<UserModel>();
@@ -41,7 +41,7 @@ namespace WebServer.Services
                 }
             });
 
-            return new Response<List<UserModel>>() 
+            return new Response<List<UserModel>>()
             {
                 Status = StatusCodes.Status200OK,
                 Data = followers
@@ -68,26 +68,26 @@ namespace WebServer.Services
                     });
                 }
             });
-            
-            return new Response<List<UserModel>>() 
+
+            return new Response<List<UserModel>>()
             {
                 Status = StatusCodes.Status200OK,
                 Data = followings
             };
         }
 
-        public Response<List<UserModel>> GetFollowRequests(int userId)
+        public Response<List<UserModel>> GetReceivedRequests(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
-            List<UserModel> followRequests = new List<UserModel>();
-            _unitOfWork.Followers.GetFollowRequests(userId).ForEach(request =>
+            List<UserModel> receivedRequests = new List<UserModel>();
+            _unitOfWork.Followers.GetReceivedRequests(userId).ForEach(request =>
             {
                 User user = _unitOfWork.Users.Get(request.FollowerId);
                 if (user != null)
                 {
-                    followRequests.Add(new UserModel()
+                    receivedRequests.Add(new UserModel()
                     {
                         Id = user.Id,
                         Username = user.Username,
@@ -97,14 +97,43 @@ namespace WebServer.Services
                 }
             });
 
-            return new Response<List<UserModel>>() 
+            return new Response<List<UserModel>>()
             {
                 Status = StatusCodes.Status200OK,
-                Data = followRequests
+                Data = receivedRequests
             };
         }
 
-        public Response<string> SendFollowRequest(int userId, int followerId)
+        public Response<List<UserModel>> GetSentRequests(int userId)
+        {
+            if (_unitOfWork.Users.Get(userId) == null)
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+
+            List<UserModel> sentRequests = new List<UserModel>();
+            _unitOfWork.Followers.GetSentRequests(userId).ForEach(request =>
+            {
+                User user = _unitOfWork.Users.Get(request.UserId);
+                if (user != null)
+                {
+                    sentRequests.Add(new UserModel()
+                    {
+                        Id = user.Id,
+                        Username = user.Username,
+                        Name = user.Name,
+                        IsPublic = user.IsPublic
+                    });
+                }
+            });
+
+            return new Response<List<UserModel>>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = sentRequests
+            };
+        }
+
+
+        public Response<bool> SendFollowRequest(int userId, int followerId)
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null || _unitOfWork.Users.Get(followerId) == null)
@@ -116,6 +145,9 @@ namespace WebServer.Services
             if (_unitOfWork.Followers.HasRequestFrom(userId, followerId))
                 throw new HttpException(StatusCodes.Status409Conflict, Alerts.AlreadySentRequest);
 
+            if (userId == followerId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
             bool isPublicUser = user.IsPublic == 1;
             Follower follower = new Follower()
             {
@@ -126,10 +158,10 @@ namespace WebServer.Services
             _unitOfWork.Followers.Add(follower);
             _unitOfWork.Save();
 
-            return new Response<string>()
+            return new Response<bool>()
             {
                 Status = StatusCodes.Status201Created,
-                Data = Alerts.FollowRequestSent
+                Data = isPublicUser
             };
         }
 

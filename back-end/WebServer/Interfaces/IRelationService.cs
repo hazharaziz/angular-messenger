@@ -11,8 +11,9 @@ namespace WebServer.Interfaces
     {
         Response<List<UserModel>> GetFollowers(int id);
         Response<List<UserModel>> GetFollowings(int id);
-        Response<List<UserModel>> GetFollowRequests(int id);
-        Response<string> SendFollowRequest(int userId, int followerId);
+        Response<List<UserModel>> GetReceivedRequests(int id);
+        Response<List<UserModel>> GetSentRequests(int id);
+        Response<bool> SendFollowRequest(int userId, int followerId);
         Response<string> AcceptFollowRequest(int userId, int followerId);
         Response<string> RejectFollowRequest(int userId, int followerId);
         Response<string> CancelFollowRequest(int userId, int followerId);

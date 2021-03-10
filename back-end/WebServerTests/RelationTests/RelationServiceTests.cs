@@ -117,12 +117,12 @@ namespace WebServerTests
             _unitOfWork.SetupSequence(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Nico)
                 .Returns(Users.Patrick);
-            _unitOfWork.Setup(u => u.Followers.GetFollowRequests(It.IsAny<int>()))
+            _unitOfWork.Setup(u => u.Followers.GetReceivedRequests(It.IsAny<int>()))
                 .Returns(new List<Follower>() { Relations.Relation8 });
             List<UserModel> expected = new List<UserModel>() { UserModels.Patrick };
 
             // Act
-            var response = _relationService.GetFollowRequests(user.Id);
+            var response = _relationService.GetReceivedRequests(user.Id);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -140,7 +140,7 @@ namespace WebServerTests
                 .Returns(Users.Null);
 
             // Act
-            Action action = () => _relationService.GetFollowRequests(user.Id);
+            Action action = () => _relationService.GetReceivedRequests(user.Id);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -218,6 +218,27 @@ namespace WebServerTests
                 .Returns(false);
             _unitOfWork.Setup(u => u.Followers.HasRequestFrom(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(true);
+
+            // Act
+            Action action = () => _relationService.SendFollowRequest(user.Id, follower.Id);
+
+            // Assert
+            Assert.Throws<HttpException>(action);
+        }
+
+        [Fact]
+        public void SendFollowRequest_ThrowsHttpException_Status405MethodNotAllowed()
+        {
+            // Arrange
+            User user = Users.Adam;
+            User follower = Users.Adam;
+            _unitOfWork.SetupSequence(u => u.Users.Get(It.IsAny<int>()))
+                .Returns(Users.Adam)
+                .Returns(Users.Adam);
+            _unitOfWork.Setup(u => u.Followers.HasFollower(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(false);
+            _unitOfWork.Setup(u => u.Followers.HasRequestFrom(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(false);
 
             // Act
             Action action = () => _relationService.SendFollowRequest(user.Id, follower.Id);
