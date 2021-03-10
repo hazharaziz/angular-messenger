@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { concatMap, map, catchError } from 'rxjs/operators';
 
 import { Chat } from 'src/app/models/data/chat.model';
-import { GeneralChatService } from 'src/app/services/api/chatService/general-chat.service';
+import { GeneralChatService } from 'src/app/services/api/chat-service/general-chat.service';
 import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { log } from 'src/app/utils/logger';
 import { MessageMapper } from 'src/app/utils/message-mapper';

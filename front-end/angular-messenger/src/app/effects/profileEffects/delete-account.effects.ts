@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
-import { ProfileService } from 'src/app/services/api/profileService/profile.service';
+import { ProfileService } from 'src/app/services/api/profile-service/profile.service';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { Messages } from 'src/assets/common/strings';
 
