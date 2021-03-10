@@ -38,5 +38,7 @@ export const ActionTypes = {
   UnfollowFail: '[Unfollow Effects] Unfollow Fail',
   GetRequestsSentRequest: '[SentRequests Screen] Get Sent Requests Request',
   GetRequestsSentSuccess: '[SentRequests Effects] Get Sent Requests Success',
-  GetRequestsSentFail: '[SentRequests Effects] Get Sent Requests Fail'
+  GetRequestsSentFail: '[SentRequests Effects] Get Sent Requests Fail',
+  AcceptRequestRequest: '[SentRequests Screen] Accept Request Request',
+  AcceptRequestFail: '[SentRequests Effects] Accept Request Fail'
 };

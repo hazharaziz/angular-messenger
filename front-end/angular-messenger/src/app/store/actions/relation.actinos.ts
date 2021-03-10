@@ -24,5 +24,7 @@ export const RelationActions = {
     ActionTypes.GetRequestsSentSuccess,
     props<{ sentRequests: User[] }>()
   ),
-  GetRequestsSentFail: createAction(ActionTypes.GetRequestsSentFail, props<{ error: string }>())
+  GetRequestsSentFail: createAction(ActionTypes.GetRequestsSentFail, props<{ error: string }>()),
+  AcceptRequestRequest: createAction(ActionTypes.AcceptRequestRequest, props<{ userId: number }>()),
+  AcceptRequestFail: createAction(ActionTypes.AcceptRequestFail, props<{ error: string }>())
 };
