@@ -4,6 +4,7 @@ import { ChangePasswordComponent } from './screens/change-password/change-passwo
 import { DirectComponent } from './screens/direct/direct.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { FollowersComponent } from './screens/followers/followers.component';
+import { FollowingsComponent } from './screens/followings/followings.component';
 import { GeneralComponent } from './screens/general/general.component';
 import { GroupComponent } from './screens/group/group.component';
 import { LoginComponent } from './screens/login/login.component';
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'followers',
         component: FollowersComponent
+      },
+      {
+        path: 'followings',
+        component: FollowingsComponent
       }
     ]
   },

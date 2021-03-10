@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/models/data/user.model';
 import { AppState } from 'src/app/store';
 import { RelationActions } from 'src/app/store/actions/relation.actinos';
-import { RelationSelector } from 'src/app/store/selectors/relation.selectors';
+import { RelationSelectors } from 'src/app/store/selectors/relation.selectors';
 import { log } from 'src/app/utils/logger';
 
 @Component({
@@ -14,7 +14,7 @@ import { log } from 'src/app/utils/logger';
   styleUrls: ['./followers.component.css']
 })
 export class FollowersComponent implements OnInit {
-  followers$: Observable<User[]> = this.store.select(RelationSelector.selectFollowers);
+  followers$: Observable<User[]> = this.store.select(RelationSelectors.selectFollowers);
 
   constructor(private store: Store<AppState>) {}
 

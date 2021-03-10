@@ -4,7 +4,7 @@ import { relationStateFeatureKey } from '..';
 
 const selectRelations = createFeatureSelector<Relation>(relationStateFeatureKey);
 
-export const RelationSelector = {
+export const RelationSelectors = {
   selectFollowers: createSelector(selectRelations, (state: Relation) => state.followers),
   selectFollowings: createSelector(selectRelations, (state: Relation) => state.followings)
 };

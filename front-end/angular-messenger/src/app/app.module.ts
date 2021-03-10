@@ -31,6 +31,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { FollowersComponent } from './screens/followers/followers.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { FollowingsComponent } from './screens/followings/followings.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { UserItemComponent } from './components/user-item/user-item.component';
     ConfirmDialogComponent,
     ChangePasswordComponent,
     FollowersComponent,
-    UserItemComponent
+    UserItemComponent,
+    FollowingsComponent
   ],
   imports: [
     BrowserModule,
