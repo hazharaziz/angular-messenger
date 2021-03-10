@@ -1,5 +1,5 @@
-import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
+
 import { Relation } from 'src/app/models/data/relation.model';
 import { User } from 'src/app/models/data/user.model';
 import { RelationActions } from '../actions/relation.actinos';
@@ -11,5 +11,9 @@ export const relationReducer = createReducer(
   on(RelationActions.GetFollowersSucces, (state: Relation, payload: { followers: User[] }) => ({
     ...state,
     followers: payload.followers
+  })),
+  on(RelationActions.GetFollowingsSucces, (state: Relation, payload: { followings: User[] }) => ({
+    ...state,
+    followings: payload.followings
   }))
 );
