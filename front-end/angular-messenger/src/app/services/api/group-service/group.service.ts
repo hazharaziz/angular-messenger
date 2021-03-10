@@ -18,4 +18,10 @@ export class GroupService implements GroupAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  getGroupInfo(groupId: number): Observable<Group> {
+    return this.http.get<Group>(API_URL + `/groups/${groupId}`, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }

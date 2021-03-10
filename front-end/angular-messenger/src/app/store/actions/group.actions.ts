@@ -6,7 +6,7 @@ export const GroupActions = {
   GetGroupsRequest: createAction(ActionTypes.GetGroupsRequest),
   GetGroupsSuccess: createAction(ActionTypes.GetGroupsSuccess, props<{ groups: Group[] }>()),
   GetGroupsFail: createAction(ActionTypes.GetGroupsFail, props<{ error: string }>()),
-  GetGroupInfoRequest: createAction(ActionTypes.GetGroupInfoRequest),
+  GetGroupInfoRequest: createAction(ActionTypes.GetGroupInfoRequest, props<{ groupId: number }>()),
   GetGroupInfoSuccess: createAction(ActionTypes.GetGroupInfoSuccess, props<{ groupInfo: Group }>()),
   GetGroupInfoFail: createAction(ActionTypes.GetGroupInfoFail, props<{ error: string }>())
 };
