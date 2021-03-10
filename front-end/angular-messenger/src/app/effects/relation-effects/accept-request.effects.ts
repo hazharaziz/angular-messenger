@@ -9,33 +9,35 @@ import { RelationActions } from 'src/app/store/actions/relation.actinos';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
-export class UnfollowEffects {
-  unfollowRequest$ = createEffect(() =>
+export class AcceptRequestEffects {
+  acceptRequestRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RelationActions.UnfollowRequest),
+      ofType(RelationActions.AcceptRequestRequest),
       concatMap((payload) =>
-        this.relationService.unfollowRequest(payload.followingId).pipe(
-          map(() => RelationActions.GetFollowingsRequest()),
+        this.relationService.acceptRequestRequest(payload.userId).pipe(
+          map(() => RelationActions.GetFollowersRequest()),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
-            if (status == 401) {
+            if (status == 400) {
+              errorMessage = Messages.AlreadyFollower;
+            } else if (status == 401) {
               errorMessage = Messages.AuthorizationFailed;
             } else if (status == 404) {
               errorMessage = Messages.NotFound;
             } else {
               errorMessage = Messages.Error;
             }
-            return of(RelationActions.UnfollowFail({ error: errorMessage }));
+            return of(RelationActions.AcceptRequestFail({ error: errorMessage }));
           })
         )
       )
     )
   );
 
-  unfollowFail$ = createEffect(() =>
+  acceptRequestFail$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RelationActions.UnfollowFail),
+      ofType(RelationActions.AcceptRequestFail),
       tap(({ error }) => {
         this.toast.warning(error, undefined);
       })

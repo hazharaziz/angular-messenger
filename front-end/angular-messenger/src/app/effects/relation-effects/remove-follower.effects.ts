@@ -22,7 +22,7 @@ export class RemoveFollowerEffects {
             if (status == 401) {
               errorMessage = Messages.AuthorizationFailed;
             } else if (status == 404) {
-              errorMessage = Messages.RelationNotFound;
+              errorMessage = Messages.NotFound;
             } else {
               errorMessage = Messages.Error;
             }
