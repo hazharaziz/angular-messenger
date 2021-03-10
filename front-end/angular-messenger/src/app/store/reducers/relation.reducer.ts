@@ -2,14 +2,14 @@ import { createReducer, on } from '@ngrx/store';
 
 import { Relation } from 'src/app/models/data/relation.model';
 import { User } from 'src/app/models/data/user.model';
+import { GroupActions } from '../actions/group.actions';
 import { RelationActions } from '../actions/relation.actinos';
 
 const initialState: Relation = {
   followers: [],
   followings: [],
   receivedRequest: [],
-  sentRequests: [],
-  friends: []
+  sentRequests: []
 };
 
 export const relationReducer = createReducer(
@@ -34,13 +34,6 @@ export const relationReducer = createReducer(
     (state: Relation, payload: { receivedRequests: User[] }) => ({
       ...state,
       receivedRequest: payload.receivedRequests
-    })
-  ),
-  on(
-    RelationActions.GetAvailableFriendsSuccess,
-    (state: Relation, payload: { friends: User[] }) => ({
-      ...state,
-      friends: payload.friends
     })
   )
 );

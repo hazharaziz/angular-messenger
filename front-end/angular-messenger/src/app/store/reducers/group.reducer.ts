@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Group } from 'src/app/models/data/group.model';
+import { User } from 'src/app/models/data/user.model';
 import { GroupActions } from '../actions/group.actions';
 
 const initialState: Group[] = [];
@@ -13,7 +14,7 @@ export const groupReducer = createReducer(
   on(GroupActions.GetGroupInfoSuccess, (state: Group[], payload: { groupInfo: Group }) => {
     let index = state.findIndex((group) => group.groupId == payload.groupInfo.groupId);
     if (index < 0) return state;
-    state[index] = payload.groupInfo;
+    state[index] = { ...state[index], ...payload.groupInfo };
     // let newState: Group[] = [];
     // state.forEach((group) => newState.push(group));
     // let index = newState.findIndex((group) => group.groupId == payload.groupInfo.groupId);

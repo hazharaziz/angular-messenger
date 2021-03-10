@@ -10,4 +10,5 @@ export type Group = {
   addMemberAccess?: number;
   members?: User[];
   messages?: Message[];
+  friends?: User[];
 };

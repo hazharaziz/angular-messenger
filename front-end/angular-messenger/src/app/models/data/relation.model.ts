@@ -5,5 +5,4 @@ export type Relation = {
   followings?: User[];
   receivedRequest?: User[];
   sentRequests?: User[];
-  friends?: User[];
 };

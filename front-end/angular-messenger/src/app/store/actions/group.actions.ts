@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Group } from 'src/app/models/data/group.model';
+import { User } from 'src/app/models/data/user.model';
 import { ActionTypes } from './types';
 
 export const GroupActions = {

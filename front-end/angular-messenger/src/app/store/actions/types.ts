@@ -62,5 +62,6 @@ export const ActionTypes = {
   GetGroupInfoFail: '[GroupInfo Effects] Get Group Info Fail',
   GetAvailableFriendsRequest: '[AddMember Screen] Get Available Friends Request',
   GetAvailableFriendsSuccess: '[GetAvailableFriends Effects] Get Available Friends Success',
-  GetAvailableFriendsFail: '[GetAvailableFriends Effects] Get Available Friends Fail'
+  GetAvailableFriendsFail: '[GetAvailableFriends Effects] Get Available Friends Fail',
+  ClearAvailableFriends: '[AddMember Effects] Clear Available Friends'
 };
