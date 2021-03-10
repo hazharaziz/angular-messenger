@@ -39,6 +39,8 @@ export const ActionTypes = {
   GetRequestsSentRequest: '[SentRequests Screen] Get Sent Requests Request',
   GetRequestsSentSuccess: '[SentRequests Effects] Get Sent Requests Success',
   GetRequestsSentFail: '[SentRequests Effects] Get Sent Requests Fail',
-  AcceptRequestRequest: '[SentRequests Screen] Accept Request Request',
-  AcceptRequestFail: '[SentRequests Effects] Accept Request Fail'
+  CancelRequestRequest: '[SentRequests Screen] Cancel Request Request',
+  CancelRequestFail: '[SentRequests Effects] Cancel Request Fail',
+  AcceptRequestRequest: '[ReceivedRequests Screen] Accept Request Request',
+  AcceptRequestFail: '[ReceivedRequests Effects] Accept Request Fail'
 };
