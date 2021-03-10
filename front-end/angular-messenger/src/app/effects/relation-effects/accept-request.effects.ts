@@ -15,7 +15,7 @@ export class AcceptRequestEffects {
       ofType(RelationActions.AcceptRequestRequest),
       concatMap((payload) =>
         this.relationService.acceptRequestRequest(payload.userId).pipe(
-          map(() => RelationActions.GetFollowersRequest()),
+          map(() => RelationActions.GetRequestsReceivedRequest()),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
