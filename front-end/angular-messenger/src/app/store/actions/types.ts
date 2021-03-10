@@ -56,5 +56,8 @@ export const ActionTypes = {
   RemoveSearchItem: '[Search Screen] Remove Search Item',
   GetGroupsRequest: '[Groups Screen] Get Groups Request',
   GetGroupsSuccess: '[Groups Effects] Get Groups Success',
-  GetGroupsFail: '[Groups Effects] Get Groups Fail'
+  GetGroupsFail: '[Groups Effects] Get Groups Fail',
+  GetGroupInfoRequest: '[GroupInfo Screen] Get Group Info Request',
+  GetGroupInfoSuccess: '[GroupInfo Effects] Get Group Info Success',
+  GetGroupInfoFail: '[GroupInfo Effects] Get Group Info Fail'
 };
