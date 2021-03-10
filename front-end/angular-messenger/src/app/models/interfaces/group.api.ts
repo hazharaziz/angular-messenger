@@ -3,5 +3,5 @@ import { Group } from '../data/group.model';
 
 export interface GroupAPI {
   getGroupsRequest(): Observable<Group[]>;
-  getGroupInfo(groupId: number): Observable<Group>;
+  getGroupInfoRequest(groupId: number): Observable<Group>;
 }
