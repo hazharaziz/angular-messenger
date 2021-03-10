@@ -5,5 +5,11 @@ import { ActionTypes } from './types';
 export const RelationActions = {
   GetFollowersRequest: createAction(ActionTypes.GetFollowersRequest),
   GetFollowersSucces: createAction(ActionTypes.GetFollowersSuccess, props<{ followers: User[] }>()),
-  GetFollowersFail: createAction(ActionTypes.GetFollowersFail, props<{ error: string }>())
+  GetFollowersFail: createAction(ActionTypes.GetFollowersFail, props<{ error: string }>()),
+  RemoveFollowerRequest: createAction(ActionTypes.RemoveFollowerRequest),
+  RemoveFollowerSuccess: createAction(
+    ActionTypes.RemoveFollowerSuccess,
+    props<{ followers: User[] }>()
+  ),
+  RemoveFollowerFail: createAction(ActionTypes.RemoveFollowerFail, props<{ error: string }>())
 };

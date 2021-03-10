@@ -24,7 +24,9 @@ export class GetGeneralChatMessagesEffects {
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
-            if (status == 404) {
+            if (status == 401) {
+              errorMessage = Messages.AuthorizationFailed;
+            } else if (status == 404) {
               errorMessage = Messages.NoUserWithUsername;
             } else {
               errorMessage = Messages.Error;

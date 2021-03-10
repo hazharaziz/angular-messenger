@@ -4,6 +4,13 @@
     <div class="fixed-top bg-dark text-center screen-header">
       <h3>Followers</h3>
     </div>
-    <div></div>
+    <div>
+      <app-user-item
+        *ngFor="let follower of followers$ | async"
+        [user]="follower"
+        relationStatus="follower"
+        (remove)="removeFollower($event)"
+      ></app-user-item>
+    </div>
   </div>
 </div>

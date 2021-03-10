@@ -28,5 +28,8 @@ export const ActionTypes = {
   DeleteAccountFail: '[DeleteAccount Effects] Delete Account Fail',
   GetFollowersRequest: '[Followers Screen] Get Followers Request',
   GetFollowersSuccess: '[Followers Effects] Get Followers Success',
-  GetFollowersFail: '[Followers Effects] Get Followers Fail'
+  GetFollowersFail: '[Followers Effects] Get Followers Fail',
+  RemoveFollowerRequest: '[Followers Screen] Remove Follower Request',
+  RemoveFollowerSuccess: '[RemoveFollower Effects] Remove Follower Success',
+  RemoveFollowerFail: '[RemoveFollower Effects] Remove Follower Fail'
 };

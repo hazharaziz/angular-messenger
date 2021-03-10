@@ -19,7 +19,9 @@ export class EditProfileEffects {
           catchError((error) => {
             let errorMessage = '';
             let status: number = error.status;
-            if (status == 404) {
+            if (status == 401) {
+              errorMessage = Messages.AuthorizationFailed;
+            } else if (status == 404) {
               errorMessage = Messages.NoUserWithUsername;
             } else if (status == 409) {
               errorMessage = Messages.UserExists;

@@ -22,7 +22,9 @@ export class EditMessageEffects {
           catchError((error) => {
             let errorMessage = '';
             let status: number = error.status;
-            if (status == 404) {
+            if (status == 401) {
+              errorMessage = Messages.AuthorizationFailed;
+            } else if (status == 404) {
               errorMessage = Messages.MessageNotFound;
             } else if (status == 405) {
               errorMessage = Messages.EditMessageNotAllowed;
