@@ -9,6 +9,7 @@ import { DeleteAccountEffects } from './profile-effects/delete-account.effects';
 import { EditProfileEffects } from './profile-effects/edit-profile.effects';
 import { GetProfileEffects } from './profile-effects/get-profile.effects';
 import { AcceptRequestEffects } from './relation-effects/accept-request.effects';
+import { CancelRequestEffects } from './relation-effects/cancel-request.effects';
 import { GetFollowersEffects } from './relation-effects/get-followers.effects';
 import { GetFollowingsEffects } from './relation-effects/get-followings.effects';
 import { GetRequestsSentEffects } from './relation-effects/get-requests-sent.effects';
@@ -31,5 +32,6 @@ export const effects = [
   GetFollowingsEffects,
   UnfollowEffects,
   GetRequestsSentEffects,
-  AcceptRequestEffects
+  AcceptRequestEffects,
+  CancelRequestEffects
 ];
