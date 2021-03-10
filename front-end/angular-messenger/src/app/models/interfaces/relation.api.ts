@@ -8,5 +8,6 @@ export interface RelationAPI {
   unfollowRequest(followingId: number): Observable<string>;
   getRequestsSentRequest(): Observable<User[]>;
   cancelRequestRequest(userId: number): Observable<string>;
+  getRequestsReceivedRequest(): Observable<User[]>;
   acceptRequestRequest(userId: number): Observable<string>;
 }

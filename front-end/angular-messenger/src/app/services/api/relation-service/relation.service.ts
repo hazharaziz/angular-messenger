@@ -49,6 +49,12 @@ export class RelationService implements RelationAPI {
     });
   }
 
+  getRequestsReceivedRequest(): Observable<User[]> {
+    return this.http.get<User[]>(API_URL + '/relations/requests/received', {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
+
   acceptRequestRequest(userId: number): Observable<string> {
     return this.http.put<string>(API_URL + `/relations/accept-request/${userId}`, {
       headers: this.httpService.authorizationHeader()
