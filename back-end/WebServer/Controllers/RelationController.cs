@@ -96,7 +96,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _relationService.SendFollowRequest(targetId, userId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -116,7 +116,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _relationService.AcceptFollowRequest(userId, followerId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -136,7 +136,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _relationService.RejectFollowRequest(userId, followerId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -156,7 +156,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _relationService.CancelFollowRequest(followerId, userId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -176,7 +176,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _relationService.DeleteRelation(followingId, userId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -196,7 +196,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _relationService.DeleteRelation(userId, followerId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
