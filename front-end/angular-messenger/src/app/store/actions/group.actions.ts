@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+
 import { Group } from 'src/app/models/data/group.model';
-import { User } from 'src/app/models/data/user.model';
 import { ActionTypes } from './types';
 
 export const GroupActions = {
@@ -9,5 +9,8 @@ export const GroupActions = {
   GetGroupsFail: createAction(ActionTypes.GetGroupsFail, props<{ error: string }>()),
   GetGroupInfoRequest: createAction(ActionTypes.GetGroupInfoRequest, props<{ groupId: number }>()),
   GetGroupInfoSuccess: createAction(ActionTypes.GetGroupInfoSuccess, props<{ groupInfo: Group }>()),
-  GetGroupInfoFail: createAction(ActionTypes.GetGroupInfoFail, props<{ error: string }>())
+  GetGroupInfoFail: createAction(ActionTypes.GetGroupInfoFail, props<{ error: string }>()),
+  CreateGroupRequest: createAction(ActionTypes.CreateGroupRequest, props<Group>()),
+  CreateGroupSuccess: createAction(ActionTypes.CreateGroupSuccess),
+  CreateGroupFail: createAction(ActionTypes.CreateGroupFail, props<{ error: string }>())
 };
