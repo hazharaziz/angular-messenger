@@ -13,7 +13,7 @@ export class SearchService implements SearchAPI {
   constructor(private http: HttpClient, private httpService: HttpService) {}
 
   searchRequest(query: string): Observable<User[]> {
-    return this.http.get<User[]>(API_URL + `users/${query}`, {
+    return this.http.get<User[]>(API_URL + `/users/${query}`, {
       headers: this.httpService.authorizationHeader()
     });
   }

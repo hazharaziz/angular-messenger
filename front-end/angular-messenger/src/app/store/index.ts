@@ -14,7 +14,7 @@ export const authStateFeatureKey = 'auth';
 export const userStateFeatureKey = 'profile';
 export const generalChatStateFeatureKey = 'chat';
 export const relationStateFeatureKey = 'relations';
-export const searchStateFeatureKey = 'searchedUser';
+export const searchStateFeatureKey = 'searchedUsers';
 
 export type AppState = {
   [authStateFeatureKey]: Authentication;

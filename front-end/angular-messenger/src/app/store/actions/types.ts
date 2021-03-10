@@ -48,10 +48,10 @@ export const ActionTypes = {
   AcceptRequestFail: '[ReceivedRequests Effects] Accept Request Fail',
   RejectRequestRequest: '[ReceivedRequests Screen] Reject Request Request',
   RejectRequestFail: '[ReceivedRequests Effects] Reject Request Fail',
+  FollowRequest: '[Search Screen] Follow Request',
+  FollowFail: '[Search Effects] Follow Fail',
   SearchRequest: '[Search Screen] Search Request',
   SearchSuccess: '[Search Effects] Search Success',
   SearchFail: '[Search Effects] Search Fail',
-  FollowRequest: '[Search Screen] Follow Request',
-  FollowSuccess: '[Search Effects] Follow Success',
-  FollowFail: '[Search Effects] Follow Fail'
+  RemoveSearchItem: '[Search Screen] Remove Search Item'
 };

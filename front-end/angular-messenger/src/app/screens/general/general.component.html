@@ -43,17 +43,15 @@
         </button>
         Reply to {{ data.replyToName }}
       </button>
-      <div class="d-flex justify-content-center align-items-center">
+      <form class="d-flex justify-content-center align-items-center" (ngSubmit)="onSubmitMessage()">
         <input
           [formControl]="messageForm"
           type="text"
           placeholder="Type your message"
           class="flex-grow-1 form-control bg-dark text-light mr-2 rounded-lg"
         />
-        <button (click)="onSubmitMessage()" class="btn btn-danger rounded-lg text-light">
-          Send
-        </button>
-      </div>
+        <input type="submit" class="btn btn-danger rounded-lg text-light" value="Send" />
+      </form>
     </div>
   </div>
 </div>

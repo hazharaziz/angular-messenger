@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'sign-up', component: SignupComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'general', component: GeneralComponent, canActivate: [AuthGuard] },
-  { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: SearchComponent },
   { path: 'direct', component: DirectComponent, canActivate: [AuthGuard] },
   { path: 'group', component: GroupComponent, canActivate: [AuthGuard] },
   {

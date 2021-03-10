@@ -46,22 +46,33 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
 
             List<UserModel> filteredUsers = new List<UserModel>();
-            _unitOfWork.Users.GetAll().ForEach(user =>
+            if (text != "")
             {
-                if ((user.Username.ToLower().Contains(text.ToLower()) || 
-                    user.Name.ToLower().Contains(text.ToLower())) && user.Id != userId)
+                _unitOfWork.Users.GetAll().ForEach(user =>
                 {
-                    filteredUsers.Add(new UserModel()
+                    if (!_unitOfWork.Followers.HasFollower(userId, user.Id) &&
+                        !_unitOfWork.Followers.HasFollower(user.Id, userId))
                     {
-                        Id = user.Id,
-                        Username = user.Username,
-                        Name = user.Name,
-                        IsPublic = user.IsPublic
-                    });
-                }
-            });
+                        if ((user.Username.ToLower().Contains(text.ToLower()) ||
+                            user.Name.ToLower().Contains(text.ToLower())) && user.Id != userId)
+                        {
+                            filteredUsers.Add(new UserModel()
+                            {
+                                Id = user.Id,
+                                Username = user.Username,
+                                Name = user.Name,
+                                IsPublic = user.IsPublic
+                            });
+                        }
+                    }
+                });
+            }
 
-            return new Response<List<UserModel>>() { Status = StatusCodes.Status200OK, Data = filteredUsers };
+            return new Response<List<UserModel>>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = filteredUsers
+            };
         }
 
         public Response<List<UserModel>> GetUserFriends(int userId)
@@ -87,7 +98,11 @@ namespace WebServer.Services
                 }
             });
 
-            return new Response<List<UserModel>>() { Status = StatusCodes.Status200OK, Data = friends };
+            return new Response<List<UserModel>>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = friends
+            };
         }
     }
 }

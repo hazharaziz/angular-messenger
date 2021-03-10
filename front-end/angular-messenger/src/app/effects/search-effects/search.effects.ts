@@ -10,11 +10,11 @@ import { Messages } from 'src/assets/common/strings';
 export class SearchEffects {
   searchRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SearchActions.searchRequest),
+      ofType(SearchActions.SearchRequest),
       delay(2000),
       concatMap((payload) =>
         this.searchService.searchRequest(payload.query).pipe(
-          map((response) => SearchActions.searchSuccess({ searchedUsers: response })),
+          map((response) => SearchActions.SearchSuccess({ searchedUsers: response })),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
@@ -25,7 +25,7 @@ export class SearchEffects {
             } else {
               errorMessage = Messages.Error;
             }
-            return of(SearchActions.searchFail({ error: errorMessage }));
+            return of(SearchActions.SearchFail({ error: errorMessage }));
           })
         )
       )

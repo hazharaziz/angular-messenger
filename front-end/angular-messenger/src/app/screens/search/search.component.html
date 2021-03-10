@@ -1,8 +1,37 @@
 <div class="d-flex align-items-stretch wrap-container">
   <app-left-nav-bar class="align-self-center" page="search"></app-left-nav-bar>
-  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container">
+  <div
+    *ngIf="searchedUsers$ | async as users"
+    class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+  >
     <div class="fixed-top bg-dark text-center screen-header">
-      <h3>Search Users</h3>
+      <form class="d-flex justify-content-center align-items-center" (ngSubmit)="onSubmitMessage()">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            [formControl]="searchForm"
+            class="form-control bg-dark text-light"
+            placeholder="Search users"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-light" type="submit">
+              <i class="bi bi-search text-light"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="users.length != 0" class="items-container">
+      <app-user-item
+        *ngFor="let user of users"
+        [user]="user"
+        relationStatus="neutral"
+        (follow)="followUser($event)"
+      ></app-user-item>
+    </div>
+    <div *ngIf="users.length == 0" class="empty-container">
+      <span class="badge badge-secondary badge-pill custom-empty-badge">Oops! no users found</span>
     </div>
   </div>
 </div>
