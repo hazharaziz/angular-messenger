@@ -10,6 +10,7 @@ import { EditProfileEffects } from './profile-effects/edit-profile.effects';
 import { GetProfileEffects } from './profile-effects/get-profile.effects';
 import { GetFollowersEffects } from './relation-effects/get-followers.effects';
 import { GetFollowingsEffects } from './relation-effects/get-followings.effects';
+import { GetRequestsSentEffects } from './relation-effects/get-requests-sent.effects';
 import { RemoveFollowerEffects } from './relation-effects/remove-follower.effects';
 import { UnfollowEffects } from './relation-effects/unfollow.effects';
 
@@ -27,5 +28,6 @@ export const effects = [
   GetFollowersEffects,
   RemoveFollowerEffects,
   GetFollowingsEffects,
-  UnfollowEffects
+  UnfollowEffects,
+  GetRequestsSentEffects
 ];

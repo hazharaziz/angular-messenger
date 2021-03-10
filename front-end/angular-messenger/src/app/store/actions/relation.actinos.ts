@@ -24,5 +24,5 @@ export const RelationActions = {
     ActionTypes.GetRequestsSentSuccess,
     props<{ sentRequests: User[] }>()
   ),
-  GetRequestsSentsFail: createAction(ActionTypes.GetRequestsSentFail, props<{ error: string }>())
+  GetRequestsSentFail: createAction(ActionTypes.GetRequestsSentFail, props<{ error: string }>())
 };
