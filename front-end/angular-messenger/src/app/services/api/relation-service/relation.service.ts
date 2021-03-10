@@ -42,4 +42,10 @@ export class RelationService implements RelationAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  acceptRequestRequest(userId: number): Observable<string> {
+    return this.http.put<string>(API_URL + `/relations/accept-request/${userId}`, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }
