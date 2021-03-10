@@ -9,6 +9,7 @@ import { DeleteAccountEffects } from './profile-effects/delete-account.effects';
 import { EditProfileEffects } from './profile-effects/edit-profile.effects';
 import { GetProfileEffects } from './profile-effects/get-profile.effects';
 import { GetFollowersEffects } from './relation-effects/get-followers.effects';
+import { RemoveFollowerEffects } from './relation-effects/remove-follower.effects';
 
 export const effects = [
   LoginEffects,
@@ -21,5 +22,6 @@ export const effects = [
   EditProfileEffects,
   ChangePasswordEffects,
   DeleteAccountEffects,
-  GetFollowersEffects
+  GetFollowersEffects,
+  RemoveFollowerEffects
 ];

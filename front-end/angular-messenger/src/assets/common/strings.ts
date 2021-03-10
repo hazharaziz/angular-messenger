@@ -8,5 +8,6 @@ export const Messages = {
   FetchDataError: 'Error occured while fetching data',
   MessageNotFound: 'Message not found',
   EditMessageNotAllowed: 'You are not allowed to edit this message',
-  DeleteMessageNotAllowed: 'You are not allowed to delete this message'
+  DeleteMessageNotAllowed: 'You are not allowed to delete this message',
+  RelationNotFound: 'Relation not found'
 };
