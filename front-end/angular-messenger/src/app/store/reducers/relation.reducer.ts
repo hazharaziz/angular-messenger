@@ -27,5 +27,12 @@ export const relationReducer = createReducer(
       ...state,
       sentRequests: payload.sentRequests
     })
+  ),
+  on(
+    RelationActions.GetRequestsReceivedSuccess,
+    (state: Relation, payload: { receivedRequests: User[] }) => ({
+      ...state,
+      receivedRequest: payload.receivedRequests
+    })
   )
 );
