@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
 import { User } from 'src/app/models/data/user.model';
 import { AppState } from 'src/app/store';
 import { RelationActions } from 'src/app/store/actions/relation.actinos';

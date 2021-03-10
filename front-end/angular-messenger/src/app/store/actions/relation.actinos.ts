@@ -14,5 +14,11 @@ export const RelationActions = {
     ActionTypes.RemoveFollowerSuccess,
     props<{ followers: User[] }>()
   ),
-  RemoveFollowerFail: createAction(ActionTypes.RemoveFollowerFail, props<{ error: string }>())
+  RemoveFollowerFail: createAction(ActionTypes.RemoveFollowerFail, props<{ error: string }>()),
+  GetFollowingsRequest: createAction(ActionTypes.GetFollowingsRequest),
+  GetFollowingsSucces: createAction(
+    ActionTypes.GetFollowingsSuccess,
+    props<{ followings: User[] }>()
+  ),
+  GetFollowingsFail: createAction(ActionTypes.GetFollowingsFail, props<{ error: string }>())
 };
