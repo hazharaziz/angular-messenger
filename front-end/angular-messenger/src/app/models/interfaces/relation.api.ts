@@ -5,4 +5,5 @@ export interface RelationAPI {
   getFollowersRequest(): Observable<User[]>;
   removeFollowerRequest(followerId: number): Observable<string>;
   getFollowingsRequest(): Observable<User[]>;
+  unfollowRequest(followingId: number): Observable<string>;
 }

@@ -30,4 +30,10 @@ export class RelationService implements RelationAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  unfollowRequest(followingId: number): Observable<string> {
+    return this.http.delete<string>(API_URL + `/relations/unfollow/${followingId}`, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }
