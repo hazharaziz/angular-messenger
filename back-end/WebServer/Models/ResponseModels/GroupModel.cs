@@ -9,7 +9,7 @@ namespace WebServer.Models.ResponseModels
 {
     public class GroupModel
     {
-        [JsonPropertyName("id")]
+        [JsonPropertyName("groupId")]
         public int GroupId { get; set; }
 
         [JsonPropertyName("groupName")]

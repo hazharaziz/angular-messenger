@@ -53,5 +53,8 @@ export const ActionTypes = {
   SearchRequest: '[Search Screen] Search Request',
   SearchSuccess: '[Search Effects] Search Success',
   SearchFail: '[Search Effects] Search Fail',
-  RemoveSearchItem: '[Search Screen] Remove Search Item'
+  RemoveSearchItem: '[Search Screen] Remove Search Item',
+  GetGroupsRequest: '[Groups Screen] Get Groups Request',
+  GetGroupsSuccess: '[Groups Effects] Get Groups Success',
+  GetGroupsFail: '[Groups Effects] Get Groups Fail'
 };
