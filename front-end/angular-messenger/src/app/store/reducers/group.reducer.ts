@@ -9,5 +9,17 @@ export const groupReducer = createReducer(
   on(
     GroupActions.GetGroupsSuccess,
     (state: Group[], payload: { groups: Group[] }) => payload.groups
-  )
+  ),
+  on(GroupActions.GetGroupInfoSuccess, (state: Group[], payload: { groupInfo: Group }) => {
+    let index = state.findIndex((group) => group.groupId == payload.groupInfo.groupId);
+    if (index < 0) return state;
+    state[index] = payload.groupInfo;
+    // let newState: Group[] = [];
+    // state.forEach((group) => newState.push(group));
+    // let index = newState.findIndex((group) => group.groupId == payload.groupInfo.groupId);
+    // if (index < 0) return newState;
+    // newState[index] = payload.groupInfo;
+    // return newState;
+    return state;
+  })
 );
