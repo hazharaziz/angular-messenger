@@ -43,6 +43,12 @@ export class RelationService implements RelationAPI {
     });
   }
 
+  cancelRequestRequest(userId: number): Observable<string> {
+    return this.http.delete<string>(API_URL + `/relations/cancel-request/${userId}`, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
+
   acceptRequestRequest(userId: number): Observable<string> {
     return this.http.put<string>(API_URL + `/relations/accept-request/${userId}`, {
       headers: this.httpService.authorizationHeader()
