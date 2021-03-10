@@ -18,4 +18,10 @@ export class RelationService implements RelationAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  removeFollowerRequest(followerId: number): Observable<string> {
+    return this.http.delete<string>(API_URL + `/relations/delete-follower/${followerId}`, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }
