@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddMemberComponent } from './screens/add-member/add-member.component';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { CreateGroupComponent } from './screens/create-group/create-group.component';
-import { DirectComponent } from './screens/direct/direct.component';
+import { DirectChatComponent } from './screens/direct-chat/direct-chat.component';
+import { DirectsComponent } from './screens/directs/directs.component';
 import { EditGroupComponent } from './screens/edit-group/edit-group.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { FollowersComponent } from './screens/followers/followers.component';
@@ -27,7 +28,12 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'general', component: GeneralChatComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
-  { path: 'direct', component: DirectComponent, canActivate: [AuthGuard] },
+  {
+    path: 'directs',
+    component: DirectsComponent,
+    canActivate: [AuthGuard],
+    children: [{ path: 'chat/:target/:name', component: DirectChatComponent }]
+  },
   {
     path: 'groups',
     component: GroupsComponent,

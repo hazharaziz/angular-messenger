@@ -8,11 +8,11 @@ export interface DirectAPI {
   getDirectMessagesRequest(targetId: number): Observable<Message[]>;
   sendDirectMessageRequest(targetId: number, message: Message): Observable<string>;
   editDirectMessageRequest(
-    directId: number,
+    targetId: number,
     messageId: number,
     message: Message
   ): Observable<string>;
-  deleteDirectMessageRequest(directId: number, messageId: number): Observable<string>;
+  deleteDirectMessageRequest(targetId: number, messageId: number): Observable<string>;
   deleteDirectChatHistoryRequest(targetId: number): Observable<string>;
   deleteDirectRequest(directId: number): Observable<string>;
 }

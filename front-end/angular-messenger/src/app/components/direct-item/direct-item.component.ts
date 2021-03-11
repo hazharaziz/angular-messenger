@@ -8,9 +8,9 @@ import { Direct } from 'src/app/models/data/direct.model';
 })
 export class DirectItemComponent implements OnInit {
   @Input() direct?: Direct;
-  @Output() chat: EventEmitter<{ id: number; name: string }> = new EventEmitter<{
-    id: number;
-    name: string;
+  @Output() chat: EventEmitter<{ targetId?: number; name?: string }> = new EventEmitter<{
+    targetId?: number;
+    name?: string;
   }>();
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
 
@@ -18,8 +18,8 @@ export class DirectItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  directChat(id: number, name: string) {
-    this.chat.emit({ id, name });
+  directChat(targetId?: number, name?: string) {
+    this.chat.emit({ targetId, name });
   }
 
   deleteDirect(id: number) {

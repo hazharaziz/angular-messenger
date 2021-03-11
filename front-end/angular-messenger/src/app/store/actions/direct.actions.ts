@@ -15,31 +15,25 @@ export const DirectActions = {
   ),
   GetDirectMessagesSuccess: createAction(
     ActionTypes.GetDirectMessagesSuccess,
-    props<{ messages: Chat[] }>()
+    props<{ targetId: number; messages: Chat[] }>()
   ),
   GetDirectMessagesFail: createAction(
     ActionTypes.GetDirectMessagesFail,
     props<{ error: string }>()
   ),
-  SendDirectMessageRequest: createAction(
-    ActionTypes.SendDirectMessageRequest,
-    props<{ directMessage: Message }>()
-  ),
+  SendDirectMessageRequest: createAction(ActionTypes.SendDirectMessageRequest, props<Message>()),
   SendDirectMessageFail: createAction(
     ActionTypes.SendDirectMessageFail,
     props<{ error: string }>()
   ),
-  EditDirectMessageRequest: createAction(
-    ActionTypes.EditDirectMessageRequest,
-    props<{ directMessage: Message }>()
-  ),
+  EditDirectMessageRequest: createAction(ActionTypes.EditDirectMessageRequest, props<Message>()),
   EditDirectMessageFail: createAction(
     ActionTypes.EditDirectMessageFail,
     props<{ error: string }>()
   ),
   DeleteDirectMessageRequest: createAction(
     ActionTypes.DeleteDirectMessageRequest,
-    props<{ directId: number; targetId: number; messageId: number }>()
+    props<{ targetId: number; messageId: number }>()
   ),
   DeleteDirectMessageFail: createAction(
     ActionTypes.DeleteDirectMessageFail,

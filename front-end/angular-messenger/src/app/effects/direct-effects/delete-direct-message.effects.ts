@@ -16,7 +16,7 @@ export class DeleteDirectMessageEffects {
       ofType(DirectActions.DeleteDirectMessageRequest),
       concatMap((payload) => {
         return this.directService
-          .deleteDirectMessageRequest(payload.directId, payload.messageId)
+          .deleteDirectMessageRequest(payload.targetId, payload.messageId)
           .pipe(
             map(() => DirectActions.GetDirectMessagesRequest({ targetId: payload.targetId })),
             catchError((err) => {
@@ -28,13 +28,15 @@ export class DeleteDirectMessageEffects {
     )
   );
 
-  deleteDirectMessageFail = createEffect(() =>
-    this.actions$.pipe(
-      ofType(DirectActions.DeleteDirectMessageFail),
-      tap(({ error }) => {
-        this.toast.error(error, 'Error');
-      })
-    )
+  deleteDirectMessageFail = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(DirectActions.DeleteDirectMessageFail),
+        tap(({ error }) => {
+          this.toast.error(error, 'Error');
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

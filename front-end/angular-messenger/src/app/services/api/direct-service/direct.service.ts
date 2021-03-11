@@ -33,17 +33,17 @@ export class DirectService implements DirectAPI {
   }
 
   editDirectMessageRequest(
-    directId: number,
+    targetId: number,
     messageId: number,
     message: Message
   ): Observable<string> {
-    return this.http.put<string>(API_URL + `/directs/${directId}/message/${messageId}`, message, {
+    return this.http.put<string>(API_URL + `/directs/message/${targetId}/${messageId}`, message, {
       headers: this.httpService.authorizationHeader()
     });
   }
 
-  deleteDirectMessageRequest(directId: number, messageId: number): Observable<string> {
-    return this.http.delete<string>(API_URL + `/directs/${directId}/message/${messageId}`, {
+  deleteDirectMessageRequest(targetId: number, messageId: number): Observable<string> {
+    return this.http.delete<string>(API_URL + `/directs/message/${targetId}/${messageId}`, {
       headers: this.httpService.authorizationHeader()
     });
   }

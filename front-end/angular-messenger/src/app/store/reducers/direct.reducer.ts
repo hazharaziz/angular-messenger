@@ -12,13 +12,15 @@ export const directReducer = createReducer(
     DirectActions.GetDirectsSuccess,
     (state: Direct[], payload: { directs: Direct[] }) => payload.directs
   ),
-  on(DirectActions.GetDirectMessagesSuccess, (state: Direct[], payload: { messages: Chat[] }) => {
-    let newState: Direct[] = [];
-    state.forEach((direct) => newState.push(direct));
-    if (payload.messages.length == 0) return newState;
-    let directId = payload.messages[0].messages[0].directId;
-    let index = newState.findIndex((direct) => direct.directId == directId);
-    if (index < 0) return newState;
-    newState[index] = { ...newState[index], messages: payload.messages };
-  })
+  on(
+    DirectActions.GetDirectMessagesSuccess,
+    (state: Direct[], payload: { targetId: number; messages: Chat[] }) => {
+      let newState: Direct[] = [];
+      state.forEach((direct) => newState.push(direct));
+      let index = newState.findIndex((direct) => direct.targetId == payload.targetId);
+      if (index < 0) return newState;
+      newState[index] = { ...newState[index], messages: payload.messages };
+      return newState;
+    }
+  )
 );

@@ -95,15 +95,15 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut("{directId}/message/{messageId}")]
-        public IActionResult EditDirectMessage(int directId, int messageId, [FromBody] DirectMessage message)
+        [HttpPut("message/{targetId}/{messageId}")]
+        public IActionResult EditDirectMessage(int targetId, int messageId, [FromBody] DirectMessage message)
         {
             try
             {
                 int userId = int.Parse
                     (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = 
-                    _directService.EditDirectMessage(userId, directId, messageId, message);
+                    _directService.EditDirectMessage(userId, targetId, messageId, message);
                 return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
@@ -117,13 +117,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{directId}/message/{messageId}")]
-        public IActionResult DeleteDirectMessage(int directId, int messageId)
+        [HttpDelete("message/{targetId}/{messageId}")]
+        public IActionResult DeleteDirectMessage(int targetId, int messageId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _directService.DeleteDirectMessage(userId, directId, messageId);
+                Response<string> response = _directService.DeleteDirectMessage(userId, targetId, messageId);
                 return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)

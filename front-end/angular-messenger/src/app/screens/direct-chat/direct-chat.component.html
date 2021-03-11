@@ -1,0 +1,66 @@
+<div class="d-flex align-items-stretch wrap-container">
+  <app-left-nav-bar class="align-self-center" page="general"></app-left-nav-bar>
+  <div
+    *ngIf="chat$ | async as chatHistory"
+    class="d-flex flex-column card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+    #chatBox
+  >
+    <div class="fixed-top bg-dark header-container">
+      <div class="d-flex justify-content-center align-items-center text-center screen-header">
+        <div class="align-self-center text-left flex-grow-1">
+          <h3>{{ directParam.targetName != '' ? directParam.targetName : 'Direct' }} Chat</h3>
+        </div>
+        <div>
+          <button (click)="clearHistory()" class="btn btn-danger rounded-lg btn-sm">
+            Clear History
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="chatHistory.length != 0" class="chat-container">
+      <div *ngFor="let date of chatHistory">
+        <div class="d-flex justify-content-center align-items-center badge-wrap">
+          <span class="badge badge-pill badge-secondary message-date-badge">
+            {{ date.date }}
+          </span>
+        </div>
+        <div *ngFor="let message of date.messages" #message [id]="message.id">
+          <app-message-container
+            [message]="message"
+            (scroll)="scrollToElement($event)"
+            (edit)="configInfo('edit', $event)"
+            (reply)="configInfo('reply', $event)"
+            (delete)="deleteMessage($event)"
+            [editInfoAccessibility]="message.composerId == (userId$ | async)"
+          ></app-message-container>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="chatHistory.length == 0" class="empty-chat">
+      <span class="badge badge-secondary badge-pill custom-empty-badge">No messages yet ...</span>
+    </div>
+
+    <div class="bg-dark fixed-bottom message-input-container">
+      <button
+        *ngIf="submitMode == 'reply'"
+        class="d-flex justify-content-center align-items-center bg-transparent text-light top-reply-badge"
+        (click)="scrollToElement(data.replyId)"
+      >
+        <button class="bg-transparent custom-close-icon" (click)="submitMode = 'send'">
+          <i class="bi bi-x-circle text-danger"></i>
+        </button>
+        Reply to {{ data.replyToName }}
+      </button>
+      <form class="d-flex justify-content-center align-items-center" (ngSubmit)="onSubmitMessage()">
+        <input
+          [formControl]="messageForm"
+          type="text"
+          placeholder="Type your message"
+          class="flex-grow-1 form-control bg-dark text-light mr-2 rounded-lg"
+        />
+        <input type="submit" class="btn btn-danger rounded-lg text-light" value="Send" />
+      </form>
+    </div>
+  </div>
+</div>

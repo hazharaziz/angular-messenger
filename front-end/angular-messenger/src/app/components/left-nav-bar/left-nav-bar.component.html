@@ -15,11 +15,11 @@
     [ngClass]="{ 'bi-house-door': page != 'general', 'bi-house-door-fill': page == 'general' }"
   ></button>
   <button
-    [routerLink]="page != 'direct' ? ['/direct'] : undefined"
+    [routerLink]="page != 'directs' ? ['/directs'] : undefined"
     class="bi bi-chat-square-dots btn btn-dark icons icon-middle"
     [ngClass]="{
-      'bi-chat-square-dots': page != 'direct',
-      'bi-chat-square-dots-fill': page == 'direct'
+      'bi-chat-square-dots': page != 'directs',
+      'bi-chat-square-dots-fill': page == 'directs'
     }"
   ></button>
   <button

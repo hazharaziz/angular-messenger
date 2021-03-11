@@ -26,13 +26,15 @@ export class ClearDirectChatHistoryEffects {
     )
   );
 
-  clearDirectChatHistoryFail = createEffect(() =>
-    this.actions$.pipe(
-      ofType(DirectActions.ClearDirectChatHistoryFail),
-      tap(({ error }) => {
-        this.toast.error(error, 'Error');
-      })
-    )
+  clearDirectChatHistoryFail = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(DirectActions.ClearDirectChatHistoryFail),
+        tap(({ error }) => {
+          this.toast.error(error, 'Error');
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

@@ -6,13 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./left-nav-bar.component.css']
 })
 export class LeftNavBarComponent implements OnInit {
-  @Input() page: 'general' | 'search' | 'direct' | 'groups' | 'profile';
+  @Input() page: 'general' | 'search' | 'directs' | 'groups' | 'profile';
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  get route() {
-    return `../${this.page}`;
-  }
 }

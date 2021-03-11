@@ -21,7 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { GeneralChatComponent } from './screens/general-chat/general-chat.component';
 import { SearchComponent } from './screens/search/search.component';
 import { ProfileComponent } from './screens/profile/profile.component';
-import { DirectComponent } from './screens/direct/direct.component';
+import { DirectsComponent } from './screens/directs/directs.component';
 import { MessageContainerComponent } from './components/message-container/message-container.component';
 import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
@@ -40,6 +40,7 @@ import { EditGroupComponent } from './screens/edit-group/edit-group.component';
 import { AddMemberComponent } from './screens/add-member/add-member.component';
 import { GroupChatComponent } from './screens/group-chat/group-chat.component';
 import { DirectItemComponent } from './components/direct-item/direct-item.component';
+import { DirectChatComponent } from './screens/direct-chat/direct-chat.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { DirectItemComponent } from './components/direct-item/direct-item.compon
     GeneralChatComponent,
     SearchComponent,
     ProfileComponent,
-    DirectComponent,
+    DirectsComponent,
     MessageContainerComponent,
     LeftNavBarComponent,
     EditProfileComponent,
@@ -69,7 +70,8 @@ import { DirectItemComponent } from './components/direct-item/direct-item.compon
     EditGroupComponent,
     AddMemberComponent,
     GroupChatComponent,
-    DirectItemComponent
+    DirectItemComponent,
+    DirectChatComponent
   ],
   imports: [
     BrowserModule,

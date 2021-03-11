@@ -18,7 +18,10 @@ export class GetDirectMessagesEffects {
         return this.directService.getDirectMessagesRequest(payload.targetId).pipe(
           map((response) => {
             let result = MessageMapper.mapMessaegesToChat(response);
-            return DirectActions.GetDirectMessagesSuccess({ messages: result });
+            return DirectActions.GetDirectMessagesSuccess({
+              targetId: payload.targetId,
+              messages: result
+            });
           }),
           catchError((err) => {
             let error: HttpErrorResponse = err as HttpErrorResponse;

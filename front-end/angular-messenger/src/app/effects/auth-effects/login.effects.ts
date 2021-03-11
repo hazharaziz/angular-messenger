@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ToastrService } from 'ngx-toastr';
-import { of } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { concatMap, map, catchError, tap } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/api/auth-service/auth.service';

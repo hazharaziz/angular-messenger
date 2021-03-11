@@ -26,13 +26,15 @@ export class RemoveDirectEffects {
     )
   );
 
-  removeDirectFail = createEffect(() =>
-    this.actions$.pipe(
-      ofType(DirectActions.RemoveDirectFail),
-      tap(({ error }) => {
-        this.toast.error(error, 'Error');
-      })
-    )
+  removeDirectFail = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(DirectActions.RemoveDirectFail),
+        tap(({ error }) => {
+          this.toast.error(error, 'Error');
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

@@ -195,17 +195,22 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage5;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
 
             _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
                 .Returns(DirectMessages.DirectMessage5);
+
+            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Directs.Direct5);
+
             _unitOfWork.Setup(u => u.Save());
 
             // Act
             Response<string> response =
-                _directService.EditDirectMessage(user.Id, message.DirectId, message.DirectMessageId, message);
+                _directService.EditDirectMessage(user.Id, target.Id, message.DirectMessageId, message);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -217,6 +222,7 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage5;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Null);
@@ -224,7 +230,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, message.DirectId, message.DirectMessageId, message);
+                (user.Id, target.Id, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -235,6 +241,8 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
+
             DirectMessage message = DirectMessages.DirectMessage5;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
@@ -244,7 +252,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, message.DirectId, message.DirectMessageId, message);
+                (user.Id, target.Id, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -255,6 +263,7 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Nico;
             DirectMessage message = DirectMessages.DirectMessage4;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
@@ -264,7 +273,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, message.DirectId, message.DirectMessageId, message);
+                (user.Id, target.Id, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -275,16 +284,20 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Patrick;
+            User target = Users.Nico;
             DirectMessage message = DirectMessages.DirectMessage4;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Patrick);
             _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
                 .Returns(DirectMessages.DirectMessage4);
 
+            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Directs.Direct3);
+
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, 3, message.DirectMessageId, message);
+                (user.Id, target.Id, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -296,17 +309,22 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage5;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
 
             _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
                 .Returns(DirectMessages.DirectMessage5);
+
+            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Directs.Direct5);
+
             _unitOfWork.Setup(u => u.Save());
 
             // Act
             Response<string> response =
-                _directService.DeleteDirectMessage(user.Id, message.DirectId, message.DirectMessageId);
+                _directService.DeleteDirectMessage(user.Id, target.Id, message.DirectMessageId);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -318,6 +336,7 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage5;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Null);
@@ -325,7 +344,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, message.DirectId, message.DirectMessageId);
+                (user.Id, target.Id, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -336,6 +355,7 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage5;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
@@ -345,7 +365,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, message.DirectId, message.DirectMessageId);
+                (user.Id, target.Id, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -356,16 +376,18 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage4;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
             _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
-                .Returns(DirectMessages.DirectMessage4);
+                .Returns(DirectMessages.DirectMessage3);
+
 
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, message.DirectId, message.DirectMessageId);
+                (user.Id, target.Id, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -376,16 +398,20 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Isaac;
+            User target = Users.Oscar;
             DirectMessage message = DirectMessages.DirectMessage4;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Isaac);
             _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
                 .Returns(DirectMessages.DirectMessage4);
 
+            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Directs.Direct4);
+
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, 2, message.DirectMessageId);
+                (user.Id, target.Id, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);

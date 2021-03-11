@@ -8,41 +8,57 @@ import {
   ViewChildren
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Chat } from 'src/app/models/data/chat.model';
+import { Direct } from 'src/app/models/data/direct.model';
 import { AppState } from 'src/app/store';
-import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { DirectActions } from 'src/app/store/actions/direct.actions';
 import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
-import { GeneralChatSelectors } from 'src/app/store/selectors/chat.selectors';
+import { DirectSelectors } from 'src/app/store/selectors/direct.selectors';
 import { log } from 'src/app/utils/logger';
 
 @Component({
-  selector: 'app-general',
-  templateUrl: './general-chat.component.html',
-  styleUrls: ['./general-chat.component.css']
+  selector: 'app-direct-chat',
+  templateUrl: './direct-chat.component.html',
+  styleUrls: ['./direct-chat.component.css']
 })
-export class GeneralChatComponent implements OnInit, AfterViewChecked {
+export class DirectChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatBox') chatBox: ElementRef;
   @ViewChildren('message') messages: QueryList<ElementRef>;
   messageForm: FormControl;
+  directParam: Direct = this.getDirectParams();
   userId$: Observable<number> = this.store.select(AuthSelectors.selectUserId);
-  chat$: Observable<Chat[]> = this.store.select(GeneralChatSelectors.selectChatMessages);
+  chat$: Observable<Chat[]> = this.store.select(DirectSelectors.selectDirectMessages, {
+    targetId: this.directParam.targetId
+  });
   submitMode: 'send' | 'edit' | 'reply' | 'delete';
   data: { editId?: number; replyId?: number; replyToName?: string; deleteId?: number };
   doScrollToBottom: boolean;
 
-  constructor(private store: Store<AppState>, fb: FormBuilder) {
-    this.messageForm = fb.control('', Validators.required);
+  constructor(
+    private store: Store<AppState>,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {
+    this.messageForm = this.fb.control('', Validators.required);
     this.submitMode = 'send';
     this.data = {};
     this.doScrollToBottom = true;
   }
 
+  getDirectParams(): Direct {
+    let params = this.route.snapshot.paramMap;
+    return {
+      targetId: Number(params.get('target')),
+      targetName: params.get('name')
+    };
+  }
+
   ngOnInit(): void {
-    this.fetchMessages();
+    this.fetchMessages(this.directParam.targetId);
   }
 
   ngAfterViewChecked(): void {
@@ -53,8 +69,9 @@ export class GeneralChatComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
-  fetchMessages() {
-    this.store.dispatch(ChatActions.GetChatMessagesRequest());
+  fetchMessages(targetId: number): void {
+    if (targetId == undefined) return;
+    this.store.dispatch(DirectActions.GetDirectMessagesRequest({ targetId }));
   }
 
   configInfo(
@@ -101,22 +118,43 @@ export class GeneralChatComponent implements OnInit, AfterViewChecked {
 
   sendMessage(text: string, replyToId?: number) {
     this.store.dispatch(
-      ChatActions.SendMessageRequest({
+      DirectActions.SendDirectMessageRequest({
+        targetId: this.directParam.targetId,
         replyToId,
         text,
         dateTime: new Date().toJSON()
       })
     );
+    setTimeout(() => {
+      this.store.dispatch(
+        DirectActions.GetDirectMessagesRequest({ targetId: this.directParam.targetId })
+      );
+    }, 100);
   }
 
   editMessage(id: number) {
     this.store.dispatch(
-      ChatActions.EditMessageRequest({ messageId: id, message: this.messageForm.value })
+      DirectActions.EditDirectMessageRequest({
+        targetId: this.directParam.targetId,
+        id: id,
+        text: this.messageForm.value
+      })
     );
   }
 
   deleteMessage(id: number) {
-    this.store.dispatch(ChatActions.DeleteMessageRequest({ messageId: id }));
+    this.store.dispatch(
+      DirectActions.DeleteDirectMessageRequest({
+        targetId: this.directParam.targetId,
+        messageId: id
+      })
+    );
+  }
+
+  clearHistory() {
+    this.store.dispatch(
+      DirectActions.ClearDirectChatHistoryRequest({ targetId: this.directParam.targetId })
+    );
   }
 
   scrollToBottom(): void {

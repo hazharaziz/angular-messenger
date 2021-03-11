@@ -16,13 +16,11 @@ export class EditDirectMessageEffects {
       ofType(DirectActions.EditDirectMessageRequest),
       concatMap((payload) => {
         return this.directService
-          .editDirectMessageRequest(payload.directMessage.directId, payload.directMessage.id, {
-            text: payload.directMessage.text
+          .editDirectMessageRequest(payload.targetId, payload.id, {
+            text: payload.text
           })
           .pipe(
-            map(() =>
-              DirectActions.GetDirectMessagesRequest({ targetId: payload.directMessage.targetId })
-            ),
+            map(() => DirectActions.GetDirectMessagesRequest({ targetId: payload.targetId })),
             catchError((err) => {
               let error: HttpErrorResponse = err as HttpErrorResponse;
               return of(DirectActions.EditDirectMessageFail({ error: error.error }));
@@ -32,13 +30,15 @@ export class EditDirectMessageEffects {
     )
   );
 
-  editDirectMessageFail = createEffect(() =>
-    this.actions$.pipe(
-      ofType(DirectActions.EditDirectMessageFail),
-      tap(({ error }) => {
-        this.toast.error(error, 'Error');
-      })
-    )
+  editDirectMessageFail = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(DirectActions.EditDirectMessageFail),
+        tap(({ error }) => {
+          this.toast.error(error, 'Error');
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

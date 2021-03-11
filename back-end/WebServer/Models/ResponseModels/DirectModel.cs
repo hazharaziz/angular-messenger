@@ -9,7 +9,7 @@ namespace WebServer.Models.ResponseModels
 {
     public class DirectModel
     {
-        [JsonPropertyName("id")]
+        [JsonPropertyName("directId")]
         public int Id { get; set; }
 
         [JsonPropertyName("targetId")]
