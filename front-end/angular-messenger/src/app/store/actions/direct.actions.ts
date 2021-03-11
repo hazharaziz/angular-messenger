@@ -11,11 +11,11 @@ export const DirectActions = {
   GetDirectsFail: createAction(ActionTypes.GetDirectsFail, props<{ error: string }>()),
   GetDirectMessagesRequest: createAction(
     ActionTypes.GetDirectMessagesRequest,
-    props<{ directId: number }>()
+    props<{ targetId: number }>()
   ),
   GetDirectMessagesSuccess: createAction(
     ActionTypes.GetDirectMessagesSuccess,
-    props<{ directId: number; messages: Chat[] }>()
+    props<{ messages: Chat[] }>()
   ),
   GetDirectMessagesFail: createAction(
     ActionTypes.GetDirectMessagesFail,
@@ -47,7 +47,7 @@ export const DirectActions = {
   ),
   ClearDirectChatHistoryRequest: createAction(
     ActionTypes.ClearDirectChatHistoryRequest,
-    props<{ directId: number }>()
+    props<{ targetId: number }>()
   ),
   ClearDirectChatHistoryFail: createAction(
     ActionTypes.ClearDirectChatHistoryFail,

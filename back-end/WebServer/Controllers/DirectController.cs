@@ -49,13 +49,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet("{directId}/messages")]
-        public IActionResult GetDirectMessages(int directId)
+        [HttpGet("messages/{targetId}")]
+        public IActionResult GetDirectMessages(int targetId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<List<DirectMessage>> response = _directService.GetDirectMessages(userId, directId);
+                Response<List<DirectMessage>> response = _directService.GetDirectMessages(userId, targetId);
                 return StatusCode(response.Status, response.Data);
             }
             catch (HttpException exception)
@@ -69,16 +69,14 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPost("message")]
-        public IActionResult SendDirectMessage([FromBody] DirectMessageRequest directMessage)
+        [HttpPost("message/{targetId}")]
+        public IActionResult SendDirectMessage(int targetId, [FromBody] DirectMessageRequest directMessage)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                int targetId = directMessage.TargetId;
                 DirectMessage message = new DirectMessage()
                 {
-                    DirectId = directMessage.DirectId,
                     Text = directMessage.Text,
                     DateTime = directMessage.DateTime,
                     ReplyToId = directMessage.ReplyToId
@@ -139,13 +137,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{directId}/history")]
-        public IActionResult DeleteDirectHistory(int directId)
+        [HttpDelete("history/{targetId}")]
+        public IActionResult DeleteDirectHistory(int targetId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _directService.DeleteDirectHistory(userId, directId);
+                Response<string> response = _directService.DeleteDirectHistory(userId, targetId);
                 return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)

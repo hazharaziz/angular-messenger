@@ -29,7 +29,7 @@
             [message]="message"
             (scroll)="scrollToElement($event)"
             (edit)="configInfo('edit', $event)"
-            (reply)="configInfo('reply', { id: $event })"
+            (reply)="configInfo('reply', $event)"
             (delete)="deleteMessage($event)"
             [editInfoAccessibility]="message.composerId == (userId$ | async)"
           ></app-message-container>

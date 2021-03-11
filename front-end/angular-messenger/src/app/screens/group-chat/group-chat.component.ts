@@ -76,7 +76,10 @@ export class GroupChatComponent implements OnInit, AfterViewChecked {
     this.store.dispatch(GroupActions.GetGroupMessagesRequest({ groupId }));
   }
 
-  configInfo(mode: 'send' | 'edit' | 'reply' | 'delete', data: { id: number; message?: string }) {
+  configInfo(
+    mode: 'send' | 'edit' | 'reply' | 'delete',
+    data: { id: number; message?: string; name?: string }
+  ) {
     this.data = {};
     this.submitMode = mode;
     this.data[`${mode}Id`] = data.id;
@@ -85,12 +88,7 @@ export class GroupChatComponent implements OnInit, AfterViewChecked {
         this.messageForm.patchValue(data.message ? data.message : '');
         break;
       case 'reply':
-        this.store
-          .select(GroupSelectors.selectGroupMessageComposerName, {
-            groupId: this.groupParam.groupId,
-            messageId: data.id
-          })
-          .subscribe((name) => (this.data.replyToName = name));
+        this.data.replyToName = data.name;
         this.messageForm.patchValue('');
         break;
       case 'delete':
