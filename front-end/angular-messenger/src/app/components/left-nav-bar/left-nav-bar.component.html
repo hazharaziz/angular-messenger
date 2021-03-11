@@ -5,9 +5,9 @@
     [ngClass]="{ 'bi-person': page != 'profile', 'bi-person-fill': page == 'profile' }"
   ></button>
   <button
-    [routerLink]="page != 'group' ? ['/group'] : undefined"
+    [routerLink]="page != 'groups' ? ['/groups'] : undefined"
     class="bi bi-people btn btn-dark icons icon-middle"
-    [ngClass]="{ 'bi-people': page != 'group', 'bi-people-fill': page == 'group' }"
+    [ngClass]="{ 'bi-people': page != 'groups', 'bi-people-fill': page == 'groups' }"
   ></button>
   <button
     [routerLink]="page != 'general' ? ['/general'] : undefined"

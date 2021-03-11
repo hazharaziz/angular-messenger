@@ -4,6 +4,7 @@ import { DeleteMessageEffects } from './general-chat-effects/delete-message.effe
 import { EditMessageEffects } from './general-chat-effects/edit-message.effects';
 import { GetGeneralChatMessagesEffects } from './general-chat-effects/get-general-chat-messages.effects';
 import { SendMessageEffects } from './general-chat-effects/send-message.effects';
+import { CreateGroupEffects } from './group-effects/create-group.effects';
 import { GetAvailableFriendsEffects } from './group-effects/get-available-friends.effects';
 import { GetGroupInfoEffects } from './group-effects/get-group-info.effects';
 import { GetGroupsEffects } from './group-effects/get-groups.effects';
@@ -47,5 +48,6 @@ export const effects = [
   SearchEffects,
   GetGroupsEffects,
   GetGroupInfoEffects,
-  GetAvailableFriendsEffects
+  GetAvailableFriendsEffects,
+  CreateGroupEffects
 ];

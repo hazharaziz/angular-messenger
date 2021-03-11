@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'general', component: GeneralComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent },
   { path: 'direct', component: DirectComponent, canActivate: [AuthGuard] },
-  { path: 'group', component: GroupComponent, canActivate: [AuthGuard] },
+  { path: 'groups', component: GroupComponent, canActivate: [AuthGuard] },
   {
     path: 'profile',
     component: ProfileComponent,

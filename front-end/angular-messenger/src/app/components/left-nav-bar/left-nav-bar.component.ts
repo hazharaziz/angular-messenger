@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./left-nav-bar.component.css']
 })
 export class LeftNavBarComponent implements OnInit {
-  @Input() page: 'general' | 'search' | 'direct' | 'group' | 'profile';
+  @Input() page: 'general' | 'search' | 'direct' | 'groups' | 'profile';
 
   constructor() {}
 
