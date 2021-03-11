@@ -30,7 +30,7 @@ export class RemoveFollowerEffects {
       this.actions$.pipe(
         ofType(RelationActions.RemoveFollowerFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

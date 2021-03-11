@@ -33,7 +33,7 @@ export class DeleteMessageEffects {
       this.actions$.pipe(
         ofType(ChatActions.DeleteMessageFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

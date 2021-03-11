@@ -31,7 +31,7 @@ export class DeleteGroupMessageEffects {
       this.actions$.pipe(
         ofType(GroupActions.DeleteGroupMessageFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

@@ -31,7 +31,7 @@ export class LeaveGroupEffects {
       this.actions$.pipe(
         ofType(GroupActions.LeaveGroupFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

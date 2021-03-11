@@ -44,7 +44,7 @@ export class DeleteAccountEffects {
       this.actions$.pipe(
         ofType(ProfileActions.DeleteAccountFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

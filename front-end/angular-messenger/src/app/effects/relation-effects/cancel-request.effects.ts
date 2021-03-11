@@ -30,7 +30,7 @@ export class CancelRequestEffects {
       this.actions$.pipe(
         ofType(RelationActions.CancelRequestFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

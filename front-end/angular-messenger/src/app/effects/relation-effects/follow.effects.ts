@@ -31,7 +31,7 @@ export class FollowEffects {
       this.actions$.pipe(
         ofType(RelationActions.FollowFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

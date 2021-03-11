@@ -31,7 +31,7 @@ export class ClearGroupChatHistoryEffects {
       this.actions$.pipe(
         ofType(GroupActions.ClearGroupChatHistoryFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

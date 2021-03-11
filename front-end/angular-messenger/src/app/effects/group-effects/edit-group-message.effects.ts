@@ -38,7 +38,7 @@ export class EditGroupMessageEffects {
       this.actions$.pipe(
         ofType(GroupActions.EditGroupMessageFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

@@ -1,17 +1,17 @@
 <div class="d-flex align-items-stretch wrap-container">
   <app-left-nav-bar class="align-self-center" page="groups"></app-left-nav-bar>
-  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container">
-    <div
-      class="d-flex justify-content-center align-items-center fixed-top bg-dark text-center screen-header"
-    >
-      <div class="align-self-center text-left flex-grow-1">
-        <h3>Groups</h3>
-      </div>
-      <div>
-        <button class="btn btn-success rounded-lg btn-sm">
-          New Group
-          <i class="bi bi-plus-circle"></i>
-        </button>
+  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg main-container">
+    <div class="fixed-top bg-dark header-container">
+      <div class="d-flex justify-content-center align-items-center text-center screen-header">
+        <div class="align-self-center text-left flex-grow-1">
+          <h3>Groups</h3>
+        </div>
+        <div>
+          <button routerLink="./create" class="btn btn-success rounded-lg btn-sm">
+            New Group
+            <i class="bi bi-plus-circle"></i>
+          </button>
+        </div>
       </div>
     </div>
     <div *ngIf="groups$ | async as groups">
@@ -26,3 +26,5 @@
     </div>
   </div>
 </div>
+
+<router-outlet></router-outlet>

@@ -33,7 +33,7 @@ export class EditMessageEffects {
       this.actions$.pipe(
         ofType(ChatActions.EditMessageFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

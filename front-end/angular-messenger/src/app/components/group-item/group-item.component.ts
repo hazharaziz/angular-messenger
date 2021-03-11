@@ -15,10 +15,7 @@ export class GroupItemComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    log(this.group);
-    log(this.isCreator);
-  }
+  ngOnInit(): void {}
 
   groupChat(id: number) {}
 

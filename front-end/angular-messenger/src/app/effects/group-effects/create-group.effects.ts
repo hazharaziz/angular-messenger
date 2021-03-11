@@ -8,6 +8,7 @@ import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
 import { GroupService } from 'src/app/services/api/group-service/group.service';
 import { GroupActions } from 'src/app/store/actions/group.actions';
+import { ProfileActions } from 'src/app/store/actions/profile.actions';
 
 @Injectable()
 export class CreateGroupEffects {
@@ -31,7 +32,7 @@ export class CreateGroupEffects {
       this.actions$.pipe(
         ofType(GroupActions.CreateGroupFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

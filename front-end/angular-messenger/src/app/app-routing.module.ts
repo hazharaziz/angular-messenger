@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
+import { CreateGroupComponent } from './screens/create-group/create-group.component';
 import { DirectComponent } from './screens/direct/direct.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { FollowersComponent } from './screens/followers/followers.component';
@@ -23,7 +24,11 @@ const routes: Routes = [
   { path: 'general', component: GeneralComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
   { path: 'direct', component: DirectComponent, canActivate: [AuthGuard] },
-  { path: 'groups', component: GroupsComponent },
+  {
+    path: 'groups',
+    component: GroupsComponent,
+    children: [{ path: 'create', component: CreateGroupComponent }]
+  },
   {
     path: 'profile',
     component: ProfileComponent,

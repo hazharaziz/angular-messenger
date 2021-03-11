@@ -30,7 +30,7 @@ export class RejectRequestEffects {
       this.actions$.pipe(
         ofType(RelationActions.RejectRequestFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

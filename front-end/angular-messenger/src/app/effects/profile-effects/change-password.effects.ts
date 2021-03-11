@@ -41,7 +41,7 @@ export class ChangePasswordEffects {
       this.actions$.pipe(
         ofType(ProfileActions.ChangePasswordFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

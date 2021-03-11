@@ -31,7 +31,7 @@ export class RemoveMemberFromGroupEffects {
       this.actions$.pipe(
         ofType(GroupActions.RemoveMemberFromGroupFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

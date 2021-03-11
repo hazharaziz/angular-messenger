@@ -34,6 +34,7 @@ import { SentRequestsComponent } from './screens/sent-requests/sent-requests.com
 import { ReceivedRequestsComponent } from './screens/received-requests/received-requests.component';
 import { GroupItemComponent } from './components/group-item/group-item.component';
 import { GroupsComponent } from './screens/groups/groups.component';
+import { CreateGroupComponent } from './screens/create-group/create-group.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { GroupsComponent } from './screens/groups/groups.component';
     SentRequestsComponent,
     ReceivedRequestsComponent,
     GroupItemComponent,
-    GroupsComponent
+    GroupsComponent,
+    CreateGroupComponent
   ],
   imports: [
     BrowserModule,

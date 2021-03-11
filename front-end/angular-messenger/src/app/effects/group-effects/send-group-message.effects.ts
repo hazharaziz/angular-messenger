@@ -36,7 +36,7 @@ export class SendGroupMessageEffects {
       this.actions$.pipe(
         ofType(GroupActions.SendGroupMessageFail),
         tap(({ error }) => {
-          this.toast.warning(error);
+          this.toast.error(error, 'Error');
         })
       ),
     { dispatch: false }

@@ -29,17 +29,21 @@
   display: none;
 }
 
-.header-container {
-  position: sticky;
-}
-
 .screen-header {
   border-bottom: 1px solid #ffffffaa;
   padding: 10px;
   margin-right: 20px;
   margin-left: 20px;
-  /* position: sticky; */
+  position: sticky;
   z-index: 2;
+}
+
+.form-container {
+  margin: 20px;
+}
+
+.custom-btn {
+  margin: 15px 30px 0 30px;
 }
 
 @media (max-width: 1300px) and (min-width: 1100px) {
