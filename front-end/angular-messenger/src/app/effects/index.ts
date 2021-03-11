@@ -4,10 +4,20 @@ import { DeleteMessageEffects } from './general-chat-effects/delete-message.effe
 import { EditMessageEffects } from './general-chat-effects/edit-message.effects';
 import { GetGeneralChatMessagesEffects } from './general-chat-effects/get-general-chat-messages.effects';
 import { SendMessageEffects } from './general-chat-effects/send-message.effects';
+import { AddMemberToGroupEffects } from './group-effects/add-member-to-group.effects';
+import { ClearGroupChatHistoryEffects } from './group-effects/clear-group-chat-history.effects';
 import { CreateGroupEffects } from './group-effects/create-group.effects';
+import { DeleteGroupMessageEffects } from './group-effects/delete-group-message.effects';
+import { DeleteGroupEffects } from './group-effects/delete-group.effects';
+import { EditGroupMessageEffects } from './group-effects/edit-group-message.effects';
+import { EditGroupEffects } from './group-effects/edit-group.effects';
 import { GetAvailableFriendsEffects } from './group-effects/get-available-friends.effects';
 import { GetGroupInfoEffects } from './group-effects/get-group-info.effects';
+import { GetGroupMessagesEffects } from './group-effects/get-group-messages.effects';
 import { GetGroupsEffects } from './group-effects/get-groups.effects';
+import { LeaveGroupEffects } from './group-effects/leave-group.effects';
+import { RemoveMemberFromGroupEffects } from './group-effects/remove-member-from-group.effects';
+import { SendGroupMessageEffects } from './group-effects/send-group-message.effects';
 import { ChangePasswordEffects } from './profile-effects/change-password.effects';
 import { DeleteAccountEffects } from './profile-effects/delete-account.effects';
 import { EditProfileEffects } from './profile-effects/edit-profile.effects';
@@ -49,5 +59,15 @@ export const effects = [
   GetGroupsEffects,
   GetGroupInfoEffects,
   GetAvailableFriendsEffects,
-  CreateGroupEffects
+  CreateGroupEffects,
+  EditGroupEffects,
+  DeleteGroupEffects,
+  AddMemberToGroupEffects,
+  RemoveMemberFromGroupEffects,
+  GetGroupMessagesEffects,
+  SendGroupMessageEffects,
+  EditGroupMessageEffects,
+  DeleteGroupMessageEffects,
+  ClearGroupChatHistoryEffects,
+  LeaveGroupEffects
 ];

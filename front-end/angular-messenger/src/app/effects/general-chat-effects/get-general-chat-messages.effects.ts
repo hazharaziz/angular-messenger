@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -8,7 +9,6 @@ import { GeneralChatService } from 'src/app/services/api/chat-service/general-ch
 import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { log } from 'src/app/utils/logger';
 import { MessageMapper } from 'src/app/utils/message-mapper';
-import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class GetGeneralChatMessagesEffects {
@@ -21,17 +21,9 @@ export class GetGeneralChatMessagesEffects {
             let result: Chat[] = MessageMapper.mapMessaegesToChat(response);
             return ChatActions.GetChatMessagesSuccess({ data: result });
           }),
-          catchError((error) => {
-            let errorMessage = '';
-            let status = error.status;
-            if (status == 401) {
-              errorMessage = Messages.AuthorizationFailed;
-            } else if (status == 404) {
-              errorMessage = Messages.NoUserWithUsername;
-            } else {
-              errorMessage = Messages.Error;
-            }
-            return of(ChatActions.GetChatMessagesFail({ error: errorMessage }));
+          catchError((err) => {
+            let error: HttpErrorResponse = err as HttpErrorResponse;
+            return of(ChatActions.GetChatMessagesFail({ error: error.error }));
           })
         );
       })

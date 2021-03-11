@@ -7,7 +7,6 @@ import { concatMap, map, catchError, tap } from 'rxjs/operators';
 
 import { GeneralChatService } from 'src/app/services/api/chat-service/general-chat.service';
 import { ChatActions } from 'src/app/store/actions/chat.actions';
-import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class SendMessageEffects {
@@ -19,17 +18,9 @@ export class SendMessageEffects {
           map(() => {
             return ChatActions.GetChatMessagesRequest();
           }),
-          catchError((error) => {
-            let errorMessage = '';
-            let status = (error as HttpErrorResponse).status;
-            if (status == 401) {
-              errorMessage = Messages.NotAllowedToAccessResource;
-            } else if (status == 404) {
-              errorMessage = Messages.NoUserWithUsername;
-            } else {
-              errorMessage = Messages.Error;
-            }
-            return of(ChatActions.GetChatMessagesFail({ error: errorMessage }));
+          catchError((err) => {
+            let error: HttpErrorResponse = err as HttpErrorResponse;
+            return of(ChatActions.SendMessageFail({ error: error.error }));
           })
         )
       )
@@ -41,7 +32,7 @@ export class SendMessageEffects {
       this.actions$.pipe(
         ofType(ChatActions.SendMessageFail),
         tap(({ error }) => {
-          this.toast.warning(error, 'Error', { progressBar: false });
+          this.toast.warning(error);
         })
       ),
     { dispatch: false }

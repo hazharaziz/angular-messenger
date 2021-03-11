@@ -39,7 +39,7 @@ export class GroupService implements GroupAPI {
     });
   }
 
-  editGroupRequest(groupId: string, group: Group): Observable<string> {
+  editGroupRequest(groupId: number, group: Group): Observable<string> {
     return this.http.put<string>(API_URL + `/groups/${groupId}`, group, {
       headers: this.httpService.authorizationHeader()
     });
@@ -63,7 +63,7 @@ export class GroupService implements GroupAPI {
     });
   }
 
-  getGroupMessages(groupId: number): Observable<Message[]> {
+  getGroupMessagesRequest(groupId: number): Observable<Message[]> {
     return this.http.get<Message[]>(API_URL + `/groups/${groupId}/messages`, {
       headers: this.httpService.authorizationHeader()
     });

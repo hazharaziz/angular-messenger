@@ -8,7 +8,6 @@ import { concatMap, map, catchError, tap } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/api/auth-service/auth.service';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
-import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class LoginEffects {
@@ -18,17 +17,9 @@ export class LoginEffects {
       concatMap((action) => {
         return this.authService.login(action).pipe(
           map((response) => AuthActions.LoginSuccess(response)),
-          catchError((error) => {
-            let errorMessage = '';
-            let status = error.status;
-            if (status == 404) {
-              errorMessage = Messages.NoUserWithUsername;
-            } else if (status == 401) {
-              errorMessage = Messages.WrongAuthCredentials;
-            } else {
-              errorMessage = Messages.Error;
-            }
-            return of(AuthActions.LoginFail({ error: errorMessage }));
+          catchError((err) => {
+            let error: HttpErrorResponse = err as HttpErrorResponse;
+            return of(AuthActions.LoginFail({ error: error.error }));
           })
         );
       })
@@ -51,7 +42,7 @@ export class LoginEffects {
       this.actions$.pipe(
         ofType(AuthActions.LoginFail),
         tap(({ error }) => {
-          this.toast.error(error, undefined);
+          this.toast.error(error);
         })
       ),
     { dispatch: false }

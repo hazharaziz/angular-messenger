@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -6,7 +7,6 @@ import { of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/api/profile-service/profile.service';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
-import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class DeleteAccountEffects {
@@ -16,17 +16,9 @@ export class DeleteAccountEffects {
       concatMap(() =>
         this.profileService.deleteAccountRequest().pipe(
           map(() => ProfileActions.DeleteAccountSuccess()),
-          catchError((error) => {
-            let errorMessage = '';
-            let status: number = error.status;
-            if (status == 401) {
-              errorMessage = Messages.AuthorizationFailed;
-            } else if (status == 404) {
-              errorMessage = Messages.NoUserWithUsername;
-            } else {
-              errorMessage = Messages.Error;
-            }
-            return of(ProfileActions.DeleteAccountFail({ error: errorMessage }));
+          catchError((err) => {
+            let error: HttpErrorResponse = err as HttpErrorResponse;
+            return of(ProfileActions.DeleteAccountFail({ error: error.error }));
           })
         )
       )
@@ -52,7 +44,7 @@ export class DeleteAccountEffects {
       this.actions$.pipe(
         ofType(ProfileActions.DeleteAccountFail),
         tap(({ error }) => {
-          this.toast.warning(error, 'Error');
+          this.toast.warning(error);
         })
       ),
     { dispatch: false }

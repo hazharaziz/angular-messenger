@@ -57,27 +57,21 @@ export const GroupActions = {
   ),
   GetGroupMessagesFail: createAction(ActionTypes.GetGroupMessagesFail, props<{ error: string }>()),
   SendGroupMessageRequest: createAction(
-    ActionTypes.SendGroupMessagesRequest,
+    ActionTypes.SendGroupMessageRequest,
     props<{ message: Message }>()
   ),
-  SendGroupMessagesFail: createAction(
-    ActionTypes.SendGroupMessagesFail,
-    props<{ error: string }>()
-  ),
+  SendGroupMessageFail: createAction(ActionTypes.SendGroupMessagesFail, props<{ error: string }>()),
   EditGroupMessageRequest: createAction(
     ActionTypes.EditGroupMessagesRequest,
     props<{ message: Message }>()
   ),
-  EditGroupMessagesFail: createAction(
-    ActionTypes.EditGroupMessagesFail,
-    props<{ error: string }>()
-  ),
+  EditGroupMessageFail: createAction(ActionTypes.EditGroupMessageFail, props<{ error: string }>()),
   DeleteGroupMessageRequest: createAction(
     ActionTypes.DeleteGroupMessagesRequest,
     props<{ groupId: number; messageId: number }>()
   ),
-  DeleteGroupMessagesFail: createAction(
-    ActionTypes.DeleteGroupMessagesFail,
+  DeleteGroupMessageFail: createAction(
+    ActionTypes.DeleteGroupMessageFail,
     props<{ error: string }>()
   ),
   ClearGroupChatHistoryRequest: createAction(

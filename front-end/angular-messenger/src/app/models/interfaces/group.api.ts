@@ -8,11 +8,11 @@ export interface GroupAPI {
   getGroupInfoRequest(groupId: number): Observable<Group>;
   getAvailableFriends(groupId: number): Observable<User[]>;
   createGroupRequest(group: Group): Observable<string>;
-  editGroupRequest(groupId: string, group: Group): Observable<string>;
+  editGroupRequest(groupId: number, group: Group): Observable<string>;
   deleteGroupRequest(groupId: number): Observable<string>;
   addMemberToGroupRequest(groupId: number, members: number[]): Observable<string>;
   removeMemberFromGroupRequest(groupId: number, memberId: number): Observable<string>;
-  getGroupMessages(groupId: number): Observable<Message[]>;
+  getGroupMessagesRequest(groupId: number): Observable<Message[]>;
   sendGroupMessageRequest(groupId: number, message: Message): Observable<string>;
   editGroupMessageRequest(groupId: number, messageId: number, message: Message): Observable<string>;
   deleteGroupMessageRequest(groupId: number, messageId: number): Observable<string>;

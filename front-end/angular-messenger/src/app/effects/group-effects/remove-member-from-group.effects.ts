@@ -5,30 +5,31 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
-import { ProfileService } from 'src/app/services/api/profile-service/profile.service';
-import { ProfileActions } from 'src/app/store/actions/profile.actions';
+
+import { GroupService } from 'src/app/services/api/group-service/group.service';
+import { GroupActions } from 'src/app/store/actions/group.actions';
 
 @Injectable()
-export class EditProfileEffects {
-  editProfileRequest$ = createEffect(() =>
+export class RemoveMemberFromGroupEffects {
+  removeMemberFromGroupRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProfileActions.EditProfileRequest),
-      concatMap((editedUser) =>
-        this.profileService.editProfileRequest(editedUser).pipe(
-          map(() => ProfileActions.GetProfileRequest()),
+      ofType(GroupActions.RemoveMemberFromGroupRequest),
+      concatMap((payload) =>
+        this.groupService.removeMemberFromGroupRequest(payload.groupId, payload.memberId).pipe(
+          map(() => GroupActions.GetGroupInfoRequest({ groupId: payload.groupId })),
           catchError((err) => {
             let error: HttpErrorResponse = err as HttpErrorResponse;
-            return of(ProfileActions.EditProfileFail({ error: error.error }));
+            return of(GroupActions.RemoveMemberFromGroupFail({ error: error.error }));
           })
         )
       )
     )
   );
 
-  editProfileFail$ = createEffect(
+  removeMemberFromGroupFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProfileActions.EditProfileFail),
+        ofType(GroupActions.RemoveMemberFromGroupFail),
         tap(({ error }) => {
           this.toast.warning(error);
         })
@@ -38,7 +39,7 @@ export class EditProfileEffects {
 
   constructor(
     private actions$: Actions,
-    private profileService: ProfileService,
+    private groupService: GroupService,
     private router: Router,
     private toast: ToastrService
   ) {}

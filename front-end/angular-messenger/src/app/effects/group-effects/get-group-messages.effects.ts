@@ -10,31 +10,22 @@ import { GroupService } from 'src/app/services/api/group-service/group.service';
 import { GroupActions } from 'src/app/store/actions/group.actions';
 
 @Injectable()
-export class CreateGroupEffects {
-  createGroupRequest$ = createEffect(() =>
+export class GetGroupMessagesEffects {
+  getGroupMessagesRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(GroupActions.CreateGroupRequest),
+      ofType(GroupActions.GetGroupMessagesRequest),
       concatMap((payload) =>
-        this.groupService.createGroupRequest(payload).pipe(
-          map(() => GroupActions.GetGroupsRequest()),
+        this.groupService.getGroupMessagesRequest(payload.groupId).pipe(
+          map((response) =>
+            GroupActions.GetGroupMessagesSuccess({ groupId: payload.groupId, messages: response })
+          ),
           catchError((err) => {
             let error: HttpErrorResponse = err as HttpErrorResponse;
-            return of(GroupActions.CreateGroupFail({ error: error.error }));
+            return of(GroupActions.GetGroupMessagesFail({ error: error.error }));
           })
         )
       )
     )
-  );
-
-  createGroupFail$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(GroupActions.CreateGroupFail),
-        tap(({ error }) => {
-          this.toast.warning(error);
-        })
-      ),
-    { dispatch: false }
   );
 
   constructor(

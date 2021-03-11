@@ -9,7 +9,6 @@ import { map, catchError, tap, concatMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/api/auth-service/auth.service';
 import { AuthActions } from 'src/app/store/actions/auth.actions';
 import { log } from 'src/app/utils/logger';
-import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class SignUpEffects {
@@ -19,16 +18,9 @@ export class SignUpEffects {
       concatMap((action) => {
         return this.authService.signUp(action).pipe(
           map((response) => AuthActions.SignUpSuccess(response)),
-          catchError((error) => {
-            let errorMessage = '';
-            let status = error.status;
-            log(status);
-            if (status == 409) {
-              errorMessage = Messages.UserExists;
-            } else {
-              errorMessage = Messages.Error;
-            }
-            return of(AuthActions.SignUpFail({ error: errorMessage }));
+          catchError((err) => {
+            let error: HttpErrorResponse = err as HttpErrorResponse;
+            return of(AuthActions.SignUpFail({ error: error.error }));
           })
         );
       })
@@ -51,7 +43,6 @@ export class SignUpEffects {
       this.actions$.pipe(
         ofType(AuthActions.SignUpFail),
         tap(({ error }) => {
-          log(error);
           this.toast.error(error);
         })
       ),

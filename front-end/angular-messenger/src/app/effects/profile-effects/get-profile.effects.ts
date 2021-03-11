@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -5,7 +6,6 @@ import { catchError, concatMap, map } from 'rxjs/operators';
 
 import { ProfileService } from 'src/app/services/api/profile-service/profile.service';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
-import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class GetProfileEffects {
@@ -15,17 +15,9 @@ export class GetProfileEffects {
       concatMap(() =>
         this.profileService.getProfileRequest().pipe(
           map((response) => ProfileActions.GetProfileSuccess(response)),
-          catchError((error) => {
-            let errorMessage = '';
-            let status = error.status;
-            if (status == 401) {
-              errorMessage = Messages.AuthorizationFailed;
-            } else if (status == 404) {
-              errorMessage = Messages.NoUserWithUsername;
-            } else {
-              errorMessage = Messages.Error;
-            }
-            return of(ProfileActions.GetProfileFail({ error: errorMessage }));
+          catchError((err) => {
+            let error: HttpErrorResponse = err as HttpErrorResponse;
+            return of(ProfileActions.GetProfileFail({ error: error.error }));
           })
         )
       )
