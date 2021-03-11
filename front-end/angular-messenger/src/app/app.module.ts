@@ -39,6 +39,7 @@ import { GroupInfoComponent } from './screens/group-info/group-info.component';
 import { EditGroupComponent } from './screens/edit-group/edit-group.component';
 import { AddMemberComponent } from './screens/add-member/add-member.component';
 import { GroupChatComponent } from './screens/group-chat/group-chat.component';
+import { DirectItemComponent } from './components/direct-item/direct-item.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { GroupChatComponent } from './screens/group-chat/group-chat.component';
     GroupInfoComponent,
     EditGroupComponent,
     AddMemberComponent,
-    GroupChatComponent
+    GroupChatComponent,
+    DirectItemComponent
   ],
   imports: [
     BrowserModule,

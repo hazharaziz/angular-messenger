@@ -12,8 +12,11 @@ namespace WebServer.Models.ResponseModels
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("directName")]
+        [JsonPropertyName("targetId")]
+        public int TargetId { get; set; }
+
+        [JsonPropertyName("targetName")]
         [StringLength(maximumLength: 40, MinimumLength = 3)]
-        public string DirectName { get; set; }
+        public string TargetName { get; set; }
     }
 }

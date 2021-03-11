@@ -34,7 +34,8 @@ namespace WebServer.Services
                 directModels.Add(new DirectModel()
                 {
                     Id = direct.DirectId,
-                    DirectName = (target != null) ? target.Name : "Deleted Account"
+                    TargetId = targetId,
+                    TargetName = (target != null) ? target.Name : "Deleted Account"
                 });
             });
 
