@@ -28,7 +28,11 @@ export class GroupsComponent implements OnInit {
     this.store.dispatch(GroupActions.GetGroupsRequest());
   }
 
-  groupInfo(id: number) {
+  groupChat(data: { id: number; name: string; creatorId: number }): void {
+    this.router.navigate(['/groups/chat', data.id, data.name, data.creatorId]);
+  }
+
+  groupInfo(id: number): void {
     this.router.navigate(['/groups/info', id]);
   }
 

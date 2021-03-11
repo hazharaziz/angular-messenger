@@ -35,7 +35,8 @@ export class AddMemberComponent implements OnInit {
     this.store.dispatch(
       GroupActions.AddMemberToGroupRequest({ groupId: this.groupIdParam, members: this.membersIds })
     );
-    setInterval(() => {
+
+    setTimeout(() => {
       this.fetchFriends(this.groupIdParam);
     }, 1000);
   }

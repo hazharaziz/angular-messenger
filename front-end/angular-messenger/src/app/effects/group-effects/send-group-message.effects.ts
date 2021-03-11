@@ -16,12 +16,12 @@ export class SendGroupMessageEffects {
       ofType(GroupActions.SendGroupMessageRequest),
       concatMap((payload) =>
         this.groupService
-          .sendGroupMessageRequest(payload.message.groupId, {
-            ...payload.message,
+          .sendGroupMessageRequest(payload.groupId, {
+            ...payload,
             groupId: undefined
           })
           .pipe(
-            map(() => GroupActions.GetGroupMessagesRequest({ groupId: payload.message.groupId })),
+            map(() => GroupActions.GetGroupMessagesRequest({ groupId: payload.groupId })),
             catchError((err) => {
               let error: HttpErrorResponse = err as HttpErrorResponse;
               return of(GroupActions.SendGroupMessageFail({ error: error.error }));

@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Chat } from 'src/app/models/data/chat.model';
 
 import { Group } from 'src/app/models/data/group.model';
 import { Message } from 'src/app/models/data/message.model';
@@ -53,17 +54,14 @@ export const GroupActions = {
   ),
   GetGroupMessagesSuccess: createAction(
     ActionTypes.GetGroupMessagesSuccess,
-    props<{ groupId: number; messages: Message[] }>()
+    props<{ groupId: number; messages: Chat[] }>()
   ),
   GetGroupMessagesFail: createAction(ActionTypes.GetGroupMessagesFail, props<{ error: string }>()),
-  SendGroupMessageRequest: createAction(
-    ActionTypes.SendGroupMessageRequest,
-    props<{ message: Message }>()
-  ),
+  SendGroupMessageRequest: createAction(ActionTypes.SendGroupMessageRequest, props<Message>()),
   SendGroupMessageFail: createAction(ActionTypes.SendGroupMessagesFail, props<{ error: string }>()),
   EditGroupMessageRequest: createAction(
     ActionTypes.EditGroupMessagesRequest,
-    props<{ message: Message }>()
+    props<{ groupId: number; messageId: number; message: string }>()
   ),
   EditGroupMessageFail: createAction(ActionTypes.EditGroupMessageFail, props<{ error: string }>()),
   DeleteGroupMessageRequest: createAction(

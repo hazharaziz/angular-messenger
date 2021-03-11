@@ -1208,6 +1208,26 @@ namespace WebServerTests
         }
 
         [Fact]
+        public void ClearGroupHistory_ThrowsHttpException_Status405MethodNotAllowed_NotAllowed()
+        {
+            // Arrange
+            User user = Users.Adam;
+            Group group = Groups.Group3;
+            GroupMessage message = GroupMessages.GroupMessage8;
+            _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
+                .Returns(Users.Adam);
+            _unitOfWork.Setup(u => u.Groups.Get(It.IsAny<int>()))
+                .Returns(Groups.Group3);
+
+
+            // Act
+            Action action = () => _groupService.ClearGroupHistory(user.Id, group.GroupId);
+
+            // Assert
+            Assert.Throws<HttpException>(action);
+        }
+
+        [Fact]
         public void LeaveGroup_ReturnsStringResponse()
         {
             // Arrange

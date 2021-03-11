@@ -22,6 +22,7 @@
         *ngFor="let group of groups"
         [group]="group"
         [isCreator]="group.creatorId == (auth$ | async)"
+        (chat)="groupChat($event)"
         (info)="groupInfo($event)"
         (leave)="leaveGroup($event)"
         (delete)="deleteGroup($event)"

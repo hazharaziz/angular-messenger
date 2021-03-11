@@ -10,6 +10,11 @@ import { log } from 'src/app/utils/logger';
 export class GroupItemComponent implements OnInit {
   @Input() group?: Group;
   @Input() isCreator?: boolean = false;
+  @Output() chat: EventEmitter<{ id: number; name: string; creatorId: number }> = new EventEmitter<{
+    id: number;
+    name: string;
+    creatorId: number;
+  }>();
   @Output() info: EventEmitter<number> = new EventEmitter<number>();
   @Output() leave: EventEmitter<number> = new EventEmitter<number>();
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
@@ -18,7 +23,9 @@ export class GroupItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  groupChat(id: number) {}
+  groupChat(id: number, name: string, creatorId: number) {
+    this.chat.emit({ id, name, creatorId });
+  }
 
   groupInfo(id: number) {
     this.info.emit(id);

@@ -5,10 +5,10 @@ import { generalChatStateFeatureKey } from '..';
 
 const selectChatState = createFeatureSelector<Chat[]>(generalChatStateFeatureKey);
 
-export const ChatSelectors = {
+export const GeneralChatSelectors = {
   selectChatMessages: createSelector(selectChatState, (state: Chat[]) => state),
   selectMessageComposerName: createSelector(selectChatState, (state: Chat[], messageId: number) => {
-    let name = '';
+    let name = 'Deleted Message';
     state.forEach((chat) => {
       chat.messages.forEach((msg) => {
         if (msg.id == messageId) {

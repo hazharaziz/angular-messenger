@@ -1,4 +1,4 @@
-import { Message } from './message.model';
+import { Chat } from './chat.model';
 import { User } from './user.model';
 
 export type Group = {
@@ -9,6 +9,6 @@ export type Group = {
   membersCount?: number;
   addMemberAccess?: number;
   members?: User[];
-  messages?: Message[];
+  messages?: Chat[];
   friends?: User[];
 };

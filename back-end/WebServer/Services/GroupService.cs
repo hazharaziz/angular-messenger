@@ -351,6 +351,9 @@ namespace WebServer.Services
             if (group == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.GroupNotFound);
 
+            if (userId != group.CreatorId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
             _unitOfWork.GroupMessages.GetGroupMessages(groupId).ForEach(message =>
             {
                 _unitOfWork.GroupMessages.Remove(message);

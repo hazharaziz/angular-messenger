@@ -6,7 +6,7 @@
         <div
           class="d-flex flex-column justify-content-center align-items-center group-info-container"
         >
-          <div class="text-light text-name">{{ group.groupName }} Profile</div>
+          <div class="text-light text-name">{{ group.groupName }} Info</div>
           <div class="text-group-privacy">
             {{ group.addMemberAccess == 1 ? 'Public' : 'Private' }} Group
           </div>
@@ -32,7 +32,9 @@
           </button>
         </div>
         <div class="members-container">
-          <div class="text-center"><h4>Members</h4></div>
+          <div class="text-center">
+            <h4>{{ group.membersCount }} {{ group.membersCount == 1 ? 'Member' : 'Members' }}</h4>
+          </div>
           <app-user-item
             *ngFor="let member of group.members"
             [user]="member"

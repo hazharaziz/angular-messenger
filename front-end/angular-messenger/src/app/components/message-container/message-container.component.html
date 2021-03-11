@@ -1,7 +1,7 @@
 <div class="message">
   <div *ngIf="message.replyToId">
     <button (click)="scrollToElement(message.replyToId)" class="badge btn text-light reply-badge">
-      Reply to {{ message.replyToName }}
+      Reply to {{ message.replyToName == undefined ? 'Deleted Message' : message.replyToName }}
     </button>
   </div>
 

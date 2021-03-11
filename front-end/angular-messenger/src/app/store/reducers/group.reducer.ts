@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { Chat } from 'src/app/models/data/chat.model';
 import { Group } from 'src/app/models/data/group.model';
 import { Message } from 'src/app/models/data/message.model';
 import { User } from 'src/app/models/data/user.model';
@@ -42,12 +43,12 @@ export const groupReducer = createReducer(
   }),
   on(
     GroupActions.GetGroupMessagesSuccess,
-    (state: Group[], payload: { groupId: number; messages: Message[] }) => {
+    (state: Group[], payload: { groupId: number; messages: Chat[] }) => {
       let newState: Group[] = [];
       state.forEach((group) => newState.push(group));
       let index = newState.findIndex((group) => group.groupId == payload.groupId);
       if (index < 0) return newState;
-      newState[index].messages = payload.messages;
+      newState[index] = { ...newState[index], messages: payload.messages };
       return newState;
     }
   )

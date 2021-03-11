@@ -12,24 +12,23 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Chat } from 'src/app/models/data/chat.model';
-import { User } from 'src/app/models/data/user.model';
 import { AppState } from 'src/app/store';
 import { ChatActions } from 'src/app/store/actions/chat.actions';
 import { AuthSelectors } from 'src/app/store/selectors/auth.selectors';
-import { ChatSelectors } from 'src/app/store/selectors/chat.selectors';
+import { GeneralChatSelectors } from 'src/app/store/selectors/chat.selectors';
 import { log } from 'src/app/utils/logger';
 
 @Component({
   selector: 'app-general',
-  templateUrl: './general.component.html',
-  styleUrls: ['./general.component.css']
+  templateUrl: './general-chat.component.html',
+  styleUrls: ['./general-chat.component.css']
 })
-export class GeneralComponent implements OnInit, AfterViewChecked {
+export class GeneralChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatBox') chatBox: ElementRef;
   @ViewChildren('message') messages: QueryList<ElementRef>;
   messageForm: FormControl;
   userId$: Observable<number> = this.store.select(AuthSelectors.selectUserId);
-  chat$: Observable<Chat[]> = this.store.select(ChatSelectors.selectChatMessages);
+  chat$: Observable<Chat[]> = this.store.select(GeneralChatSelectors.selectChatMessages);
   submitMode: 'send' | 'edit' | 'reply' | 'delete';
   data: { editId?: number; replyId?: number; replyToName?: string; deleteId?: number };
   doScrollToBottom: boolean;
@@ -67,7 +66,7 @@ export class GeneralComponent implements OnInit, AfterViewChecked {
         break;
       case 'reply':
         this.store
-          .select(ChatSelectors.selectMessageComposerName, data.id)
+          .select(GeneralChatSelectors.selectMessageComposerName, data.id)
           .subscribe((name) => (this.data.replyToName = name));
         this.messageForm.patchValue('');
         break;

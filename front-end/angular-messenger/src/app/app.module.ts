@@ -18,7 +18,7 @@ import { effects } from './effects';
 import { reducers, metaReducers } from './store';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
-import { GeneralComponent } from './screens/general/general.component';
+import { GeneralChatComponent } from './screens/general-chat/general-chat.component';
 import { SearchComponent } from './screens/search/search.component';
 import { ProfileComponent } from './screens/profile/profile.component';
 import { DirectComponent } from './screens/direct/direct.component';
@@ -38,6 +38,7 @@ import { CreateGroupComponent } from './screens/create-group/create-group.compon
 import { GroupInfoComponent } from './screens/group-info/group-info.component';
 import { EditGroupComponent } from './screens/edit-group/edit-group.component';
 import { AddMemberComponent } from './screens/add-member/add-member.component';
+import { GroupChatComponent } from './screens/group-chat/group-chat.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { AddMemberComponent } from './screens/add-member/add-member.component';
     InputFormComponent,
     SignupComponent,
     PageNotFoundComponent,
-    GeneralComponent,
+    GeneralChatComponent,
     SearchComponent,
     ProfileComponent,
     DirectComponent,
@@ -65,7 +66,8 @@ import { AddMemberComponent } from './screens/add-member/add-member.component';
     CreateGroupComponent,
     GroupInfoComponent,
     EditGroupComponent,
-    AddMemberComponent
+    AddMemberComponent,
+    GroupChatComponent
   ],
   imports: [
     BrowserModule,

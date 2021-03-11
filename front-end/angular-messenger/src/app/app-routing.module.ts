@@ -8,7 +8,8 @@ import { EditGroupComponent } from './screens/edit-group/edit-group.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { FollowersComponent } from './screens/followers/followers.component';
 import { FollowingsComponent } from './screens/followings/followings.component';
-import { GeneralComponent } from './screens/general/general.component';
+import { GeneralChatComponent } from './screens/general-chat/general-chat.component';
+import { GroupChatComponent } from './screens/group-chat/group-chat.component';
 import { GroupInfoComponent } from './screens/group-info/group-info.component';
 import { GroupsComponent } from './screens/groups/groups.component';
 import { LoginComponent } from './screens/login/login.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignupComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'general', component: GeneralComponent, canActivate: [AuthGuard] },
+  { path: 'general', component: GeneralChatComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
   { path: 'direct', component: DirectComponent, canActivate: [AuthGuard] },
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
           { path: 'edit/:id/:name/:access', component: EditGroupComponent },
           { path: 'add-member/:id', component: AddMemberComponent }
         ]
-      }
+      },
+      { path: 'chat/:id/:name/:creator', component: GroupChatComponent }
     ]
   },
   {

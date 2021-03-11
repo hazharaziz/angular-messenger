@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralComponent } from './general.component';
+import { GeneralChatComponent } from './general-chat.component';
 
-describe('GeneralComponent', () => {
-  let component: GeneralComponent;
-  let fixture: ComponentFixture<GeneralComponent>;
+describe('GeneralChatComponent', () => {
+  let component: GeneralChatComponent;
+  let fixture: ComponentFixture<GeneralChatComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GeneralComponent]
+      declarations: [GeneralChatComponent]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneralComponent);
+    fixture = TestBed.createComponent(GeneralChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

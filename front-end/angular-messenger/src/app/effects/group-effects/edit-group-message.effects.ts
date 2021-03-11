@@ -17,13 +17,11 @@ export class EditGroupMessageEffects {
       ofType(GroupActions.EditGroupMessageRequest),
       concatMap((payload) =>
         this.groupService
-          .editGroupMessageRequest(payload.message.groupId, payload.message.id, {
-            ...payload.message,
-            id: undefined,
-            groupId: undefined
+          .editGroupMessageRequest(payload.groupId, payload.messageId, {
+            text: payload.message
           })
           .pipe(
-            map(() => GroupActions.GetGroupMessagesRequest({ groupId: payload.message.groupId })),
+            map(() => GroupActions.GetGroupMessagesRequest({ groupId: payload.groupId })),
             catchError((err) => {
               let error: HttpErrorResponse = err as HttpErrorResponse;
               return of(GroupActions.EditGroupMessageFail({ error: error.error }));

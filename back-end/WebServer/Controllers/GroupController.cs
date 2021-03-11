@@ -198,7 +198,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<GroupMessage>> response = _groupService.GetGroupMessages(userId, groupId);
-                return StatusCode(response.Status, new { message = response.Data });
+                return StatusCode(response.Status, response.Data );
             }
             catch (HttpException exception)
             {

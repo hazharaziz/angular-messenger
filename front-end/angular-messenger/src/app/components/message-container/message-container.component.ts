@@ -22,6 +22,7 @@ export class MessageContainerComponent implements OnInit {
   ngOnInit(): void {}
 
   scrollToElement(id: number) {
+    if (this.message.replyToName == undefined) return;
     this.scroll.emit(id);
   }
 
