@@ -15,5 +15,12 @@ namespace WebServer.Models.ResponseModels
         [JsonPropertyName("groupName")]
         [StringLength(40, MinimumLength = 3)]
         public string GroupName { get; set; }
+
+        [JsonPropertyName("creatorId")]
+        public int CreatorId { get; set; }
+
+        [JsonPropertyName("creatorName")]
+        [StringLength(40, MinimumLength = 3)]
+        public string CreatorName { get; set; }
     }
 }

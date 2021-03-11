@@ -23,7 +23,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetAllUsers(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> users = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(user =>
@@ -43,15 +43,14 @@ namespace WebServer.Services
         public Response<List<UserModel>> FilterUsers(int userId, string text)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> filteredUsers = new List<UserModel>();
             if (text != "")
             {
                 _unitOfWork.Users.GetAll().ForEach(user =>
                 {
-                    if (!_unitOfWork.Followers.HasFollower(userId, user.Id) &&
-                        !_unitOfWork.Followers.HasFollower(user.Id, userId))
+                    if (!_unitOfWork.Followers.HasFollower(user.Id, userId))
                     {
                         if ((user.Username.ToLower().Contains(text.ToLower()) ||
                             user.Name.ToLower().Contains(text.ToLower())) && user.Id != userId)
@@ -78,7 +77,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetUserFriends(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> friends = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(record =>

@@ -24,7 +24,7 @@ namespace WebServer.Services
         public Response<List<DirectModel>> GetUserDirects(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<DirectModel> directModels = new List<DirectModel>();
             _unitOfWork.Directs.GetDirects(userId).ForEach(direct =>
@@ -67,7 +67,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null || _unitOfWork.Users.Get(targetId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             Direct direct = _unitOfWork.Directs.Get(directMessage.DirectId);
             if (direct == null)
@@ -97,7 +97,7 @@ namespace WebServer.Services
         public Response<string> EditDirectMessage(int userId, int directMessageId, DirectMessage editedMessage)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             DirectMessage message = _unitOfWork.DirectMessages.Get(directMessageId);
             if (message == null)
@@ -118,7 +118,7 @@ namespace WebServer.Services
         public Response<string> DeleteDirectMessage(int userId, int directMessageId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             DirectMessage directMessage = _unitOfWork.DirectMessages.Get(directMessageId);
             if (directMessage == null)
@@ -140,7 +140,7 @@ namespace WebServer.Services
         public Response<string> DeleteDirectHistory(int userId, int directId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             Direct direct = _unitOfWork.Directs.Get(directId);
             if (direct == null)
@@ -166,7 +166,7 @@ namespace WebServer.Services
         public Response<string> DeleteDirect(int userId, int directId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             Direct direct = _unitOfWork.Directs.Get(directId);
             if (direct == null)

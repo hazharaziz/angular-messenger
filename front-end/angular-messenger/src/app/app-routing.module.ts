@@ -6,7 +6,7 @@ import { EditProfileComponent } from './screens/edit-profile/edit-profile.compon
 import { FollowersComponent } from './screens/followers/followers.component';
 import { FollowingsComponent } from './screens/followings/followings.component';
 import { GeneralComponent } from './screens/general/general.component';
-import { GroupComponent } from './screens/group/group.component';
+import { GroupsComponent } from './screens/groups/groups.component';
 import { LoginComponent } from './screens/login/login.component';
 import { PageNotFoundComponent } from './screens/page-not-found/page-not-found.component';
 import { ProfileComponent } from './screens/profile/profile.component';
@@ -21,12 +21,13 @@ const routes: Routes = [
   { path: 'sign-up', component: SignupComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'general', component: GeneralComponent, canActivate: [AuthGuard] },
-  { path: 'search', component: SearchComponent },
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
   { path: 'direct', component: DirectComponent, canActivate: [AuthGuard] },
-  { path: 'groups', component: GroupComponent, canActivate: [AuthGuard] },
+  { path: 'groups', component: GroupsComponent },
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'edit/:name/:username/:access',

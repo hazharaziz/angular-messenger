@@ -15,7 +15,7 @@ namespace WebServer.Messages
         public const string MessageEdited = "Message edited successfully";
         public const string MessageDeleted = "Message deleted successfully";
         public const string InternalServerError = "Internal server error";
-        public const string UsersNotFound = "User(s) not found";
+        public const string UserNotFound = "User not found";
         public const string FollowRequestSent = "Follow request sent successfully";
         public const string UserFollowed = "User followed successfully";
         public const string NoRequestFromThisUser = "No requests from this user";

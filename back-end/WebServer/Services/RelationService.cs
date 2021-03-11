@@ -23,7 +23,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetFollowers(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> followers = new List<UserModel>();
             _unitOfWork.Followers.GetFollowers(userId).ForEach(relation =>
@@ -51,7 +51,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetFollowings(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> followings = new List<UserModel>();
             _unitOfWork.Followers.GetFollowings(userId).ForEach(relation =>
@@ -79,7 +79,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetReceivedRequests(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> receivedRequests = new List<UserModel>();
             _unitOfWork.Followers.GetReceivedRequests(userId).ForEach(request =>
@@ -107,7 +107,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetSentRequests(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> sentRequests = new List<UserModel>();
             _unitOfWork.Followers.GetSentRequests(userId).ForEach(request =>
@@ -137,7 +137,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null || _unitOfWork.Users.Get(followerId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             if (_unitOfWork.Followers.HasFollower(userId, followerId))
                 throw new HttpException(StatusCodes.Status409Conflict, Alerts.AlreadyFollowed);
@@ -168,7 +168,7 @@ namespace WebServer.Services
         public Response<string> AcceptFollowRequest(int userId, int followerId)
         {
             if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             if (_unitOfWork.Followers.HasFollower(userId, followerId))
                 throw new HttpException(StatusCodes.Status400BadRequest, Alerts.AlreadyIsFollower);
@@ -190,7 +190,7 @@ namespace WebServer.Services
         public Response<string> RejectFollowRequest(int userId, int followerId)
         {
             if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             if (_unitOfWork.Followers.HasFollower(userId, followerId))
                 throw new HttpException(StatusCodes.Status400BadRequest, Alerts.AlreadyIsFollower);
@@ -212,7 +212,7 @@ namespace WebServer.Services
         public Response<string> CancelFollowRequest(int userId, int followerId)
         {
             if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             if (_unitOfWork.Followers.HasFollower(userId, followerId))
                 throw new HttpException(StatusCodes.Status400BadRequest, Alerts.AlreadyIsFollower);
@@ -234,7 +234,7 @@ namespace WebServer.Services
         public Response<string> DeleteRelation(int userId, int followerId)
         {
             if (_unitOfWork.Users.Get(userId) == null || _unitOfWork.Users.Get(followerId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             if (!_unitOfWork.Followers.HasFollower(userId, followerId))
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.RelationNotFound);

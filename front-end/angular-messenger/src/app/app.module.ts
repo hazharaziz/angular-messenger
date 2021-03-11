@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './core/app.component';
 import { LoginComponent } from './screens/login/login.component';
 import { InputFormComponent } from './components/input-form/input-form.component';
@@ -23,7 +22,6 @@ import { GeneralComponent } from './screens/general/general.component';
 import { SearchComponent } from './screens/search/search.component';
 import { ProfileComponent } from './screens/profile/profile.component';
 import { DirectComponent } from './screens/direct/direct.component';
-import { GroupComponent } from './screens/group/group.component';
 import { MessageContainerComponent } from './components/message-container/message-container.component';
 import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
@@ -34,6 +32,8 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { FollowingsComponent } from './screens/followings/followings.component';
 import { SentRequestsComponent } from './screens/sent-requests/sent-requests.component';
 import { ReceivedRequestsComponent } from './screens/received-requests/received-requests.component';
+import { GroupItemComponent } from './components/group-item/group-item.component';
+import { GroupsComponent } from './screens/groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,6 @@ import { ReceivedRequestsComponent } from './screens/received-requests/received-
     SearchComponent,
     ProfileComponent,
     DirectComponent,
-    GroupComponent,
     MessageContainerComponent,
     LeftNavBarComponent,
     EditProfileComponent,
@@ -56,7 +55,9 @@ import { ReceivedRequestsComponent } from './screens/received-requests/received-
     UserItemComponent,
     FollowingsComponent,
     SentRequestsComponent,
-    ReceivedRequestsComponent
+    ReceivedRequestsComponent,
+    GroupItemComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,
