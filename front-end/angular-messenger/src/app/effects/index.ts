@@ -1,5 +1,12 @@
 import { LoginEffects } from './auth-effects/login.effects';
 import { SignUpEffects } from './auth-effects/sign-up.effects';
+import { ClearDirectChatHistoryEffects } from './direct-effects/clear-direct-chat-history.effects';
+import { DeleteDirectMessageEffects } from './direct-effects/delete-direct-message.effects';
+import { EditDirectMessageEffects } from './direct-effects/edit-direct-message.effects';
+import { GetDirectMessagesEffects } from './direct-effects/get-direct-messages.effects';
+import { GetDirectsEffects } from './direct-effects/get-directs.effects';
+import { RemoveDirectEffects } from './direct-effects/remove-direct.effects';
+import { SendDirectMessageEffects } from './direct-effects/send-direct-message.effects';
 import { DeleteMessageEffects } from './general-chat-effects/delete-message.effects';
 import { EditMessageEffects } from './general-chat-effects/edit-message.effects';
 import { GetGeneralChatMessagesEffects } from './general-chat-effects/get-general-chat-messages.effects';
@@ -69,5 +76,12 @@ export const effects = [
   EditGroupMessageEffects,
   DeleteGroupMessageEffects,
   ClearGroupChatHistoryEffects,
-  LeaveGroupEffects
+  LeaveGroupEffects,
+  GetDirectsEffects,
+  GetDirectMessagesEffects,
+  SendDirectMessageEffects,
+  EditDirectMessageEffects,
+  DeleteDirectMessageEffects,
+  ClearDirectChatHistoryEffects,
+  RemoveDirectEffects
 ];

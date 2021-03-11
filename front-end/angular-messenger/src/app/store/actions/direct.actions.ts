@@ -39,7 +39,7 @@ export const DirectActions = {
   ),
   DeleteDirectMessageRequest: createAction(
     ActionTypes.DeleteDirectMessageRequest,
-    props<{ directId: number; messageId: number }>()
+    props<{ directId: number; targetId: number; messageId: number }>()
   ),
   DeleteDirectMessageFail: createAction(
     ActionTypes.DeleteDirectMessageFail,
