@@ -1,4 +1,4 @@
-<div *ngIf="user != undefined" class="d-flex justify-content-between m-3 p-3 item-container">
+<div *ngIf="user != undefined" class="d-flex justify-content-between m-2 p-3 item-container">
   <div class="d-flex flex-column justify-content-center align-self-center">
     <div class="font-weight-bolder text-primary">{{ user.name }}</div>
     <div class="font-weight-light text-secondary">{{ user.username }}</div>
@@ -37,13 +37,27 @@
       *ngIf="relationStatus == 'follower'"
       class="d-flex justify-content-between align-items-center"
     >
-      <button (click)="removeFollower(user.id)" class="btn btn-danger btn-sm">Remove</button>
+      <button (click)="removeUser(user.id)" class="btn btn-danger btn-sm">Remove</button>
     </div>
     <div
       *ngIf="relationStatus == 'following'"
       class="d-flex justify-content-between align-items-center"
     >
       <button (click)="unfollowUser(user.id)" class="btn btn-danger btn-sm">Unfollow</button>
+    </div>
+    <div
+      *ngIf="relationStatus == 'member'"
+      class="d-flex justify-content-between align-items-center"
+    >
+      <span *ngIf="isCreator" class="badge badge-primary mr-2">Creator</span>
+      <button
+        *ngIf="canRemove && !isCreator"
+        (click)="removeUser(user.id)"
+        class="btn btn-danger btn-sm"
+      >
+        Remove
+        <i class="bi bi-x text-white"></i>
+      </button>
     </div>
   </div>
 </div>

@@ -13,7 +13,10 @@ export class UserItemComponent implements OnInit {
     | 'request-sent'
     | 'request-received'
     | 'follower'
-    | 'following';
+    | 'following'
+    | 'member';
+  @Input() isCreator?: boolean;
+  @Input() canRemove?: boolean;
 
   @Output() follow: EventEmitter<number> = new EventEmitter<number>();
   @Output() cancel: EventEmitter<number> = new EventEmitter<number>();
@@ -42,7 +45,7 @@ export class UserItemComponent implements OnInit {
     this.reject.emit(id);
   }
 
-  removeFollower(id: number) {
+  removeUser(id: number) {
     this.remove.emit(id);
   }
 

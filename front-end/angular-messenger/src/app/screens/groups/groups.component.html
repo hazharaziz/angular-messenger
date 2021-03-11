@@ -1,6 +1,9 @@
 <div class="d-flex align-items-stretch wrap-container">
   <app-left-nav-bar class="align-self-center" page="groups"></app-left-nav-bar>
-  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg main-container">
+  <div
+    *ngIf="groups$ | async as groups"
+    class="card p-2 flex-grow-1 bg-dark text-light rounded-lg main-container"
+  >
     <div class="fixed-top bg-dark header-container">
       <div class="d-flex justify-content-center align-items-center text-center screen-header">
         <div class="align-self-center text-left flex-grow-1">
@@ -14,15 +17,19 @@
         </div>
       </div>
     </div>
-    <div *ngIf="groups$ | async as groups">
+    <div>
       <app-group-item
         *ngFor="let group of groups"
         [group]="group"
         [isCreator]="group.creatorId == (auth$ | async)"
+        (info)="groupInfo($event)"
         (leave)="leaveGroup($event)"
         (delete)="deleteGroup($event)"
       >
       </app-group-item>
+    </div>
+    <div *ngIf="groups.length == 0" class="empty-container">
+      <span class="badge badge-secondary badge-pill custom-empty-badge">No Groups</span>
     </div>
   </div>
 </div>

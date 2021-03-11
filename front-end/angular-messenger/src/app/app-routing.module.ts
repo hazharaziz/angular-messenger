@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { CreateGroupComponent } from './screens/create-group/create-group.component';
 import { DirectComponent } from './screens/direct/direct.component';
+import { EditGroupComponent } from './screens/edit-group/edit-group.component';
 import { EditProfileComponent } from './screens/edit-profile/edit-profile.component';
 import { FollowersComponent } from './screens/followers/followers.component';
 import { FollowingsComponent } from './screens/followings/followings.component';
 import { GeneralComponent } from './screens/general/general.component';
+import { GroupInfoComponent } from './screens/group-info/group-info.component';
 import { GroupsComponent } from './screens/groups/groups.component';
 import { LoginComponent } from './screens/login/login.component';
 import { PageNotFoundComponent } from './screens/page-not-found/page-not-found.component';
@@ -27,7 +29,14 @@ const routes: Routes = [
   {
     path: 'groups',
     component: GroupsComponent,
-    children: [{ path: 'create', component: CreateGroupComponent }]
+    children: [
+      { path: 'create', component: CreateGroupComponent },
+      {
+        path: 'info/:id',
+        component: GroupInfoComponent,
+        children: [{ path: 'edit/:id/:name/:access', component: EditGroupComponent }]
+      }
+    ]
   },
   {
     path: 'profile',

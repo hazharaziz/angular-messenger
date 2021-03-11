@@ -4,8 +4,10 @@
     *ngIf="followers$ | async as followers"
     class="card p-2 flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
   >
-    <div class="fixed-top bg-dark text-center screen-header">
-      <h3>Followers</h3>
+    <div class="fixed-top bg-dark header-container">
+      <div class="d-flex justify-content-center align-items-center text-center screen-header">
+        <h3>Followers</h3>
+      </div>
     </div>
     <div *ngIf="followers.length != 0" class="items-container">
       <app-user-item

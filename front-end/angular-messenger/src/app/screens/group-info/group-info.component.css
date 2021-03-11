@@ -41,13 +41,41 @@
   z-index: 2;
 }
 
-.items-container {
-  margin-bottom: 15px;
+.group-info-container {
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-radius: 10px;
+}
+
+.text-name {
+  font-weight: 800;
+  font-size: 30px;
+}
+
+.text-group-privacy {
+  font-size: 15px;
+}
+
+.group-buttons-container {
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.members-container {
+  border-top: 1px solid white;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
   padding-top: 10px;
 }
 
-.empty-container {
-  height: 85%;
+.empty-chat {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

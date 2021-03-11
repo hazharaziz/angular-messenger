@@ -1,0 +1,55 @@
+<div class="d-flex align-items-stretch wrap-container">
+  <app-left-nav-bar class="align-self-center"></app-left-nav-bar>
+  <div class="card p-2 flex-grow-1 bg-dark text-light rounded-lg main-container">
+    <div *ngIf="groupInfo$ | async as group" class="d-flex flex-column p-2 text-center">
+      <div>
+        <div
+          class="d-flex flex-column justify-content-center align-items-center group-info-container"
+        >
+          <div class="text-light text-name">{{ group.groupName }} Profile</div>
+          <div class="text-group-privacy">
+            {{ group.addMemberAccess == 1 ? 'Public' : 'Private' }} Group
+          </div>
+        </div>
+
+        <div
+          class="d-flex flex-column justify-content-center align-items-center group-buttons-container"
+        >
+          <button
+            [routerLink]="['./edit', group.groupId, group.groupName, group.addMemberAccess]"
+            class="btn btn-outline-primary btn-lg btn-block m-2 border-right-0 border-left-0"
+          >
+            <i class="bi bi-pencil-square pr-2"></i>
+            Edit Group
+          </button>
+          <button
+            *ngIf="group.creatorId == (auth$ | async) || group.addMemberAccess == 1"
+            class="btn btn-outline-primary btn-lg btn-block m-2 border-right-0 border-left-0"
+          >
+            <i class="bi bi-person-plus-fill pr-2"></i>
+            Add new Member
+          </button>
+        </div>
+        <div class="members-container">
+          <div class="text-center"><h4>Members</h4></div>
+          <app-user-item
+            *ngFor="let member of group.members"
+            [user]="member"
+            relationStatus="member"
+            [isCreator]="member.id == group.creatorId"
+            [canRemove]="group.creatorId == (auth$ | async)"
+            (remove)="removeMember($event)"
+          >
+          </app-user-item>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(groupInfo$ | async) == undefined" class="empty-chat">
+      <span class="badge badge-danger badge-pill custom-empty-badge"
+        >An error occured while fetching data</span
+      >
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

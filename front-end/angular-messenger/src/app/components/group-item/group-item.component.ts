@@ -10,6 +10,7 @@ import { log } from 'src/app/utils/logger';
 export class GroupItemComponent implements OnInit {
   @Input() group?: Group;
   @Input() isCreator?: boolean = false;
+  @Output() info: EventEmitter<number> = new EventEmitter<number>();
   @Output() leave: EventEmitter<number> = new EventEmitter<number>();
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
 
@@ -19,7 +20,9 @@ export class GroupItemComponent implements OnInit {
 
   groupChat(id: number) {}
 
-  groupInfo(id: number) {}
+  groupInfo(id: number) {
+    this.info.emit(id);
+  }
 
   leaveGroup(id: number) {
     this.leave.emit(id);

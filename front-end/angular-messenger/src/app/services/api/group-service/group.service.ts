@@ -58,7 +58,7 @@ export class GroupService implements GroupAPI {
   }
 
   removeMemberFromGroupRequest(groupId: number, memberId: number): Observable<string> {
-    return this.http.delete<string>(API_URL + `/groups/${groupId}/add-member/${memberId}`, {
+    return this.http.delete<string>(API_URL + `/groups/${groupId}/remove-member/${memberId}`, {
       headers: this.httpService.authorizationHeader()
     });
   }

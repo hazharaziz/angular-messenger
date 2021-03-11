@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Group } from 'src/app/models/data/group.model';
@@ -17,7 +18,7 @@ export class GroupsComponent implements OnInit {
   auth$: Observable<number> = this.store.select(AuthSelectors.selectUserId);
   groups$: Observable<Group[]> = this.store.select(GroupSelectors.selectUserGroups);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchUserGroups();
@@ -25,6 +26,10 @@ export class GroupsComponent implements OnInit {
 
   fetchUserGroups(): void {
     this.store.dispatch(GroupActions.GetGroupsRequest());
+  }
+
+  groupInfo(id: number) {
+    this.router.navigate(['/groups/info', id]);
   }
 
   leaveGroup(groupId: number): void {
