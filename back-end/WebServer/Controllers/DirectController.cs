@@ -95,15 +95,15 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpPut("message/{messageId}")]
-        public IActionResult EditDirectMessage(int messageId, [FromBody] DirectMessage message)
+        [HttpPut("{directId}/message/{messageId}")]
+        public IActionResult EditDirectMessage(int directId, int messageId, [FromBody] DirectMessage message)
         {
             try
             {
                 int userId = int.Parse
                     (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = 
-                    _directService.EditDirectMessage(userId, messageId, message);
+                    _directService.EditDirectMessage(userId, directId, messageId, message);
                 return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
@@ -117,13 +117,13 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpDelete("message/{messageId}")]
-        public IActionResult DeleteDirectMessage(int messageId)
+        [HttpDelete("{directId}/message/{messageId}")]
+        public IActionResult DeleteDirectMessage(int directId, int messageId)
         {
             try
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
-                Response<string> response = _directService.DeleteDirectMessage(userId, messageId);
+                Response<string> response = _directService.DeleteDirectMessage(userId, directId, messageId);
                 return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)

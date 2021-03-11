@@ -47,9 +47,9 @@ namespace WebServerTests
 
             List<DirectModel> expected = new List<DirectModel>()
             {
-                new DirectModel() { Id = directs[0].DirectId, DirectName = "Deleted Account" },
-                new DirectModel() { Id = directs[1].DirectId, DirectName = Users.Nico.Name },
-                new DirectModel() { Id = directs[2].DirectId, DirectName = Users.Isaac.Name },
+                new DirectModel() { Id = directs[0].DirectId, TargetName = "Deleted Account" },
+                new DirectModel() { Id = directs[1].DirectId, TargetName = Users.Nico.Name },
+                new DirectModel() { Id = directs[2].DirectId, TargetName = Users.Isaac.Name },
             };
 
 
@@ -60,7 +60,7 @@ namespace WebServerTests
             Assert.IsType<Response<List<DirectModel>>>(response);
             Assert.Equal(StatusCodes.Status200OK, response.Status);
             Assert.Equal(expected.Count, response.Data.Count);
-            Assert.NotEqual(Users.Patrick.Name, response.Data[0].DirectName);
+            Assert.NotEqual(Users.Patrick.Name, response.Data[0].TargetName);
         }
 
         [Fact]
@@ -83,8 +83,8 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Patrick;
-            Direct direct = Directs.Direct2;
-            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>()))
+            User target = Users.Nico;
+            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(Directs.Direct2);
             _unitOfWork.Setup(u => u.DirectMessages.GetDirectMessages(It.IsAny<int>()))
                 .Returns(new List<DirectMessage>()
@@ -103,7 +103,7 @@ namespace WebServerTests
 
             // Act
             Response<List<DirectMessage>> response =
-                _directService.GetDirectMessages(user.Id, direct.DirectId);
+                _directService.GetDirectMessages(user.Id, target.Id);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -205,7 +205,7 @@ namespace WebServerTests
 
             // Act
             Response<string> response =
-                _directService.EditDirectMessage(user.Id, message.DirectMessageId, message);
+                _directService.EditDirectMessage(user.Id, message.DirectId, message.DirectMessageId, message);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -224,7 +224,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, message.DirectMessageId, message);
+                (user.Id, message.DirectId, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -244,14 +244,14 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, message.DirectMessageId, message);
+                (user.Id, message.DirectId, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
         }
 
         [Fact]
-        public void EditDirectMessage_ThrowsHttpException_Status405MethodNotAllowed()
+        public void EditDirectMessage_ThrowsHttpException_Status405MethodNotAllowed_NotComposer()
         {
             // Arrange
             User user = Users.Isaac;
@@ -264,11 +264,32 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.EditDirectMessage
-                (user.Id, message.DirectMessageId, message);
+                (user.Id, message.DirectId, message.DirectMessageId, message);
 
             // Assert
             Assert.Throws<HttpException>(action);
         }
+
+        [Fact]
+        public void EditDirectMessage_ThrowsHttpException_Status405MethodNotAllowed_IncorrectDirect()
+        {
+            // Arrange
+            User user = Users.Patrick;
+            DirectMessage message = DirectMessages.DirectMessage4;
+            _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
+                .Returns(Users.Patrick);
+            _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
+                .Returns(DirectMessages.DirectMessage4);
+
+            // Act
+            Action action =
+                () => _directService.EditDirectMessage
+                (user.Id, 3, message.DirectMessageId, message);
+
+            // Assert
+            Assert.Throws<HttpException>(action);
+        }
+
 
         [Fact]
         public void DeleteDirectMessage_ReturnsStringResponse()
@@ -285,7 +306,7 @@ namespace WebServerTests
 
             // Act
             Response<string> response =
-                _directService.DeleteDirectMessage(user.Id, message.DirectMessageId);
+                _directService.DeleteDirectMessage(user.Id, message.DirectId, message.DirectMessageId);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);
@@ -304,7 +325,7 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, message.DirectMessageId);
+                (user.Id, message.DirectId, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);
@@ -324,14 +345,14 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, message.DirectMessageId);
+                (user.Id, message.DirectId, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);
         }
 
         [Fact]
-        public void DeleteDirectMessage_ThrowsHttpException_Status405MethodNotAllowed()
+        public void DeleteDirectMessage_ThrowsHttpException_Status405MethodNotAllowed_NotComposer()
         {
             // Arrange
             User user = Users.Isaac;
@@ -344,11 +365,32 @@ namespace WebServerTests
             // Act
             Action action =
                 () => _directService.DeleteDirectMessage
-                (user.Id, message.DirectMessageId);
+                (user.Id, message.DirectId, message.DirectMessageId);
 
             // Assert
             Assert.Throws<HttpException>(action);
         }
+
+        [Fact]
+        public void DeleteDirectMessage_ThrowsHttpException_Status405MethodNotAllowed_IncorrectDirect()
+        {
+            // Arrange
+            User user = Users.Isaac;
+            DirectMessage message = DirectMessages.DirectMessage4;
+            _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
+                .Returns(Users.Isaac);
+            _unitOfWork.Setup(u => u.DirectMessages.Get(It.IsAny<int>()))
+                .Returns(DirectMessages.DirectMessage4);
+
+            // Act
+            Action action =
+                () => _directService.DeleteDirectMessage
+                (user.Id, 2, message.DirectMessageId);
+
+            // Assert
+            Assert.Throws<HttpException>(action);
+        }
+
 
         [Fact]
         public void DeleteDirect_ReturnsStringResponse()
@@ -437,11 +479,11 @@ namespace WebServerTests
         {
             // Arrange
             User user = Users.Oscar;
-            Direct direct = Directs.Direct5;
+            User target = Users.Isaac;
             _unitOfWork.Setup(u => u.Users.Get(It.IsAny<int>()))
                 .Returns(Users.Oscar);
 
-            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>()))
+            _unitOfWork.Setup(u => u.Directs.Get(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(Directs.Direct5);
             _unitOfWork.Setup(u => u.DirectMessages.GetAll())
                 .Returns(new List<DirectMessage>() 
@@ -453,7 +495,7 @@ namespace WebServerTests
 
             // Act
             Response<string> response = 
-                _directService.DeleteDirectHistory(user.Id, direct.DirectId);
+                _directService.DeleteDirectHistory(user.Id, target.Id);
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, response.Status);

@@ -95,7 +95,7 @@ namespace WebServer.Services
             };
         }
 
-        public Response<string> EditDirectMessage(int userId, int directMessageId, DirectMessage editedMessage)
+        public Response<string> EditDirectMessage(int userId, int directId, int directMessageId, DirectMessage editedMessage)
         {
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
@@ -105,6 +105,9 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
 
             if (userId != message.ComposerId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+            
+            if (message.DirectId != directId)
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             message.Text = editedMessage.Text;
@@ -116,7 +119,7 @@ namespace WebServer.Services
             };
         }
 
-        public Response<string> DeleteDirectMessage(int userId, int directMessageId)
+        public Response<string> DeleteDirectMessage(int userId, int directId, int directMessageId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
@@ -126,6 +129,9 @@ namespace WebServer.Services
                 throw new HttpException(StatusCodes.Status404NotFound, Alerts.MessageNotFound);
 
             if (directMessage.ComposerId != userId)
+                throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
+
+            if (directId != directMessage.DirectId)
                 throw new HttpException(StatusCodes.Status405MethodNotAllowed, Alerts.NotAllowed);
 
             _unitOfWork.DirectMessages.Remove(directMessage);
