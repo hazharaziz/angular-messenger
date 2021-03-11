@@ -3,17 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
 import { GroupService } from 'src/app/services/api/group-service/group.service';
-import { FriendActions } from 'src/app/store/actions/friend.actinos';
+import { GroupActions } from 'src/app/store/actions/group.actions';
 import { Messages } from 'src/assets/common/strings';
 
 @Injectable()
 export class GetAvailableFriendsEffects {
   getAvailableFriendsRequest$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(FriendActions.GetAvailableFriendsRequest),
+      ofType(GroupActions.GetAvailableFriendsRequest),
       concatMap((payload) =>
         this.groupService.getAvailableFriends(payload.groupId).pipe(
-          map((response) => FriendActions.GetAvailableFriendsSuccess({ friends: response })),
+          map((response) =>
+            GroupActions.GetAvailableFriendsSuccess({ groupId: payload.groupId, friends: response })
+          ),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
@@ -24,7 +26,7 @@ export class GetAvailableFriendsEffects {
             } else {
               errorMessage = Messages.Error;
             }
-            return of(FriendActions.GetAvailableFriendsFail({ error: errorMessage }));
+            return of(GroupActions.GetAvailableFriendsFail({ error: errorMessage }));
           })
         )
       )

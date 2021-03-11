@@ -22,5 +22,20 @@ export const groupReducer = createReducer(
     // newState[index] = payload.groupInfo;
     // return newState;
     return state;
+  }),
+  on(
+    GroupActions.GetAvailableFriendsSuccess,
+    (state: Group[], payload: { groupId: number; friends: User[] }) => {
+      let index = state.findIndex((group) => group.groupId == payload.groupId);
+      if (index < 0) return state;
+      state[index].friends = payload.friends;
+      return state;
+    }
+  ),
+  on(GroupActions.ClearAvailableFriends, (state: Group[], payload: { groupId: number }) => {
+    let index = state.findIndex((group) => group.groupId == payload.groupId);
+    if (index < 0) return state;
+    state[index].friends = [];
+    return state;
   })
 );

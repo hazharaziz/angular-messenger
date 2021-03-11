@@ -11,7 +11,6 @@ import { relationReducer } from './reducers/relation.reducer';
 import { searchReducer } from './reducers/search.reducer';
 import { Group } from '../models/data/group.model';
 import { groupReducer } from './reducers/group.reducer';
-import { friendReducer } from './reducers/friend.reducer';
 
 export const authStateFeatureKey = 'auth';
 export const userStateFeatureKey = 'profile';
@@ -19,7 +18,6 @@ export const generalChatStateFeatureKey = 'chat';
 export const relationStateFeatureKey = 'relations';
 export const searchStateFeatureKey = 'searchedUsers';
 export const groupStateFeatureKey = 'groups';
-export const friendStateFeatureKey = 'availableFriends';
 
 export type AppState = {
   [authStateFeatureKey]: Authentication;
@@ -28,7 +26,6 @@ export type AppState = {
   [relationStateFeatureKey]: Relation;
   [searchStateFeatureKey]: User[];
   [groupStateFeatureKey]: Group[];
-  [friendStateFeatureKey]: User[];
 };
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -37,8 +34,7 @@ export const reducers: ActionReducerMap<AppState> = {
   [generalChatStateFeatureKey]: chatReducer,
   [relationStateFeatureKey]: relationReducer,
   [searchStateFeatureKey]: searchReducer,
-  [groupStateFeatureKey]: groupReducer,
-  [friendStateFeatureKey]: friendReducer
+  [groupStateFeatureKey]: groupReducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : [];
