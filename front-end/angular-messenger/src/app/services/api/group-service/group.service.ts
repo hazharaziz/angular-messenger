@@ -31,4 +31,10 @@ export class GroupService implements GroupAPI {
       headers: this.httpService.authorizationHeader()
     });
   }
+
+  createGroupRequest(group: Group): Observable<string> {
+    return this.http.post<string>(API_URL + '/groups', group, {
+      headers: this.httpService.authorizationHeader()
+    });
+  }
 }

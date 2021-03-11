@@ -6,4 +6,5 @@ export interface GroupAPI {
   getGroupsRequest(): Observable<Group[]>;
   getGroupInfoRequest(groupId: number): Observable<Group>;
   getAvailableFriends(groupId: number): Observable<User[]>;
+  createGroupRequest(group: Group): Observable<string>;
 }

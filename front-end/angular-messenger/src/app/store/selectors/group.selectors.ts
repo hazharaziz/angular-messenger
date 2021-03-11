@@ -1,19 +1,23 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { Group } from 'src/app/models/data/group.model';
-import { User } from 'src/app/models/data/user.model';
-import { friendStateFeatureKey, groupStateFeatureKey } from '..';
+import { groupStateFeatureKey } from '..';
 
 const selectGroupState = createFeatureSelector<Group[]>(groupStateFeatureKey);
-const selectFriendState = createFeatureSelector<User[]>(friendStateFeatureKey);
 
 export const GroupSelectors = {
   selectUserGroups: createSelector(selectGroupState, (state: Group[]) => state),
-  selectGroupInfo: createSelector(selectGroupState, (state: Group[], groupId: number) =>
-    state.find((group) => group.groupId == groupId)
-  ),
-  selectGroupMessages: createSelector(
-    selectGroupState,
-    (state: Group[], groupId: number) => state.find((group) => group.groupId == groupId).messages
-  ),
-  selectAvailableFriends: createSelector(selectFriendState, (state: User[]) => state)
+  selectGroupInfo: createSelector(selectGroupState, (state: Group[], groupId: number) => {
+    state.find((group) => group.groupId == groupId);
+  }),
+  selectGroupMessages: createSelector(selectGroupState, (state: Group[], groupId: number) => {
+    let messages = state.find((group) => group.groupId == groupId).messages;
+    messages = messages == undefined ? [] : messages;
+    return messages;
+  }),
+  selectAvailableFriends: createSelector(selectGroupState, (state: Group[], groupId: number) => {
+    let friends = state.find((group) => group.groupId == groupId).friends;
+    friends = friends == undefined ? [] : friends;
+    return friends;
+  })
 };
