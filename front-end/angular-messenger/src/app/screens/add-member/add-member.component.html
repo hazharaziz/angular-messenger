@@ -1,0 +1,34 @@
+<div class="d-flex align-items-stretch wrap-container">
+  <app-left-nav-bar class="align-self-center"></app-left-nav-bar>
+  <div
+    *ngIf="friends$ | async as friends"
+    class="card flex-grow-1 bg-dark text-light rounded-lg mx-auto main-container"
+  >
+    <div class="fixed-top bg-dark header-container">
+      <div class="d-flex justify-content-center align-items-center text-center screen-header">
+        <div class="align-self-center flex-grow-1">
+          <h3>Add New Members</h3>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="friends.length != 0" class="items-container">
+      <app-user-item
+        *ngFor="let friend of friends"
+        [user]="friend"
+        relationStatus="selectable"
+        (select)="onSelect($event)"
+        (deSelect)="onDeSelect($event)"
+      ></app-user-item>
+      <div class="d-flex flex-column fixed-bottom m-5 btn-container">
+        <button (click)="onAddMembers()" class="btn btn-danger text-light rounded-lg custom-btn">
+          Save Changes
+        </button>
+      </div>
+    </div>
+    <div *ngIf="friends.length == 0" class="empty-container">
+      <span class="badge badge-secondary badge-pill custom-empty-badge"
+        >No friends to add to group</span
+      >
+    </div>
+  </div>
+</div>

@@ -14,7 +14,8 @@ export class UserItemComponent implements OnInit {
     | 'request-received'
     | 'follower'
     | 'following'
-    | 'member';
+    | 'member'
+    | 'selectable';
   @Input() isCreator?: boolean;
   @Input() canRemove?: boolean;
 
@@ -24,8 +25,14 @@ export class UserItemComponent implements OnInit {
   @Output() reject: EventEmitter<number> = new EventEmitter<number>();
   @Output() remove: EventEmitter<number> = new EventEmitter<number>();
   @Output() unfollow: EventEmitter<number> = new EventEmitter<number>();
+  @Output() select: EventEmitter<number> = new EventEmitter<number>();
+  @Output() deSelect: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() {}
+  selected?: boolean;
+
+  constructor() {
+    this.selected = false;
+  }
 
   ngOnInit(): void {}
 
@@ -51,5 +58,15 @@ export class UserItemComponent implements OnInit {
 
   unfollowUser(id: number) {
     this.unfollow.emit(id);
+  }
+
+  selectUser(id: number): void {
+    this.selected = true;
+    this.select.emit(id);
+  }
+
+  deSelectUser(id: number): void {
+    this.selected = false;
+    this.deSelect.emit(id);
   }
 }

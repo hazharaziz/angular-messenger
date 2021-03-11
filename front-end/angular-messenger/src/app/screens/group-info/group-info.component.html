@@ -24,6 +24,7 @@
           </button>
           <button
             *ngIf="group.creatorId == (auth$ | async) || group.addMemberAccess == 1"
+            [routerLink]="['./add-member', group.groupId]"
             class="btn btn-outline-primary btn-lg btn-block m-2 border-right-0 border-left-0"
           >
             <i class="bi bi-person-plus-fill pr-2"></i>

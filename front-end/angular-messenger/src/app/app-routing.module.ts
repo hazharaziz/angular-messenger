@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddMemberComponent } from './screens/add-member/add-member.component';
 import { ChangePasswordComponent } from './screens/change-password/change-password.component';
 import { CreateGroupComponent } from './screens/create-group/create-group.component';
 import { DirectComponent } from './screens/direct/direct.component';
@@ -34,7 +35,10 @@ const routes: Routes = [
       {
         path: 'info/:id',
         component: GroupInfoComponent,
-        children: [{ path: 'edit/:id/:name/:access', component: EditGroupComponent }]
+        children: [
+          { path: 'edit/:id/:name/:access', component: EditGroupComponent },
+          { path: 'add-member/:id', component: AddMemberComponent }
+        ]
       }
     ]
   },

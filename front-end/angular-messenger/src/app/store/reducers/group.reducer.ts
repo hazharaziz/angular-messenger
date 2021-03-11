@@ -28,7 +28,7 @@ export const groupReducer = createReducer(
       state.forEach((group) => newState.push(group));
       let index = newState.findIndex((group) => group.groupId == payload.groupId);
       if (index < 0) return newState;
-      newState[index].friends = payload.friends;
+      newState[index] = { ...newState[index], friends: payload.friends };
       return newState;
     }
   ),

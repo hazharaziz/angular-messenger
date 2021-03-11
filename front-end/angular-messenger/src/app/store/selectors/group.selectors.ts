@@ -13,9 +13,9 @@ export const GroupSelectors = {
   selectAvailableFriends: createSelector(
     selectGroupState,
     (state: Group[], props: { groupId: number }) => {
-      let friends = state.find((group) => group.groupId == props.groupId).friends;
-      friends = friends == undefined ? [] : friends;
-      return friends;
+      let group = state.find((group) => group.groupId == props.groupId);
+      if (group == undefined || group.friends == undefined) return [];
+      return group.friends;
     }
   ),
   selectGroupMessages: createSelector(

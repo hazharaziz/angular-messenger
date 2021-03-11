@@ -37,6 +37,7 @@ import { GroupsComponent } from './screens/groups/groups.component';
 import { CreateGroupComponent } from './screens/create-group/create-group.component';
 import { GroupInfoComponent } from './screens/group-info/group-info.component';
 import { EditGroupComponent } from './screens/edit-group/edit-group.component';
+import { AddMemberComponent } from './screens/add-member/add-member.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { EditGroupComponent } from './screens/edit-group/edit-group.component';
     GroupsComponent,
     CreateGroupComponent,
     GroupInfoComponent,
-    EditGroupComponent
+    EditGroupComponent,
+    AddMemberComponent
   ],
   imports: [
     BrowserModule,
