@@ -15,7 +15,7 @@ export const DirectActions = {
   ),
   GetDirectMessagesSuccess: createAction(
     ActionTypes.GetDirectMessagesSuccess,
-    props<{ messages: Chat[] }>()
+    props<{ directId: number; messages: Chat[] }>()
   ),
   GetDirectMessagesFail: createAction(
     ActionTypes.GetDirectMessagesFail,
