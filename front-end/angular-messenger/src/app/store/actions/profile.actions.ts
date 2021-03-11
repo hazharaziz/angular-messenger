@@ -8,6 +8,7 @@ export const ProfileActions = {
   GetProfileSuccess: createAction(ActionTypes.GetProfileSuccess, props<User>()),
   GetProfileFail: createAction(ActionTypes.GetProfileFail, props<{ error: string }>()),
   EditProfileRequest: createAction(ActionTypes.EditProfileRequest, props<User>()),
+  EditProfileSuccess: createAction(ActionTypes.EditProfileSuccess),
   EditProfileFail: createAction(ActionTypes.EditProfileFail, props<{ error: string }>()),
   ChangePasswordRequest: createAction(
     ActionTypes.ChangePasswordRequest,

@@ -16,7 +16,7 @@ export class CreateGroupEffects {
       ofType(GroupActions.CreateGroupRequest),
       concatMap((payload) =>
         this.groupService.createGroupRequest(payload).pipe(
-          map(() => GroupActions.CreateGroupSuccess()),
+          map(() => GroupActions.GetGroupsRequest()),
           catchError((error) => {
             let errorMessage = '';
             let status = error.status;
@@ -34,18 +34,6 @@ export class CreateGroupEffects {
         )
       )
     )
-  );
-
-  createGroupSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(GroupActions.CreateGroupSuccess),
-        tap(() => {
-          GroupActions.GetGroupsRequest();
-          this.router.navigate(['/groups']);
-        })
-      ),
-    { dispatch: false }
   );
 
   createGroupFail$ = createEffect(
