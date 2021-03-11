@@ -36,12 +36,12 @@ export const GroupActions = {
   DeleteGroupFail: createAction(ActionTypes.DeleteGroupFail, props<{ error: string }>()),
   AddMemberToGroupRequest: createAction(
     ActionTypes.AddMemberToGroupRequest,
-    props<{ members: number[] }>()
+    props<{ groupId: number; members: number[] }>()
   ),
   AddMemberToGroupFail: createAction(ActionTypes.AddMemberToGroupFail, props<{ error: string }>()),
   RemoveMemberFromGroupRequest: createAction(
     ActionTypes.RemoveMemberFromGroupRequest,
-    props<{ memberId: number }>()
+    props<{ groupId: number; memberId: number }>()
   ),
   RemoveMemberFromGroupFail: createAction(
     ActionTypes.RemoveMemberFromGroupFail,
