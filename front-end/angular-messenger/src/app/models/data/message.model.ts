@@ -1,7 +1,8 @@
 export type Message = {
   id?: number;
-  directId?: number;
   groupId?: number;
+  directId?: number;
+  targetId?: number;
   composerId?: number;
   composerName?: string;
   replyToId?: number;
