@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Group } from 'src/app/models/data/group.model';
+import { Message } from 'src/app/models/data/message.model';
 import { User } from 'src/app/models/data/user.model';
 import { GroupActions } from '../actions/group.actions';
 
@@ -37,5 +38,14 @@ export const groupReducer = createReducer(
     if (index < 0) return state;
     state[index].friends = [];
     return state;
-  })
+  }),
+  on(
+    GroupActions.GetGroupMessagesSuccess,
+    (state: Group[], payload: { groupId: number; messages: Message[] }) => {
+      let index = state.findIndex((group) => group.groupId == payload.groupId);
+      if (index < 0) return state;
+      state[index] = { ...state[index], messages: payload.messages };
+      return state;
+    }
+  )
 );

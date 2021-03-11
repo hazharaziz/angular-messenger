@@ -10,14 +10,14 @@ export const GroupSelectors = {
   selectGroupInfo: createSelector(selectGroupState, (state: Group[], groupId: number) => {
     state.find((group) => group.groupId == groupId);
   }),
-  selectGroupMessages: createSelector(selectGroupState, (state: Group[], groupId: number) => {
-    let messages = state.find((group) => group.groupId == groupId).messages;
-    messages = messages == undefined ? [] : messages;
-    return messages;
-  }),
   selectAvailableFriends: createSelector(selectGroupState, (state: Group[], groupId: number) => {
     let friends = state.find((group) => group.groupId == groupId).friends;
     friends = friends == undefined ? [] : friends;
     return friends;
+  }),
+  selectGroupMessages: createSelector(selectGroupState, (state: Group[], groupId: number) => {
+    let messages = state.find((group) => group.groupId == groupId).messages;
+    messages = messages == undefined ? [] : messages;
+    return messages;
   })
 };
