@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Group } from 'src/app/models/data/group.model';
 import { AppState } from 'src/app/store';
@@ -21,7 +21,8 @@ export class EditGroupComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.editGroupForm = this.fb.group({
       groupName: [
@@ -46,6 +47,9 @@ export class EditGroupComponent implements OnInit {
         addMemberAccess: access
       })
     );
+    setTimeout(() => {
+      this.router.navigate(['/groups/info', this.groupParams.groupId]);
+    }, 200);
   }
 
   getGroupParams(): Group {

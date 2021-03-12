@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 
 import { User } from 'src/app/models/data/user.model';
 import { AppState } from 'src/app/store';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { CustomValidator } from 'src/app/utils/custom-validator';
 import { log } from 'src/app/utils/logger';
+import { Messages } from 'src/assets/common/strings';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,7 +24,8 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.profileFormGroup = this.fb.group({
       name: [this.userParams.name, [CustomValidator.ValidateString(3, 40), Validators.required]],
@@ -55,6 +58,9 @@ export class EditProfileComponent implements OnInit {
         isPublic
       })
     );
+    setTimeout(() => {
+      this.router.navigate(['/profile']);
+    }, 200);
   }
 
   getRouteParams(): User {

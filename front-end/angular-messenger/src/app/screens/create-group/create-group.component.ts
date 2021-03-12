@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
@@ -17,8 +18,8 @@ export class CreateGroupComponent implements OnInit {
   auth$: Observable<number> = this.store.select(AuthSelectors.selectUserId);
   groupInfoForm: FormGroup;
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {
-    this.groupInfoForm = fb.group({
+  constructor(private store: Store<AppState>, private fb: FormBuilder, private router: Router) {
+    this.groupInfoForm = this.fb.group({
       groupName: fb.control('', [CustomValidator.ValidateString(3, 40), Validators.required])
     });
   }
@@ -35,6 +36,9 @@ export class CreateGroupComponent implements OnInit {
         creatorId: userId
       })
     );
+    setTimeout(() => {
+      this.router.navigate(['/groups']);
+    }, 200);
   }
 
   get groupName() {

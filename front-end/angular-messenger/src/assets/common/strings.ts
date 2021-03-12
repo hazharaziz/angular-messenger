@@ -12,5 +12,6 @@ export const Messages = {
   DeleteMessageNotAllowed: 'You are not allowed to delete this message',
   NotFound: 'Resource Not found',
   AlreadyFollower: 'This user is already your follower',
-  AlreadyDone: 'Operation is already done'
+  AlreadyDone: 'Operation is already done',
+  SamePassword: 'New password should not be the same as current password'
 };

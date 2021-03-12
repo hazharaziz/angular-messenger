@@ -37,6 +37,7 @@ const routes: Routes = [
   {
     path: 'groups',
     component: GroupsComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'create', component: CreateGroupComponent },
       {
