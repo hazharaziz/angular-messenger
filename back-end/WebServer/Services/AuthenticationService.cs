@@ -33,10 +33,10 @@ namespace WebServer.Services
             User dbUser = _unitOfWork.Users.GetByUsername(user.Username);
 
             if (dbUser == null) 
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
             
             if (dbUser.Password != user.Password) 
-                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongPassword);
+                throw new HttpException(StatusCodes.Status401Unauthorized, Alerts.WrongAuthenticationCredentials);
 
             return new Response<UserModel>()
             {
@@ -80,7 +80,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(id);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             if (user.Username != username)
                 throw new HttpException(StatusCodes.Status403Forbidden, Alerts.Forbidden);
@@ -96,7 +96,7 @@ namespace WebServer.Services
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(60),
+              expires: DateTime.Now.AddDays(1),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

@@ -97,7 +97,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.CreateGroup(userId, group);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -117,7 +117,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.EditGroup(userId, groupId, editedGroup);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -137,7 +137,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.DeleteGroup(userId, groupId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -157,7 +157,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.AddMembersToGroup(userId, groupId, memberIds);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -178,7 +178,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.RemoveMemberFromGroup(userId, groupId, memberId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -198,7 +198,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<List<GroupMessage>> response = _groupService.GetGroupMessages(userId, groupId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, response.Data );
             }
             catch (HttpException exception)
             {
@@ -218,7 +218,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.SendGroupMessage(userId, groupId, groupMessage);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -241,7 +241,7 @@ namespace WebServer.Controllers
                     (_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = 
                     _groupService.EditGroupMessage(userId, groupId, messageId, groupMessage);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -261,7 +261,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.DeleteGroupMessage(userId, groupId, messageId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -281,7 +281,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.ClearGroupHistory(userId, groupId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -301,7 +301,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _groupService.LeaveGroup(userId, groupId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {

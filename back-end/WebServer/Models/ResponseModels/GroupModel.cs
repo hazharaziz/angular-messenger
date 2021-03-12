@@ -9,11 +9,18 @@ namespace WebServer.Models.ResponseModels
 {
     public class GroupModel
     {
-        [JsonPropertyName("id")]
+        [JsonPropertyName("groupId")]
         public int GroupId { get; set; }
 
         [JsonPropertyName("groupName")]
         [StringLength(40, MinimumLength = 3)]
         public string GroupName { get; set; }
+
+        [JsonPropertyName("creatorId")]
+        public int CreatorId { get; set; }
+
+        [JsonPropertyName("creatorName")]
+        [StringLength(40, MinimumLength = 3)]
+        public string CreatorName { get; set; }
     }
 }

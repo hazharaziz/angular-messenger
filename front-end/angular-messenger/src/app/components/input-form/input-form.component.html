@@ -1,0 +1,32 @@
+<div class="form-group">
+  <label class="input-label">{{ label }}</label>
+  <div class="input-group">
+    <input
+      [type]="hidePassword ? 'password' : 'text'"
+      [ngClass]="{
+        'is-valid': checkValidation && formField.valid && formField.value.length != 0,
+        'is-invalid': checkValidation && formField.invalid && formField.value.length != 0,
+        'rounded-lg': inputType != 'password'
+      }"
+      class="form-control bg-dark text-light"
+      [value]="value"
+      [disabled]="isDisabled"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouched()"
+      [placeholder]="placeHolder"
+    />
+    <div *ngIf="inputType == 'password'" class="input-group-append">
+      <button class="btn btn-outline-light" type="button" (click)="hidePassword = !hidePassword">
+        <i *ngIf="hidePassword" class="bi bi-eye-slash-fill"></i>
+        <i *ngIf="!hidePassword" class="bi bi-eye-fill"></i>
+      </button>
+    </div>
+    <div
+      *ngIf="checkValidation && formField.invalid"
+      class="invalid-feedback"
+      style="color: #fb3449"
+    >
+      {{ error }}
+    </div>
+  </div>
+</div>

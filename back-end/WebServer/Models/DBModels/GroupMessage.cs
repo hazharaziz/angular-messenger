@@ -12,6 +12,7 @@ namespace WebServer.Models.DBModels
     public partial class GroupMessage
     {
         [Key]
+        [JsonPropertyName("id")]
         [Column("GroupMessageID")]
         public int GroupMessageId { get; set; }
 

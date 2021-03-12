@@ -26,7 +26,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<int> followingsIds = _unitOfWork.Followers.GetFollowings(userId)
                                                  .Select(f => f.UserId)
@@ -48,7 +48,7 @@ namespace WebServer.Services
         {
             User user = _unitOfWork.Users.Get(userId);
             if (user == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             message.ComposerId = user.Id;
             message.ComposerName = user.Name;

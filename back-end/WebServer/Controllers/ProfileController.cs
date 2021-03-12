@@ -55,7 +55,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _profileService.EditProfile(userId, editedUser);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -76,7 +76,7 @@ namespace WebServer.Controllers
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = 
                     _profileService.ChangePassword(userId, body.OldPassword, body.NewPassword);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -96,7 +96,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _profileService.DeleteAccount(userId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {

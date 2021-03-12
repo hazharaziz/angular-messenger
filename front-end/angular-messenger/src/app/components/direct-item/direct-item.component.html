@@ -1,0 +1,23 @@
+<div *ngIf="direct != undefined" class="d-flex justify-content-between m-3 p-3 item-container">
+  <div class="d-flex flex-column justify-content-center align-self-center">
+    <div class="font-weight-bolder text-primary">{{ direct.targetName }}</div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
+      <button
+        (click)="directChat(direct.targetId, direct.targetName)"
+        class="btn btn-primary btn-sm mr-1 rounded-circle"
+        title="Direct Chat"
+      >
+        <i class="bi bi-chat-square-text"></i>
+      </button>
+      <button
+        (click)="deleteDirect(direct.directId)"
+        class="btn btn-danger btn-sm rounded-circle"
+        title="Delete Direct"
+      >
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,7 @@ namespace WebServer.Services
         public Response<List<UserModel>> GetAllUsers(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> users = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(user =>
@@ -43,31 +43,41 @@ namespace WebServer.Services
         public Response<List<UserModel>> FilterUsers(int userId, string text)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> filteredUsers = new List<UserModel>();
-            _unitOfWork.Users.GetAll().ForEach(user =>
+            if (text != "")
             {
-                if ((user.Username.ToLower().Contains(text.ToLower()) || 
-                    user.Name.ToLower().Contains(text.ToLower())) && user.Id != userId)
+                _unitOfWork.Users.GetAll().ForEach(user =>
                 {
-                    filteredUsers.Add(new UserModel()
+                    if (!_unitOfWork.Followers.HasFollower(user.Id, userId))
                     {
-                        Id = user.Id,
-                        Username = user.Username,
-                        Name = user.Name,
-                        IsPublic = user.IsPublic
-                    });
-                }
-            });
+                        if ((user.Username.ToLower().Contains(text.ToLower()) ||
+                            user.Name.ToLower().Contains(text.ToLower())) && user.Id != userId)
+                        {
+                            filteredUsers.Add(new UserModel()
+                            {
+                                Id = user.Id,
+                                Username = user.Username,
+                                Name = user.Name,
+                                IsPublic = user.IsPublic
+                            });
+                        }
+                    }
+                });
+            }
 
-            return new Response<List<UserModel>>() { Status = StatusCodes.Status200OK, Data = filteredUsers };
+            return new Response<List<UserModel>>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = filteredUsers
+            };
         }
 
         public Response<List<UserModel>> GetUserFriends(int userId)
         {
             if (_unitOfWork.Users.Get(userId) == null)
-                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UsersNotFound);
+                throw new HttpException(StatusCodes.Status404NotFound, Alerts.UserNotFound);
 
             List<UserModel> friends = new List<UserModel>();
             _unitOfWork.Users.GetAll().ForEach(record =>
@@ -87,7 +97,11 @@ namespace WebServer.Services
                 }
             });
 
-            return new Response<List<UserModel>>() { Status = StatusCodes.Status200OK, Data = friends };
+            return new Response<List<UserModel>>()
+            {
+                Status = StatusCodes.Status200OK,
+                Data = friends
+            };
         }
     }
 }

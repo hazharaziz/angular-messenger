@@ -1,0 +1,21 @@
+<div>
+  <div class="modal-body">
+    <p>{{ message }}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      (click)="this.activeModal.close('confirm')"
+    >
+      Confirm
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="this.activeModal.dismiss('reject')"
+    >
+      Close
+    </button>
+  </div>
+</div>

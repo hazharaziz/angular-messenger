@@ -1,0 +1,100 @@
+.wrap-container {
+  width: 55vw;
+  height: 95vh;
+  padding: 10px;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.main-container {
+  width: 40vw;
+  height: 90vh;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition-duration: 0.5s;
+  border-radius: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.main-container::-webkit-scrollbar {
+  display: none;
+}
+
+.header-container {
+  position: sticky;
+}
+
+.screen-header {
+  border-bottom: 1px solid #ffffffaa;
+  padding: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+  z-index: 2;
+}
+
+.group-info-container {
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-radius: 10px;
+}
+
+.text-name {
+  font-weight: 800;
+  font-size: 30px;
+}
+
+.text-group-privacy {
+  font-size: 15px;
+}
+
+.group-buttons-container {
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.members-container {
+  border-top: 1px solid white;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+
+.empty-chat {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-empty-badge {
+  font-weight: 400;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+}
+
+@media (max-width: 1300px) and (min-width: 1100px) {
+  .main-container {
+    transform: translate(-46%, -50%);
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 900px) {
+  .main-container {
+    transform: translate(-42%, -50%);
+  }
+}

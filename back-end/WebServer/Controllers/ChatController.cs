@@ -55,7 +55,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _chatService.AddMessage(userId, message);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data});
             }
             catch (HttpException exception)
             {
@@ -75,7 +75,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _chatService.EditMessage(userId, messageId, message);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {
@@ -95,7 +95,7 @@ namespace WebServer.Controllers
             {
                 int userId = int.Parse(_authService.GetClaim(HttpContext.User, ClaimTypes.NameIdentifier));
                 Response<string> response = _chatService.DeleteMessage(userId, messageId);
-                return StatusCode(response.Status, response.Data);
+                return StatusCode(response.Status, new { message = response.Data });
             }
             catch (HttpException exception)
             {

@@ -15,8 +15,9 @@ namespace WebServer.Messages
         public const string MessageEdited = "Message edited successfully";
         public const string MessageDeleted = "Message deleted successfully";
         public const string InternalServerError = "Internal server error";
-        public const string UsersNotFound = "User(s) not found";
+        public const string UserNotFound = "User not found";
         public const string FollowRequestSent = "Follow request sent successfully";
+        public const string UserFollowed = "User followed successfully";
         public const string NoRequestFromThisUser = "No requests from this user";
         public const string RequestAccepted = "Request accepted successfully";
         public const string RequestRejected = "Request rejected successfully";
@@ -27,7 +28,7 @@ namespace WebServer.Messages
         public const string AlreadyFollowed = "User has already been followed";
         public const string AlreadySentRequest = "Request already sent";
         public const string AlreadyIsFollower = "User is already a follower";
-        public const string WrongPassword = "Wrong password";
+        public const string WrongAuthenticationCredentials = "Wrong authentication credentials";
         public const string PasswordChanged = "Password changed successfully";
         public const string UsernameExists = "Username already exists";
         public const string AccountDeleted = "Account deleted successfully";

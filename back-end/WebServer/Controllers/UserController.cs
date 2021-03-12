@@ -27,8 +27,8 @@ namespace WebServer.Controllers
         }
 
         [Authorize]
-        [HttpGet("{text}")]
-        public IActionResult FilterUsers(string text)
+        [HttpGet("{text?}")]
+        public IActionResult FilterUsers(string text = "")
         {
             try
             {
