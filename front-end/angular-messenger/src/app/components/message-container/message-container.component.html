@@ -1,0 +1,41 @@
+<div class="message">
+  <div *ngIf="message.replyToId">
+    <button (click)="scrollToElement(message.replyToId)" class="badge btn text-light reply-badge">
+      Reply to {{ message.replyToName == undefined ? 'Deleted Message' : message.replyToName }}
+    </button>
+  </div>
+
+  <div
+    class="border-top border-bottom rounded-lg message-content"
+    style="border-radius: 10px !important; padding: 5px"
+  >
+    <div>
+      <span class="badge text-light">{{ message.composerName }}</span>
+
+      <div class="float-right">
+        <button (click)="replyTo(message.id, message.composerName)" class="custom-icon-btn mr-1">
+          <i class="bi bi-reply-fill text-light"></i>
+        </button>
+        <button
+          *ngIf="editInfoAccessibility"
+          (click)="editMessage(message.id, message.text)"
+          class="custom-icon-btn mr-1"
+        >
+          <i class="bi bi-pencil-fill text-light"></i>
+        </button>
+        <button
+          *ngIf="editInfoAccessibility"
+          (click)="deleteMessage(message.id)"
+          class="custom-icon-btn"
+        >
+          <i class="bi bi-trash-fill text-danger"></i>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <p class="message-text">{{ message.text }}</p>
+      <span class="badge badge-pill badge-dark text-secondary">{{ message.dateTime }}</span>
+    </div>
+  </div>
+</div>

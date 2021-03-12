@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="card bg-dark rounded-lg card-container">
+    <div class="card-body">
+      <h2 class="card-title d-flex justify-content-center title">LOGIN</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <app-input-form
+          [parentForm]="loginForm"
+          fieldName="username"
+          label="Username"
+          inputType="text"
+          formControlName="username"
+          error="Username should be 3 to 20 characters long"
+        ></app-input-form>
+        <app-input-form
+          [parentForm]="loginForm"
+          fieldName="password"
+          label="Password"
+          inputType="password"
+          formControlName="password"
+          error="Password should be 4 to 16 characters long"
+        ></app-input-form>
+        <div *ngIf="showWarning" class="text-warning d-flex justify-content-center warning">
+          Login info is not valid
+        </div>
+        <button type="submit" class="btn btn-danger text-light rounded-lg btn-custom">Login</button>
+
+        <button
+          type="button"
+          class="btn btn-link text-light text-decoration-none btn-custom link-signup"
+          routerLink="../sign-up"
+        >
+          Don't have an account?&nbsp;<span style="font-weight: 600">SIGN UP</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

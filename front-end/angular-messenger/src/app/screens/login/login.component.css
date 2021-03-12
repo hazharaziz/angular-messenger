@@ -1,0 +1,37 @@
+* {
+  color: #fff;
+}
+
+.container {
+  width: 25rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.card-container {
+  padding: 10px;
+}
+
+.title {
+  padding: 10px;
+  color: #fff;
+}
+
+.warning {
+  transition-timing-function: linear;
+  transition: 0.2s;
+}
+
+.btn-custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 0 auto;
+}
+
+.link-signup {
+  font-weight: 300;
+}
